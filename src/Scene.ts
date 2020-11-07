@@ -212,36 +212,6 @@ const Scene = () => {
     return new THREE.Mesh(geometry, material);
   };
 
-  // const createPlaneForFramebuffer = function() {
-  //   const geometry_base = new THREE.PlaneGeometry(1000, 1000);
-  //   const geometry = new THREE.BufferGeometry();
-  //   geometry.fromGeometry(geometry_base);
-  //   const material = new THREE.ShaderMaterial({
-  //     uniforms: {
-  //       time: {
-  //         // type: 'f',
-  //         value: 0,
-  //       },
-  //       resolution: {
-  //         // type: 'v2',
-  //         value: new THREE.Vector2(window.innerWidth, window.innerHeight)
-  //       },
-  //       texture: {
-  //         // type: 't',
-  //         value: render_target.texture,
-  //       },
-  //       texture2: {
-  //         // type: 't',
-  //         value: render_target2.texture,
-  //       },
-  //     },
-  //     vertexShader: require('./glsl/fb.vert').default,
-  //     fragmentShader: require('./glsl/fb.frag').default,
-  //     transparent: true
-  //   });
-  //   return new THREE.Mesh(geometry, material);
-  // };
-
   const initSketch = () => {
     force.anchor.set(1, 0);
 
@@ -258,8 +228,6 @@ const Scene = () => {
     sub_camera.position.set(0, 0, 3000);
     sub_camera.force.look.anchor.set(0, 0, 0);
 
-    // framebuffer = createPlaneForFramebuffer();
-    // scene.add(framebuffer);
     bg = createBackground();
     scene.add(bg);
     bg_wf = createBackgroundWire();
@@ -282,12 +250,9 @@ const Scene = () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     points.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
-    // framebuffer.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
   }
   const render = () => {
     points.material.uniforms.time.value++;
-    // framebuffer.lookAt(camera.position);
-    // framebuffer.material.uniforms.time.value++;
 
     bg_fb.material.uniforms.time.value++;
     points_fb.material.uniforms.time.value++;
