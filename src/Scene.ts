@@ -4,11 +4,6 @@ import Util from './utils/util';
 import Force2 from './utils/force2';
 import ForceCamera from './utils/force-camera';
 
-const normalizeVector2 = function(vector: { x: number; y: number}) {
-  vector.x = (vector.x / document.body.clientWidth) * 2 - 1;
-  vector.y = - (vector.y / window.innerHeight) * 2 + 1;
-};
-
 const Scene = () => {
   const canvas = document.getElementById('canvas') as HTMLCanvasElement;
   if (!canvas) return;
@@ -19,7 +14,6 @@ const Scene = () => {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  console.log(ForceCamera)
   const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
 
   let points: any = null;
@@ -37,8 +31,6 @@ const Scene = () => {
   let sub_camera2 = new ForceCamera(45, 1, 1, 10000);
   let sub_light = new THREE.HemisphereLight(0xfffffff, 0xcccccc, 1);
   let render_target2 = new THREE.WebGLRenderTarget(1200, 1200);
-  let bg_fb: any = null;
-  let points_fb: any = null;
 
   const force = new Force2();
 
@@ -169,58 +161,11 @@ const Scene = () => {
     return new THREE.Mesh(geometry, material);
   };
 
-  const createPointsInFramebuffer = function() {
-    const geometry = new THREE.BufferGeometry();
-    const vertices_base = [];
-    for (let i = 0; i < 2000; i++) {
-      vertices_base.push(
-        Util.getRadian(Util.getRandomInt(0, 120) + 120),
-        Util.getRadian(Util.getRandomInt(0, 3600) / 10),
-        Util.getRandomInt(200, 1000)
-      );
-    }
-    const vertices = new Float32Array(vertices_base);
-    geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        time: {
-          // type: 'f',
-          value: 0,
-        },
-      },
-      vertexShader: require('./glsl/fb_points.vert').default,
-      fragmentShader: require('./glsl/fb_points.frag').default,
-    });
-    return new THREE.Points(geometry, material);
-  };
-
-  const createBackgroundInFramebuffer = function() {
-    const geometry_base = new THREE.SphereGeometry(1000, 128, 128);
-    const geometry = new THREE.BufferGeometry();
-    geometry.fromGeometry(geometry_base);
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        time: {
-          // type: 'f',
-          value: 0,
-        },
-      },
-      vertexShader: require('./glsl/fb_bg.vert').default,
-      fragmentShader: require('./glsl/fb_bg.frag').default,
-      side: THREE.BackSide,
-    });
-    return new THREE.Mesh(geometry, material);
-  };
-
   const initSketch = () => {
     force.anchor.set(1, 0);
 
     sub_camera2.force.position.anchor.set(1000, 300, 0);
     sub_camera2.force.look.anchor.set(0, 0, 0);
-    bg_fb = createBackgroundInFramebuffer();
-    points_fb = createPointsInFramebuffer();
-    sub_scene2.add(bg_fb);
-    sub_scene2.add(points_fb);
     sub_scene2.add(sub_light);
 
     points = createPointsForCrossFade();
@@ -253,9 +198,6 @@ const Scene = () => {
   }
   const render = () => {
     points.material.uniforms.time.value++;
-
-    bg_fb.material.uniforms.time.value++;
-    points_fb.material.uniforms.time.value++;
 
     bg_wf.rotation.y = points.material.uniforms.time.value / 1000;
     obj.material.uniforms.time.value++;
@@ -291,59 +233,9 @@ const Scene = () => {
     requestAnimationFrame(renderLoop);
   }
   const on = () => {
-    const vectorTouchStart = new THREE.Vector2();
-    const vectorTouchMove = new THREE.Vector2();
-    const vectorTouchEnd = new THREE.Vector2();
-
-    const touchStart = (x: number, y: number) => {
-      vectorTouchStart.set(x, y);
-      normalizeVector2(vectorTouchStart);
-      force.anchor.set(2, 30);
-    };
-    const touchMove = (x: number, y: number) => {
-      vectorTouchMove.set(x, y);
-      normalizeVector2(vectorTouchMove);
-    };
-    const touchEnd = (x: number, y: number) => {
-      vectorTouchEnd.set(x, y);
-      force.anchor.set(1, 0);
-    };
-    const mouseOut = () => {
-      vectorTouchEnd.set(0, 0);
-      force.anchor.set(1, 0);
-    };
-
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
-    }, 1000));
-    canvas.addEventListener('mousedown', function (event) {
-      event.preventDefault();
-      touchStart(event.clientX, event.clientY);
-    });
-    canvas.addEventListener('mousemove', function (event) {
-      event.preventDefault();
-      touchMove(event.clientX, event.clientY);
-    });
-    canvas.addEventListener('mouseup', function (event) {
-      event.preventDefault();
-      touchEnd(event.clientX, event.clientY);
-    });
-    canvas.addEventListener('touchstart', function (event) {
-      event.preventDefault();
-      touchStart(event.touches[0].clientX, event.touches[0].clientY);
-    });
-    canvas.addEventListener('touchmove', function (event) {
-      event.preventDefault();
-      touchMove(event.touches[0].clientX, event.touches[0].clientY);
-    });
-    canvas.addEventListener('touchend', function (event) {
-      event.preventDefault();
-      touchEnd(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
-    });
-    window.addEventListener('mouseout', function (event) {
-      event.preventDefault();
-      mouseOut();
-    });
+    }, 100));
   }
 
   const init = () => {
