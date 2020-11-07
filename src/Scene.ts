@@ -4,6 +4,8 @@ import Util from './utils/util';
 import Force2 from './utils/force2';
 import ForceCamera from './utils/force-camera';
 
+const ASTEROID_COUNT = 8;
+
 const Scene = () => {
   const canvas = document.getElementById('canvas') as HTMLCanvasElement;
   if (!canvas) return;
@@ -89,7 +91,7 @@ const Scene = () => {
     const radians_base = [];
     const scales_base = [];
     const indices_base: number[] = [];
-    for (let i = 0; i < 16; i ++) {
+    for (let i = 0; i < ASTEROID_COUNT; i ++) {
       const radius = Util.getRandomInt(300, 1000);
       const radian = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
       const scale = Util.getRandomInt(60, 120) / 100;
