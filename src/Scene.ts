@@ -1,12 +1,15 @@
 import * as THREE from 'three';
 import debounce from './utils/debounce';
 import Util from './utils/util';
-import Force2 from './utils/force2';
 import ForceCamera from './utils/force-camera';
+import { Clock } from 'three';
+import Logo from './Logo';
 
 const ASTEROID_COUNT = 8;
 
-const Scene = () => {
+const Scene = (texture: THREE.Texture) => {
+  const clock = new Clock();
+
   const canvas = document.getElementById('canvas') as HTMLCanvasElement;
   if (!canvas) return;
 
@@ -18,15 +21,14 @@ const Scene = () => {
   const scene = new THREE.Scene();
   const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
 
-  let bg = null;
-  let bg_wf: any = null;
-  let obj: any = null;
-  let light = new THREE.DirectionalLight(0xffffff, 1);
+  let background = null;
+  let outerSphere: any = null;
+  let asteroidField: any = null;
+  let logo: any = null;
+  let light = new THREE.DirectionalLight(0xff0000, 1);
 
-  const force = new Force2();
-
-  const createObject = function() {
-    const geometry_base = new THREE.SphereBufferGeometry(2, 4, 4);
+  const createAsteroidField = function() {
+    const geometry_base = new THREE.SphereBufferGeometry(2, 6, 4);
     const attr = geometry_base.attributes;
     const geometry = new THREE.BufferGeometry();
     const vertices_base = [];
@@ -86,7 +88,6 @@ const Scene = () => {
     const material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
-          // type: 'f',
           value: 0,
         },
       },
@@ -97,8 +98,8 @@ const Scene = () => {
     return new THREE.Mesh(geometry, material);
   };
 
-  const createBackgroundWire = function() {
-    const geometry = new THREE.SphereGeometry(1100, 64, 64);
+  const createOuterSphere = function() {
+    const geometry = new THREE.SphereGeometry(1100, 92, 92);
     const material = new THREE.MeshBasicMaterial({
       color: 0xdddddd,
       wireframe: true
@@ -107,59 +108,68 @@ const Scene = () => {
   };
 
   const initSketch = () => {
-    force.anchor.set(1, 0);
-    bg = createBackground();
-    scene.add(bg);
-    bg_wf = createBackgroundWire();
-    scene.add(bg_wf);
-    obj = createObject();
-    scene.add(obj);
+    logo = Logo(texture);
+    // logo.mesh.position.z = -1000;
+    logo.mesh.rotation.x = -0.4;
+    // logo.mesh.rotation.y = 1.5;
+
+
+    // logo.mesh.position.anchor.set(1, 1, 0);
+    // logo.mesh.rotation.set(0,1.5,0)
+    scene.add(logo.mesh);
+    background = createBackground();
+    scene.add(background);
+    outerSphere = createOuterSphere();
+    scene.add(outerSphere);
+    asteroidField = createAsteroidField();
+    scene.add(asteroidField);
     light.position.set(0, 1, 0)
     scene.add(light);
-    camera.force.position.anchor.set(1000, 300, 0);
-    camera.force.look.anchor.set(0, 0, 0);
+
+    camera.force.position.anchor.set(0, 400, 1000);
+    // camera.force.look.anchor.set(0, 0, 0);
   }
 
   //
   // common process
   //
   const resizeWindow = () => {
-    canvas.width = window.innerWidth;
+    canvas.width = document.body.clientWidth;
     canvas.height = window.innerHeight;
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = document.body.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(document.body.clientWidth, window.innerHeight);
   }
-  const render = () => {
-    obj.material.uniforms.time.value++;
 
-    force.applyHook(0, 0.12);
-    force.applyDrag(0.18);
-    force.updateVelocity();
-    camera.force.position.applyHook(0, 0.025);
-    camera.force.position.applyDrag(0.2);
+  const render = (elapsedTime: number) => {
+    outerSphere.rotation.y = elapsedTime / 20;
+    asteroidField.material.uniforms.time.value = elapsedTime * 20;
+    logo.material.uniforms.time.value += elapsedTime * 20;
+    camera.force.position.applyHook(0, 0.05);
+    camera.force.position.applyDrag(0.8);
     camera.force.position.updateVelocity();
     camera.updatePosition();
-    camera.force.look.applyHook(0, 0.2);
-    camera.force.look.applyDrag(0.4);
+    // camera.force.look.anchor.y = Math.sin(elapsedTime / 20) * 100;
+    // camera.force.look.applyHook(0, 0.2);
+    // camera.force.look.applyDrag(0.4);
     camera.updateLook();
     renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
   const renderLoop = () => {
-    render();
+    render(clock.getElapsedTime());
     requestAnimationFrame(renderLoop);
   }
   const on = () => {
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
-    }, 100));
+    }, 1));
   }
 
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 0.0);
-    camera.position.set(1000, 1000, 1000);
+    // camera.position.set(1000, 1000, 1000);
     camera.lookAt(new THREE.Vector3());
 
     on();

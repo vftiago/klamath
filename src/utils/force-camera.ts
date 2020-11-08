@@ -4,7 +4,7 @@ import Force3 from './force3';
 
 export default class ForceCamera extends THREE.PerspectiveCamera {
   force: any;
-  up: THREE.Vector3;
+  // up: THREE.Vector3;
 
   constructor(fov: any, aspect: any, near: any, far: any) {
     super(fov, aspect, near, far);
@@ -13,8 +13,8 @@ export default class ForceCamera extends THREE.PerspectiveCamera {
       position: new Force3(),
       look: new Force3(),
     };
-    this.up = new THREE.Vector3();
-    this.up.set(0, 1, 0);
+    // this.up = new THREE.Vector3();
+    // this.up.set(0, 0, 0);
   }
 
   updatePosition = () => {
