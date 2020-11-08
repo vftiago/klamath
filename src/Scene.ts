@@ -26,13 +26,6 @@ const Scene = () => {
 
   let sub_scene = new THREE.Scene();
   let sub_camera = new ForceCamera(45, 1, 1, 10000);
-  let render_target = new THREE.WebGLRenderTarget(1200, 1200);
-  // let framebuffer: any = null;
-
-  let sub_scene2 = new THREE.Scene();
-  let sub_camera2 = new ForceCamera(45, 1, 1, 10000);
-  let sub_light = new THREE.HemisphereLight(0xfffffff, 0xcccccc, 1);
-  let render_target2 = new THREE.WebGLRenderTarget(1200, 1200);
 
   const force = new Force2();
 
@@ -165,11 +158,6 @@ const Scene = () => {
 
   const initSketch = () => {
     force.anchor.set(1, 0);
-
-    sub_camera2.force.position.anchor.set(1000, 300, 0);
-    sub_camera2.force.look.anchor.set(0, 0, 0);
-    sub_scene2.add(sub_light);
-
     points = createPointsForCrossFade();
     sub_scene.add(points);
     sub_camera.position.set(0, 0, 3000);
@@ -215,17 +203,6 @@ const Scene = () => {
     camera.force.look.applyHook(0, 0.2);
     camera.force.look.applyDrag(0.4);
     camera.updateLook();
-    sub_camera2.force.position.applyHook(0, 0.1);
-    sub_camera2.force.position.applyDrag(0.2);
-    sub_camera2.force.position.updateVelocity();
-    sub_camera2.updatePosition();
-    sub_camera2.force.look.applyHook(0, 0.2);
-    sub_camera2.force.look.applyDrag(0.4);
-    sub_camera2.force.look.updateVelocity();
-    sub_camera2.updateLook();
-    renderer.setRenderTarget(render_target2);
-    renderer.render(sub_scene2, sub_camera2);
-    renderer.setRenderTarget(render_target);
     renderer.render(sub_scene, sub_camera);
     renderer.setRenderTarget(null);
     renderer.render(scene, camera);
