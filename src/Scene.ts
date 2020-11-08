@@ -24,9 +24,6 @@ const Scene = () => {
   let obj: any = null;
   let light = new THREE.DirectionalLight(0xffffff, 1);
 
-  let sub_scene = new THREE.Scene();
-  let sub_camera = new ForceCamera(45, 1, 1, 10000);
-
   const force = new Force2();
 
   const createPointsForCrossFade = function() {
@@ -159,10 +156,6 @@ const Scene = () => {
   const initSketch = () => {
     force.anchor.set(1, 0);
     points = createPointsForCrossFade();
-    sub_scene.add(points);
-    sub_camera.position.set(0, 0, 3000);
-    sub_camera.force.look.anchor.set(0, 0, 0);
-
     bg = createBackground();
     scene.add(bg);
     bg_wf = createBackgroundWire();
@@ -203,7 +196,6 @@ const Scene = () => {
     camera.force.look.applyHook(0, 0.2);
     camera.force.look.applyDrag(0.4);
     camera.updateLook();
-    renderer.render(sub_scene, sub_camera);
     renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
