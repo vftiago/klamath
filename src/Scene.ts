@@ -5,7 +5,7 @@ import ForceCamera from './utils/force-camera';
 import { Clock } from 'three';
 import Logo from './Logo';
 
-const ASTEROID_COUNT = 8;
+const ASTEROID_COUNT = 12;
 
 const Scene = (texture: THREE.Texture) => {
   const clock = new Clock();
@@ -28,7 +28,7 @@ const Scene = (texture: THREE.Texture) => {
   let light = new THREE.DirectionalLight(0xff0000, 1);
 
   const createAsteroidField = function() {
-    const geometry_base = new THREE.SphereBufferGeometry(2, 6, 4);
+    const geometry_base = new THREE.SphereBufferGeometry(1.2, 6, 4);
     const attr = geometry_base.attributes;
     const geometry = new THREE.BufferGeometry();
     const vertices_base = [];
@@ -77,7 +77,6 @@ const Scene = (texture: THREE.Texture) => {
       ]),
       vertexShader: require('./glsl/object.vert').default,
       fragmentShader: require('./glsl/object.frag').default,
-      flatShading: true,
       lights: true,
     });
     return new THREE.Mesh(geometry, material);
@@ -109,7 +108,7 @@ const Scene = (texture: THREE.Texture) => {
 
   const initSketch = () => {
     logo = Logo(texture);
-    logo.mesh.position.y = 100;
+    logo.mesh.position.y = 133;
     logo.mesh.rotation.x = -0.4;
     // logo.mesh.rotation.y = 1.5;
 
