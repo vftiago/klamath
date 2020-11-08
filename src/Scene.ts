@@ -109,7 +109,7 @@ const Scene = (texture: THREE.Texture) => {
 
   const initSketch = () => {
     logo = Logo(texture);
-    // logo.mesh.position.z = -1000;
+    logo.mesh.position.y = 100;
     logo.mesh.rotation.x = -0.4;
     // logo.mesh.rotation.y = 1.5;
 

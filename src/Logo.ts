@@ -11,18 +11,17 @@ const Logo = (textureValue: THREE.Texture) => {
         },
         resolution: {
             type: "v2",
-            value: new THREE.Vector2(4128, 4128),
+            value: new THREE.Vector2(),
         },
         texture: {
             type: "t",
             value: textureValue,
-            // magFilter: THREE.LinearMipmapNearestFilter,
-            // minFilter: THREE.LinearMipmapNearestFilter,
-           anisotropy: 32
+            magFilter: THREE.LinearMipmapNearestFilter,
+            minFilter: THREE.LinearMipmapNearestFilter,
         },
     };
 
-    const geometry = new THREE.CircleBufferGeometry(198, 64);
+    const geometry = new THREE.CircleBufferGeometry(128, 64);
 
     const material = new THREE.RawShaderMaterial({
         uniforms,
