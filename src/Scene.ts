@@ -18,62 +18,12 @@ const Scene = () => {
   const scene = new THREE.Scene();
   const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
 
-  let points: any = null;
   let bg = null;
   let bg_wf: any = null;
   let obj: any = null;
   let light = new THREE.DirectionalLight(0xffffff, 1);
 
-  let sub_scene = new THREE.Scene();
-  let sub_camera = new ForceCamera(45, 1, 1, 10000);
-
   const force = new Force2();
-
-  const createPointsForCrossFade = function() {
-    const geometry = new THREE.BufferGeometry();
-    const vertices_base = [];
-    const radians_base = [];
-    for (let i = 0; i < 32; i ++) {
-      const x = 0;
-      const y = 0;
-      const z = 0;
-      vertices_base.push(x, y, z);
-      const r1 = Util.getRadian(Util.getRandomInt(0, 360));
-      const r2 = Util.getRadian(Util.getRandomInt(0, 360));
-      const r3 = Util.getRadian(Util.getRandomInt(0, 360));
-      radians_base.push(r1, r2, r3);
-    }
-    const vertices = new Float32Array(vertices_base);
-    geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-    const radians = new Float32Array(radians_base);
-    geometry.setAttribute('radian', new THREE.BufferAttribute(radians, 3));
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        time: {
-          // type: 'f',
-          value: 0.0
-        },
-        resolution: {
-          // type: 'v2',
-          value: new THREE.Vector2(window.innerWidth, window.innerHeight)
-        },
-        size: {
-          // type: 'f',
-          value: 28.0
-        },
-        force: {
-          // type: 'v2',
-          value: force.velocity,
-        },
-      },
-      vertexShader: require('./glsl/points.vert').default,
-      fragmentShader: require('./glsl/points.frag').default,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending
-    });
-    return new THREE.Points(geometry, material);
-  };
 
   const createObject = function() {
     const geometry_base = new THREE.SphereBufferGeometry(2, 4, 4);
@@ -158,11 +108,6 @@ const Scene = () => {
 
   const initSketch = () => {
     force.anchor.set(1, 0);
-    points = createPointsForCrossFade();
-    sub_scene.add(points);
-    sub_camera.position.set(0, 0, 3000);
-    sub_camera.force.look.anchor.set(0, 0, 0);
-
     bg = createBackground();
     scene.add(bg);
     bg_wf = createBackgroundWire();
@@ -184,12 +129,8 @@ const Scene = () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    points.material.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
   }
   const render = () => {
-    points.material.uniforms.time.value++;
-
-    bg_wf.rotation.y = points.material.uniforms.time.value / 1000;
     obj.material.uniforms.time.value++;
 
     force.applyHook(0, 0.12);
@@ -199,11 +140,9 @@ const Scene = () => {
     camera.force.position.applyDrag(0.2);
     camera.force.position.updateVelocity();
     camera.updatePosition();
-    camera.force.look.anchor.y = Math.sin(points.material.uniforms.time.value / 100) * 100;
     camera.force.look.applyHook(0, 0.2);
     camera.force.look.applyDrag(0.4);
     camera.updateLook();
-    renderer.render(sub_scene, sub_camera);
     renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
