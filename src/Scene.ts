@@ -13,7 +13,6 @@ const Scene = (texture: THREE.Texture) => {
 
   if (!canvas) return;
 
-
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     canvas: canvas,
@@ -24,17 +23,20 @@ const Scene = (texture: THREE.Texture) => {
   let background = null;
   let outerSphere: any = null;
   let logo: any = null;
-  let light = new THREE.DirectionalLight(0xff0000, 1);
 
-  const initSketch = () => {
+  const createScene = () => {
     logo = createLogo(texture);
     logo.mesh.position.y = 133;
     logo.mesh.rotation.x = -0.4;
     scene.add(logo.mesh);
+
     background = createBackground();
     scene.add(background);
+
     outerSphere = createOuterSphere();
     scene.add(outerSphere);
+
+    const light = new THREE.DirectionalLight(0xff0000, 1);
     light.position.set(0, 1, 0)
     scene.add(light);
 
@@ -76,7 +78,7 @@ const Scene = (texture: THREE.Texture) => {
     camera.lookAt(new THREE.Vector3());
 
     on();
-    initSketch();
+    createScene();
     resizeWindow();
     renderLoop();
   }

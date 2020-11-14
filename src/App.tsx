@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import "./App.css";
 import * as THREE from "three";
-import logoImage from "./tf.png";
+import logoImage from "./tf-small.png";
 import Scene from "./Scene";
 
 function App() {
