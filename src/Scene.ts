@@ -1,16 +1,16 @@
 import * as THREE from 'three';
 import debounce from './utils/debounce';
-import Util from './utils/util';
 import ForceCamera from './utils/force-camera';
 import { Clock } from 'three';
-import Logo from './Logo';
-
-const ASTEROID_COUNT = 8;
+import createLogo from './logo';
+import createBackground from './background';
+import createOuterSphere from './sphere';
 
 const Scene = (texture: THREE.Texture) => {
   const clock = new Clock();
 
   const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+
   if (!canvas) return;
 
 
@@ -23,36 +23,11 @@ const Scene = (texture: THREE.Texture) => {
 
   let background = null;
   let outerSphere: any = null;
-  let asteroidField: any = null;
   let logo: any = null;
   let light = new THREE.DirectionalLight(0xff0000, 1);
 
-  const createBackground = function() {
-    const geometry = new THREE.SphereGeometry(1200, 32, 32);
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        time: {
-          value: 0,
-        },
-      },
-      vertexShader: require('./glsl/bg.vert').default,
-      fragmentShader: require('./glsl/bg.frag').default,
-      side: THREE.BackSide,
-    });
-    return new THREE.Mesh(geometry, material);
-  };
-
-  const createOuterSphere = function() {
-    const geometry = new THREE.SphereGeometry(1100, 64, 64);
-    const material = new THREE.MeshBasicMaterial({
-      color: 0xdddddd,
-      wireframe: true
-    });
-    return new THREE.Mesh(geometry, material);
-  };
-
   const initSketch = () => {
-    logo = Logo(texture);
+    logo = createLogo(texture);
     logo.mesh.position.y = 133;
     logo.mesh.rotation.x = -0.4;
     scene.add(logo.mesh);

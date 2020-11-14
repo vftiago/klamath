@@ -1,0 +1,12 @@
+import * as THREE from 'three';
+
+const createOuterSphere = function() {
+    const geometry = new THREE.SphereGeometry(1100, 64, 64);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0xdddddd,
+      wireframe: true
+    });
+    return new THREE.Mesh(geometry, material);
+  };
+
+export default createOuterSphere;

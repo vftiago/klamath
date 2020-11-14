@@ -3,7 +3,7 @@ import * as THREE from "three";
 import fragmentShader from "./glsl/logo.frag";
 import vertexShader from "./glsl/logo.vert";
 
-const Logo = (textureValue: THREE.Texture) => {
+const createLogo = (textureValue: THREE.Texture) => {
     const uniforms = {
         time: {
             type: "f",
@@ -38,4 +38,4 @@ const Logo = (textureValue: THREE.Texture) => {
     };
 };
 
-export default Logo;
+export default createLogo;
