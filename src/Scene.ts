@@ -5,7 +5,7 @@ import ForceCamera from './utils/force-camera';
 import { Clock } from 'three';
 import Logo from './Logo';
 
-const ASTEROID_COUNT = 12;
+const ASTEROID_COUNT = 8;
 
 const Scene = (texture: THREE.Texture) => {
   const clock = new Clock();
@@ -83,7 +83,7 @@ const Scene = (texture: THREE.Texture) => {
   };
 
   const createBackground = function() {
-    const geometry = new THREE.SphereGeometry(1200, 64, 64);
+    const geometry = new THREE.SphereGeometry(1200, 32, 32);
     const material = new THREE.ShaderMaterial({
       uniforms: {
         time: {
@@ -98,7 +98,7 @@ const Scene = (texture: THREE.Texture) => {
   };
 
   const createOuterSphere = function() {
-    const geometry = new THREE.SphereGeometry(1100, 92, 92);
+    const geometry = new THREE.SphereGeometry(1100, 64, 64);
     const material = new THREE.MeshBasicMaterial({
       color: 0xdddddd,
       wireframe: true

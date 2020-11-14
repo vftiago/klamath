@@ -21,7 +21,7 @@ const Logo = (textureValue: THREE.Texture) => {
         },
     };
 
-    const geometry = new THREE.CircleBufferGeometry(128, 64);
+    const geometry = new THREE.PlaneBufferGeometry(192, 192);
 
     const material = new THREE.RawShaderMaterial({
         uniforms,
