@@ -27,52 +27,6 @@ const Scene = (texture: THREE.Texture) => {
   let logo: any = null;
   let light = new THREE.DirectionalLight(0xff0000, 1);
 
-  const createAsteroidField = function() {
-    const geometry_base = new THREE.SphereBufferGeometry(1.2, 6, 4);
-    const attr = geometry_base.attributes;
-    const geometry = new THREE.SphereBufferGeometry(88);
-    const vertices_base = [];
-    const radiuses_base = [];
-    const radians_base = [];
-    const scales_base = [];
-    const indices_base: number[] = [];
-    for (let i = 0; i < ASTEROID_COUNT; i ++) {
-      const fieldRadius = Util.getRandomInt(300, 1000);
-      const fieldRadian = Util.getRadian(Util.getRandomInt(0, 3600) / 10);
-      const asteriodScale = Util.getRandomInt(120, 120) / 100;
-      for (let j = 0; j < attr.position.array.length; j += 3) {
-        vertices_base.push(
-          attr.position.array[j + 0],
-          attr.position.array[j + 1],
-          attr.position.array[j + 2]
-        );
-        radiuses_base.push(fieldRadius);
-        radians_base.push(fieldRadian);
-        scales_base.push(asteriodScale);
-      }
-
-      Object.values(geometry_base!.index!.array).map((item: number) => {
-        return indices_base.push(item + i * attr.position.array.length / 3)
-      });
-    }
-
-    const material = new THREE.ShaderMaterial({
-      uniforms: THREE.UniformsUtils.merge([
-        THREE.UniformsLib['lights'],
-        {
-          time: {
-            type: 'f',
-            value: 0,
-          },
-        }
-      ]),
-      lights: true,
-      wireframe: true
-    });
-    
-    return new THREE.Mesh(geometry, material);
-  };
-
   const createBackground = function() {
     const geometry = new THREE.SphereGeometry(1200, 32, 32);
     const material = new THREE.ShaderMaterial({
@@ -106,8 +60,6 @@ const Scene = (texture: THREE.Texture) => {
     scene.add(background);
     outerSphere = createOuterSphere();
     scene.add(outerSphere);
-    asteroidField = createAsteroidField();
-    scene.add(asteroidField);
     light.position.set(0, 1, 0)
     scene.add(light);
 
@@ -124,7 +76,6 @@ const Scene = (texture: THREE.Texture) => {
 
   const render = (elapsedTime: number) => {
     outerSphere.rotation.y = elapsedTime / 20;
-    asteroidField.material.uniforms.time.value = elapsedTime * 20;
     logo.material.uniforms.time.value += elapsedTime * 20;
     camera.force.position.applyHook(0, 0.05);
     camera.force.position.applyDrag(0.8);
