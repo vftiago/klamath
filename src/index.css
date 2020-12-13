@@ -1,14 +1,15 @@
+@font-face {
+  font-family: "Goldman";
+  src: url("./fonts/Goldman-Regular.ttf") format("truetype"); /* Safari, Android, iOS */
+}
+
 body {
   display: flex;
   background-color: #eeeeee;
+  color: #666;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Goldman", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-  display: flex;
 }

@@ -14,8 +14,8 @@ const float interval=3.;
 void main(){
   float now=ease(min(time/interval,1.));
   vec3 updatePosition=vec3(
-    position.x,
-    position.y,
+    position.x*(1.2-now*.2),
+    position.y*(1.2-now*.2),
     position.z
   );
   vUv=uv;

@@ -1,24 +1,19 @@
 import * as THREE from 'three';
 import debounce from './utils/debounce';
-import ForceCamera from './utils/force-camera';
-import { Clock } from 'three';
+import { Clock, PerspectiveCamera } from 'three';
 import createLogo from './logo';
 import createBackground from './background';
 import createOuterSphere from './sphere';
 
-const Scene = (texture: THREE.Texture) => {
+const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
   const clock = new Clock();
-
-  const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-
-  if (!canvas) return;
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new ForceCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
+  const camera = new PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
 
   let background = null;
   let outerSphere: any = null;
@@ -37,10 +32,11 @@ const Scene = (texture: THREE.Texture) => {
     scene.add(outerSphere);
 
     const light = new THREE.DirectionalLight(0xff0000, 1);
-    light.position.set(0, 1, 0)
+    // light.position.set(0, 1, 0)
     scene.add(light);
 
-    camera.force.position.anchor.set(0, 400, 1000);
+    camera.position.set(0, 400, 1000);
+    camera.lookAt(0, 1, 0)
   }
 
   const resizeWindow = () => {
@@ -53,19 +49,23 @@ const Scene = (texture: THREE.Texture) => {
 
   const render = (elapsedTime: number) => {
     outerSphere.rotation.y = elapsedTime / 20;
-    logo.material.uniforms.time.value += elapsedTime * 20;
-    camera.force.position.applyHook(0, 0.05);
-    camera.force.position.applyDrag(0.8);
-    camera.force.position.updateVelocity();
-    camera.updatePosition();
-    camera.updateLook();
+    logo.material.uniforms.time.value += elapsedTime / 20;
     renderer.setRenderTarget(null);
     renderer.render(scene, camera);
   }
+  
+
   const renderLoop = () => {
     render(clock.getElapsedTime());
     requestAnimationFrame(renderLoop);
   }
+
+  function updateCamera() {
+    // camera.lookAt(0, -100, 0)
+  }
+
+  window.addEventListener("scroll", updateCamera);
+  
   const on = () => {
     window.addEventListener('resize', debounce(() => {
       resizeWindow();
