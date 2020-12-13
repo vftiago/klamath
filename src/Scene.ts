@@ -13,7 +13,7 @@ const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
     canvas: canvas,
   });
   const scene = new THREE.Scene();
-  const camera = new PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000);
+  const camera = new PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
 
   let background = null;
   let outerSphere: any = null;
@@ -45,6 +45,7 @@ const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
     camera.aspect = document.body.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
   }
 
   const render = (elapsedTime: number) => {

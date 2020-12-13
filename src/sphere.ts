@@ -3,7 +3,7 @@ import * as THREE from 'three';
 const createOuterSphere = function() {
     const geometry = new THREE.SphereGeometry(1100, 64, 64);
     const material = new THREE.MeshBasicMaterial({
-      color: 0xdddddd,
+      color: 0xdcdcdc,
       wireframe: true
     });
     return new THREE.Mesh(geometry, material);

@@ -10,7 +10,7 @@ import LinkedinIcon from "./social-icons/LinkedinIcon";
 import GithubIcon from "./social-icons/GithubIcon";
 import MailIcon from "./social-icons/MailIcon";
 
-const size = 22;
+const size = 16;
 
 function App() {
   const [texture, setTexture] = useState<THREE.Texture>();
