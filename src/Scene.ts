@@ -62,7 +62,7 @@ const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
   }
 
   function updateCamera() {
-    // camera.lookAt(0, -100, 0)
+    camera.lookAt(0, -800, 0)
   }
 
   window.addEventListener("scroll", updateCamera);
