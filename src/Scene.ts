@@ -31,10 +31,6 @@ const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
     outerSphere = createOuterSphere();
     scene.add(outerSphere);
 
-    const light = new THREE.DirectionalLight(0xff0000, 1);
-    // light.position.set(0, 1, 0)
-    scene.add(light);
-
     camera.position.set(0, 400, 1000);
     camera.lookAt(0, 1, 0)
   }
