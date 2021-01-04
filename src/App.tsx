@@ -3,8 +3,6 @@
 import { css, jsx } from "@emotion/core";
 import { Fragment, useEffect, useState } from "react";
 import "./App.css";
-import * as THREE from "three";
-import logoImage from "./tf-small.png";
 import Scene from "./Scene";
 import LinkedinIcon from "./social-icons/LinkedinIcon";
 import GithubIcon from "./social-icons/GithubIcon";
@@ -13,25 +11,10 @@ import MailIcon from "./social-icons/MailIcon";
 const size = 16;
 
 function App() {
-  const [texture, setTexture] = useState<THREE.Texture>();
-
   useEffect(() => {
-    const loadTexture = async () => {
-      const loader = new THREE.TextureLoader();
-
-      const texture: THREE.Texture = await loader.load(logoImage);
-
-      setTexture(texture);
-
-      const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-
-      Scene(texture, canvas);
-    };
-
-    if (!texture) {
-      loadTexture();
-    }
-  }, [texture]);
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    Scene(canvas);
+  }, []);
 
   return (
     <Fragment>

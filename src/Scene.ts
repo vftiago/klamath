@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import debounce from './utils/debounce';
 import { Clock, PerspectiveCamera } from 'three';
-import createBackground from './background';
-import createOuterSphere from './sphere';
-import createPostEffect from './postEffect';
+import createBackground from './objects/background';
+import createOuterSphere from './objects/sphere';
+import createPostEffect from './objects/postEffect';
 
-const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
+const Scene = (canvas: HTMLCanvasElement) => {
   const clock = new Clock();
 
   const renderer = new THREE.WebGLRenderer({

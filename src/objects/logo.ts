@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
-import fragmentShader from "./glsl/logo.frag";
-import vertexShader from "./glsl/logo.vert";
+import fragmentShader from "../glsl/logo.frag";
+import vertexShader from "../glsl/logo.vert";
 
 const createLogo = (textureValue: THREE.Texture) => {
     const uniforms = {
