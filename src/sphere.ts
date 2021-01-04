@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-const createOuterSphere = function() {
+const createOuterSphere = () => {
     const geometry = new THREE.SphereGeometry(1100, 64, 64);
     const material = new THREE.MeshBasicMaterial({
       color: 0xdcdcdc,

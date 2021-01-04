@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 import debounce from './utils/debounce';
 import { Clock, PerspectiveCamera } from 'three';
-import createLogo from './logo';
 import createBackground from './background';
 import createOuterSphere from './sphere';
+import createPostEffect from './postEffect';
 
 const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
   const clock = new Clock();
@@ -12,24 +12,37 @@ const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
     antialias: true,
     canvas: canvas,
   });
+
+  const backgroundRenderer = new THREE.WebGLRenderTarget(
+    document.body.clientWidth,
+    window.innerHeight,
+  );
+  
+  const foregroundScene = new THREE.Scene();
   const scene = new THREE.Scene();
+
+  const foregroundCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   const camera = new PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
 
   let background = null;
   let outerSphere: any = null;
-  let logo: any = null;
+  // let logo: any = null;
+  let postEffect: any = null;
 
   const createScene = () => {
-    logo = createLogo(texture);
-    logo.mesh.position.y = 133;
-    logo.mesh.rotation.x = -0.4;
-    scene.add(logo.mesh);
+    // logo = createLogo(texture);
+    // logo.mesh.position.y = 133;
+    // logo.mesh.rotation.x = -0.4;
+    // scene.add(logo.mesh);
 
     background = createBackground();
     scene.add(background);
 
     outerSphere = createOuterSphere();
     scene.add(outerSphere);
+
+    postEffect = createPostEffect(backgroundRenderer.texture);
+    foregroundScene.add(postEffect);
 
     camera.position.set(0, 400, 1000);
     camera.lookAt(0, 1, 0)
@@ -41,19 +54,25 @@ const Scene = (texture: THREE.Texture, canvas: HTMLCanvasElement) => {
     camera.aspect = document.body.clientWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(document.body.clientWidth, window.innerHeight);
+    backgroundRenderer.setSize(document.body.clientWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setClearColor(0x111111, 1.0);
+    postEffect.material.uniforms.resolution.value.set(document.body.clientWidth, window.innerHeight)
   }
 
-  const render = (elapsedTime: number) => {
-    outerSphere.rotation.y = elapsedTime / 20;
-    logo.material.uniforms.time.value += elapsedTime / 20;
-    renderer.setRenderTarget(null);
+  const render = () => {
+    outerSphere.rotation.y += 0.0003;
+    postEffect.material.uniforms.time.value += 0.05;
+
+    renderer.setRenderTarget(backgroundRenderer);
     renderer.render(scene, camera);
+    renderer.setRenderTarget(null);
+    renderer.render(foregroundScene, foregroundCamera);
   }
   
 
   const renderLoop = () => {
-    render(clock.getElapsedTime());
+    render();
     requestAnimationFrame(renderLoop);
   }
 

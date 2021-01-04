@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import fragmentShader from "./glsl/bg.frag";
 import vertexShader from "./glsl/bg.vert";
 
- const createBackground = function() {
+ const createBackground = () => {
     const geometry = new THREE.SphereGeometry(1200, 32, 32);
     const material = new THREE.ShaderMaterial({
       uniforms: {
