@@ -35,9 +35,9 @@ function App() {
           <LinkedinIcon size={size}></LinkedinIcon>
         </div>
       </div>
-      <div css={missionStatementStyle}>
+      {/* <div css={missionStatementStyle}>
         <p>take control of your digital life</p>
-      </div>
+      </div> */}
     </Fragment>
   );
 }
@@ -97,7 +97,7 @@ const socialIconsStyle = css`
 `;
 
 const missionStatementStyle = css`
-  height: 200px;
+  /* height: 200px; */
   top: 100vh;
   position: absolute;
   display: flex;
