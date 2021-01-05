@@ -1,13 +1,12 @@
 import * as THREE from 'three';
 import debounce from './utils/debounce';
-import { Clock, PerspectiveCamera } from 'three';
+import { PerspectiveCamera } from 'three';
 import createBackground from './objects/background';
-import createOuterSphere from './objects/sphere';
+// import createOuterSphere from './objects/outerSphere';
 import createPostEffect from './objects/postEffect';
+import createInnerSphere from './objects/innerSphere';
 
 const Scene = (canvas: HTMLCanvasElement) => {
-  const clock = new Clock();
-
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     canvas: canvas,
@@ -25,21 +24,20 @@ const Scene = (canvas: HTMLCanvasElement) => {
   const camera = new PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
 
   let background = null;
-  let outerSphere: any = null;
-  // let logo: any = null;
+  let innerSphere: any = null;
   let postEffect: any = null;
 
   const createScene = () => {
-    // logo = createLogo(texture);
-    // logo.mesh.position.y = 133;
-    // logo.mesh.rotation.x = -0.4;
-    // scene.add(logo.mesh);
-
     background = createBackground();
     scene.add(background);
 
-    outerSphere = createOuterSphere();
-    scene.add(outerSphere);
+    // outerSphere = createOuterSphere();
+    // scene.add(outerSphere);
+
+    innerSphere = createInnerSphere();
+    scene.add(innerSphere);
+
+    innerSphere.position.y += 100;
 
     postEffect = createPostEffect(backgroundRenderer.texture);
     foregroundScene.add(postEffect);
@@ -61,7 +59,10 @@ const Scene = (canvas: HTMLCanvasElement) => {
   }
 
   const render = () => {
-    outerSphere.rotation.y += 0.0003;
+    // outerSphere.rotation.y += 0.0003;
+    innerSphere.rotation.x -= 0.001;
+    innerSphere.rotation.y -= 0.001;
+    innerSphere.rotation.z -= 0.001;
     postEffect.material.uniforms.time.value += 0.05;
 
     renderer.setRenderTarget(backgroundRenderer);
@@ -77,7 +78,8 @@ const Scene = (canvas: HTMLCanvasElement) => {
   }
 
   function updateCamera() {
-    camera.lookAt(0, -800, 0)
+    camera.lookAt(0, -window.pageYOffset * 4, 0)
+    // camera.position.y = 400 - window.pageYOffset / 2;
   }
 
   window.addEventListener("scroll", updateCamera);
