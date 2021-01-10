@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import debounce from './utils/debounce';
 import { PerspectiveCamera } from 'three';
 import createBackground from './objects/background';
-// import createOuterSphere from './objects/outerSphere';
+import createOuterSphere from './objects/outerSphere';
 import createPostEffect from './objects/postEffect';
 import createInnerSphere from './objects/innerSphere';
 
@@ -25,24 +25,25 @@ const Scene = (canvas: HTMLCanvasElement) => {
 
   let background = null;
   let innerSphere: any = null;
+  let outerSphere: any = null;
   let postEffect: any = null;
 
   const createScene = () => {
     background = createBackground();
     scene.add(background);
 
-    // outerSphere = createOuterSphere();
-    // scene.add(outerSphere);
+    outerSphere = createOuterSphere();
+    scene.add(outerSphere);
 
     innerSphere = createInnerSphere();
     scene.add(innerSphere);
 
-    innerSphere.position.y = -280
+    innerSphere.position.y = -512
 
     postEffect = createPostEffect(backgroundRenderer.texture);
     foregroundScene.add(postEffect);
 
-    camera.position.set(0, 1000, 1000);
+    camera.position.set(0, 400, 1000);
     camera.lookAt(0, -400, 0)
   }
 
@@ -59,7 +60,7 @@ const Scene = (canvas: HTMLCanvasElement) => {
   }
 
   const render = () => {
-    // outerSphere.rotation.y += 0.0003;
+    outerSphere.rotation.y += 0.0003;
     // innerSphere.rotation.x -= 0.004;
     innerSphere.rotation.y -= 0.002;
     // innerSphere.rotation.z -= 0.001;

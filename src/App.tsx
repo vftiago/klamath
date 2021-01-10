@@ -36,7 +36,7 @@ function App() {
         </div>
         {/* <div css={centerColumn}></div> */}
         <div css={rightColumn}>
-          <HeadphonesIcon size={44}></HeadphonesIcon>
+          <HeadphonesIcon size={22}></HeadphonesIcon>
         </div>
       </main>
       <div css={cornerCounterStyle}>
@@ -87,9 +87,9 @@ const leftColumn = css`
   min-height: 100vh;
   width: 88px;
   img {
-    height: 44px;
-    width: 44px;
-    padding: 22px;
+    height: 36px;
+    width: 36px;
+    padding: 26px;
   }
 `;
 
@@ -131,7 +131,7 @@ const rightColumn = css`
   min-height: 100vh;
   width: 88px;
   svg {
-    padding: 22px;
+    padding: 33px;
   }
 `;
 

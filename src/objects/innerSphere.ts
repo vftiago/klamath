@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 
 const createInnerSphere = () => {
-    const geometry = new THREE.SphereBufferGeometry(300, 24, 24);
+    const geometry = new THREE.SphereBufferGeometry(192, 32, 32);
     const material = new THREE.MeshBasicMaterial({
       color: 0xdddddd,
-      wireframe: true,
+      wireframe: false,
     });
     return new THREE.Mesh(geometry, material);
   };
