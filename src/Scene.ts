@@ -37,13 +37,13 @@ const Scene = (canvas: HTMLCanvasElement) => {
     innerSphere = createInnerSphere();
     scene.add(innerSphere);
 
-    innerSphere.position.y += 100;
+    innerSphere.position.y = -280
 
     postEffect = createPostEffect(backgroundRenderer.texture);
     foregroundScene.add(postEffect);
 
-    camera.position.set(0, 400, 1000);
-    camera.lookAt(0, 1, 0)
+    camera.position.set(0, 1000, 1000);
+    camera.lookAt(0, -400, 0)
   }
 
   const resizeWindow = () => {
@@ -60,9 +60,9 @@ const Scene = (canvas: HTMLCanvasElement) => {
 
   const render = () => {
     // outerSphere.rotation.y += 0.0003;
-    innerSphere.rotation.x -= 0.001;
-    innerSphere.rotation.y -= 0.001;
-    innerSphere.rotation.z -= 0.001;
+    // innerSphere.rotation.x -= 0.004;
+    innerSphere.rotation.y -= 0.002;
+    // innerSphere.rotation.z -= 0.001;
     postEffect.material.uniforms.time.value += 0.05;
 
     renderer.setRenderTarget(backgroundRenderer);
