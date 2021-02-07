@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import "./App.css";
 import Scene from "./Scene";
 import LinkedinIcon from "./social-icons/LinkedinIcon";
@@ -9,6 +9,7 @@ import GithubIcon from "./social-icons/GithubIcon";
 import MailIcon from "./social-icons/MailIcon";
 import logo from "./img/logo-256.png";
 import ambient from "./audio/ambient.mp3";
+import HeadphonesIcon from "./social-icons/Headphones";
 
 const size = 16;
 
@@ -27,9 +28,11 @@ function App() {
     Scene(canvas);
   }, []);
 
+  const [muted, setMuted] = useState(false)
+
   return (
     <Fragment>
-      <audio src={ambient} autoPlay loop></audio>
+      <audio src={ambient} autoPlay loop muted={muted}></audio>
       <canvas css={canvasStyle} id="canvas"></canvas>
       <main css={contentStyle}>
         <div css={leftColumn}>
@@ -37,7 +40,9 @@ function App() {
         </div>
         {/* <div css={centerColumn}></div> */}
         <div css={rightColumn}>
-          {/* <HeadphonesIcon size={22}></HeadphonesIcon> */}
+          <div css={[headPhoneIconContainerStyle, muted && mutedStyle]} onClick={()=>{setMuted(!muted)}}>
+            <HeadphonesIcon size={22}></HeadphonesIcon>
+          </div>
         </div>
       </main>
       <div css={cornerCounterStyle}>
@@ -65,6 +70,33 @@ function App() {
     </Fragment>
   );
 }
+
+const headPhoneIconContainerStyle = css`
+  height: 22px;
+  width: 22px;
+  padding: 33px;
+  position: relative;
+    &::after {
+      background-color: #666;
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 31px;
+      height: 2px;
+      margin-top: -1px;
+      margin-left: -15px;
+      transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+      transform: rotate(-45deg) scaleX(0);
+      width: 31px;
+    }
+`;
+
+const mutedStyle = css`
+ &::after {
+  transform:  rotate(-45deg) scaleX(1);
+ }
+`;
 
 const contentStyle = css`
   position: fixed;
@@ -132,7 +164,7 @@ const rightColumn = css`
   min-height: 100vh;
   width: 88px;
   svg {
-    padding: 33px;
+    /* padding: 33px; */
   }
 `;
 
