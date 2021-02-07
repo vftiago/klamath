@@ -8,7 +8,7 @@ import LinkedinIcon from "./social-icons/LinkedinIcon";
 import GithubIcon from "./social-icons/GithubIcon";
 import MailIcon from "./social-icons/MailIcon";
 import logo from "./img/logo-256.png";
-import HeadphonesIcon from "./social-icons/Headphones";
+import ambient from "./audio/ambient.mp3";
 
 const size = 16;
 
@@ -29,6 +29,7 @@ function App() {
 
   return (
     <Fragment>
+      <audio src={ambient} autoPlay loop></audio>
       <canvas css={canvasStyle} id="canvas"></canvas>
       <main css={contentStyle}>
         <div css={leftColumn}>
@@ -36,7 +37,7 @@ function App() {
         </div>
         {/* <div css={centerColumn}></div> */}
         <div css={rightColumn}>
-          <HeadphonesIcon size={22}></HeadphonesIcon>
+          {/* <HeadphonesIcon size={22}></HeadphonesIcon> */}
         </div>
       </main>
       <div css={cornerCounterStyle}>
