@@ -36,11 +36,13 @@ function App() {
       <canvas css={canvasStyle} id="canvas"></canvas>
       <main css={contentStyle}>
         <div css={leftColumn}>
-          <img src={logo} alt="TF" />
+          <div css={iconContainerStyle}>
+            <img src={logo} alt="TF" />
+          </div>
         </div>
         {/* <div css={centerColumn}></div> */}
         <div css={rightColumn}>
-          <div css={[headPhoneIconContainerStyle, muted && mutedStyle]} onClick={()=>{setMuted(!muted)}}>
+          <div css={[iconContainerStyle, muted && mutedStyle]} onClick={()=>{setMuted(!muted)}}>
             <HeadphonesIcon size={22}></HeadphonesIcon>
           </div>
         </div>
@@ -71,11 +73,18 @@ function App() {
   );
 }
 
-const headPhoneIconContainerStyle = css`
-  height: 22px;
-  width: 22px;
-  padding: 33px;
+const columnWidth= '88px';
+const logoSize = '36px';
+
+const iconContainerStyle = css`
+  height: ${logoSize};
+  width:  ${logoSize};
+  cursor: pointer;
+  padding: 26px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
     &::after {
       background-color: #666;
       content: "";
@@ -110,20 +119,33 @@ const contentStyle = css`
   flex-direction: row;
 `;
 
-const leftColumn = css`
+const columnStyle = css`
+  width: ${columnWidth};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-content: center;
-  border-right: 2px solid rgba(128, 128, 128, 0.1);
-  background-color: rgba(88, 88, 88, 0.03);
   min-height: 100vh;
-  width: 88px;
+  background-color: rgba(88, 88, 88, 0.01);
+`;
+
+const leftColumn = css`
+  ${columnStyle};
+  border-right: 2px solid rgba(128, 128, 128, 0.1);
   img {
-    height: 36px;
-    width: 36px;
-    padding: 26px;
+    height:  ${logoSize};
+    width:  ${logoSize};
   }
+`;
+
+const rightColumn = css`
+  ${columnStyle};
+  border-left: 2px solid rgba(128, 128, 128, 0.1);
+`;
+
+const centerColumn = css`
+  border: 1px solid rgba(255, 136, 0, 0.7);
+  min-height: 100vh;
 `;
 
 const cornerCounterStyle = css`
@@ -132,16 +154,17 @@ const cornerCounterStyle = css`
   bottom: 28px;
   text-transform: uppercase;
   z-index: 1;
+  background-color: rgba(88, 88, 88, 0.01);
 `;
 
 const labelStyle = css`
-  transform: rotate(-90deg);
-  margin-bottom: -10px;
+  /* transform: rotate(-90deg); */
+  /* margin-bottom: -10px; */
   letter-spacing: 0.165em;
   font-size: 12px;
-  position: relative;
+  /* position: relative;
   left: -46px;
-  bottom: 64px;
+  bottom: 64px; */
   width: 120px;
   opacity: 0.4;
 `;
@@ -152,21 +175,6 @@ const numStyle = css`
   position: relative;
 `;
 
-const centerColumn = css`
-  border: 1px solid rgba(255, 136, 0, 0.7);
-  background-color: rgba(88, 88, 88, 0.03);
-  min-height: 100vh;
-`;
-
-const rightColumn = css`
-  border-left: 2px solid rgba(128, 128, 128, 0.1);
-  background-color: rgba(88, 88, 88, 0.03);
-  min-height: 100vh;
-  width: 88px;
-  svg {
-    /* padding: 33px; */
-  }
-`;
 
 const canvasStyle = css`
   z-index: -1;
