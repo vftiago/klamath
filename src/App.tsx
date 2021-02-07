@@ -6,12 +6,10 @@ import "./App.css";
 import Scene from "./Scene";
 import LinkedinIcon from "./social-icons/LinkedinIcon";
 import GithubIcon from "./social-icons/GithubIcon";
-import MailIcon from "./social-icons/MailIcon";
+import HackerrankIcon from "./social-icons/HackerrankIcon";
 import logo from "./img/logo-256.png";
 import ambient from "./audio/ambient.mp3";
 import HeadphonesIcon from "./social-icons/Headphones";
-
-const size = 16;
 
 const copyToClipboard = () => {
   const dummy = document.createElement("input");
@@ -22,13 +20,15 @@ const copyToClipboard = () => {
   document.body.removeChild(dummy);
 };
 
+const iconSize = 18;
+
 function App() {
   useEffect(() => {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     Scene(canvas);
   }, []);
 
-  const [muted, setMuted] = useState(false)
+  const [muted, setMuted] = useState(false);
 
   return (
     <Fragment>
@@ -42,27 +42,32 @@ function App() {
         </div>
         {/* <div css={centerColumn}></div> */}
         <div css={rightColumn}>
-          <div css={[iconContainerStyle, muted && mutedStyle]} onClick={()=>{setMuted(!muted)}}>
-            <HeadphonesIcon size={22}></HeadphonesIcon>
+          <div
+            css={[iconContainerStyle, muted && mutedStyle]}
+            onClick={() => {
+              setMuted(!muted);
+            }}
+          >
+            <HeadphonesIcon size={iconSize}></HeadphonesIcon>
           </div>
         </div>
       </main>
-      <div css={cornerCounterStyle}>
+      {/* <div css={cornerCounterStyle}>
         <div css={labelStyle}>currently reading</div>
         <div css={numStyle}>Antifragile</div>
-      </div>
+      </div> */}
       <div css={callToActionStyle}>
         <header>tiago fernandes</header>
         <h1>front-end web developer</h1>
         <div css={socialIconsStyle}>
           <a href="https://github.com/vftiago" target="_blank">
-            <GithubIcon size={size}></GithubIcon>
+            <GithubIcon size={iconSize}></GithubIcon>
           </a>
-          <a onClick={copyToClipboard}>
-            <MailIcon size={size}></MailIcon>
+          <a href="https://www.hackerrank.com/vftiago">
+            <HackerrankIcon size={iconSize + 2}></HackerrankIcon>
           </a>
           <a href="https://linkedin.com/in/vftiago" target="_blank">
-            <LinkedinIcon size={size}></LinkedinIcon>
+            <LinkedinIcon size={iconSize}></LinkedinIcon>
           </a>
         </div>
       </div>
@@ -73,38 +78,37 @@ function App() {
   );
 }
 
-const columnWidth= '88px';
-const logoSize = '36px';
+const columnWidth = "88px";
+const logoSize = 36;
 
 const iconContainerStyle = css`
-  height: ${logoSize};
-  width:  ${logoSize};
+  height: ${logoSize + "px"};
+  width: ${logoSize + "px"};
   cursor: pointer;
   padding: 26px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-    &::after {
-      background-color: #666;
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 31px;
-      height: 2px;
-      margin-top: -1px;
-      margin-left: -15px;
-      transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-      transform: rotate(-45deg) scaleX(0);
-      width: 31px;
-    }
+  &::after {
+    background-color: #666;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: ${Math.sqrt(iconSize * iconSize + iconSize * iconSize) + "px"};
+    height: 2px;
+    margin-top: -1px;
+    margin-left: ${-1 * iconSize * 0.75 + 1 + "px"};
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform: rotate(-45deg) scaleX(0);
+  }
 `;
 
 const mutedStyle = css`
- &::after {
-  transform:  rotate(-45deg) scaleX(1);
- }
+  &::after {
+    transform: rotate(-45deg) scaleX(1);
+  }
 `;
 
 const contentStyle = css`
@@ -133,8 +137,8 @@ const leftColumn = css`
   ${columnStyle};
   border-right: 2px solid rgba(128, 128, 128, 0.1);
   img {
-    height:  ${logoSize};
-    width:  ${logoSize};
+    height: ${logoSize + "px"};
+    width: ${logoSize + "px"};
   }
 `;
 
@@ -174,7 +178,6 @@ const numStyle = css`
   font-weight: bold;
   position: relative;
 `;
-
 
 const canvasStyle = css`
   z-index: -1;
