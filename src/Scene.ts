@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 import debounce from './utils/debounce';
-import { PerspectiveCamera } from 'three';
+import { PerspectiveCamera, Texture } from 'three';
 import createBackground from './objects/background';
 import createOuterSphere from './objects/outerSphere';
 import createPostEffect from './objects/postEffect';
 import createInnerSphere from './objects/innerSphere';
 
-const Scene = (canvas: HTMLCanvasElement) => {
+const Scene = (canvas: HTMLCanvasElement, envMapTexture: Texture) => {
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     canvas: canvas,
@@ -35,13 +35,21 @@ const Scene = (canvas: HTMLCanvasElement) => {
     outerSphere = createOuterSphere();
     scene.add(outerSphere);
 
-    innerSphere = createInnerSphere();
+    innerSphere = createInnerSphere(envMapTexture);
     scene.add(innerSphere);
 
     innerSphere.position.y = -512
 
     postEffect = createPostEffect(backgroundRenderer.texture);
     foregroundScene.add(postEffect);
+
+    // const light = new THREE.AmbientLight( 0xffffff, 0.5 );
+    // light.position.set( 0, -400, 1000 );
+    // scene.add( light );
+
+    const pointLight = new THREE.PointLight( 0xdddddd, 0.1 );
+    // light.position.set( 0, -400, 1000 );
+    scene.add( pointLight );
 
     camera.position.set(0, 400, 1000);
     camera.lookAt(0, -400, 0)

@@ -8,25 +8,44 @@ import LinkedinIcon from "./social-icons/LinkedinIcon";
 import GithubIcon from "./social-icons/GithubIcon";
 import HackerrankIcon from "./social-icons/HackerrankIcon";
 import logo from "./img/logo-256.png";
+import envMap from "./img/env-map.jpg";
 import ambient from "./audio/ambient.mp3";
 import HeadphonesIcon from "./social-icons/Headphones";
+import * as THREE from "three";
 
-const copyToClipboard = () => {
-  const dummy = document.createElement("input");
-  document.body.appendChild(dummy);
-  dummy.setAttribute("value", "test@gmail.com");
-  dummy.select();
-  document.execCommand("copy");
-  document.body.removeChild(dummy);
-};
+// const copyToClipboard = () => {
+//   const dummy = document.createElement("input");
+//   document.body.appendChild(dummy);
+//   dummy.setAttribute("value", "test@gmail.com");
+//   dummy.select();
+//   document.execCommand("copy");
+//   document.body.removeChild(dummy);
+// };
 
 const iconSize = 18;
 
 function App() {
+  const [envMapTexture, setEnvMapTexture] = useState<THREE.Texture>();
+
   useEffect(() => {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-    Scene(canvas);
-  }, []);
+    const loadTexture = async () => {
+      const loader = new THREE.TextureLoader();
+
+      // const textureArray = new Array(6).fill(envMap);
+
+      const envMapTexture = await loader.load(envMap);
+
+      const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+
+      setEnvMapTexture(envMapTexture);
+
+      Scene(canvas, envMapTexture);
+    };
+
+    if (!envMapTexture) {
+      loadTexture();
+    }
+  }, [envMapTexture]);
 
   const [muted, setMuted] = useState(false);
 
