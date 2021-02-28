@@ -113,10 +113,6 @@ const mainContentStyle = css`
 const toastStyle = css`
   width: 287px;
   height: 16px;
-  ::selection {
-    color: white;
-    background: ${accentColor};
-  }
 `;
 
 const centerPieceStyle = css`
@@ -125,10 +121,6 @@ const centerPieceStyle = css`
 
 const headerStyle = css`
   width: 265px;
-  &::selection {
-    color: white;
-    background: ${accentColor};
-  }
 `;
 
 const iconContainerStyle = css`
