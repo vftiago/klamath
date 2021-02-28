@@ -13,3 +13,4 @@ declare module "*.mp3" {
     export default value;
 }
 
+declare module 'three/examples/jsm/libs/dat.gui.module';

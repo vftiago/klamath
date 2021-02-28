@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import debounce from './utils/debounce';
-import { PerspectiveCamera, Texture } from 'three';
+import { PerspectiveCamera } from 'three';
 import createBackground from './objects/background';
-import createOuterSphere from './objects/outerSphere';
 import createPostEffect from './objects/postEffect';
-import createInnerSphere from './objects/innerSphere';
+import createWavyPlane from './objects/WavyPlane';
 
-const Scene = (canvas: HTMLCanvasElement, envMapTexture: Texture) => {
+const Scene = () => {
+  const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     canvas: canvas,
@@ -24,35 +25,23 @@ const Scene = (canvas: HTMLCanvasElement, envMapTexture: Texture) => {
   const camera = new PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
 
   let background = null;
-  let innerSphere: any = null;
-  let outerSphere: any = null;
   let postEffect: any = null;
+  let wavyPlane: any = null;
 
   const createScene = () => {
     background = createBackground();
     scene.add(background);
 
-    outerSphere = createOuterSphere();
-    scene.add(outerSphere);
-
-    innerSphere = createInnerSphere(envMapTexture);
-    scene.add(innerSphere);
-
-    innerSphere.position.y = -512
+    wavyPlane = createWavyPlane();
+    wavyPlane.position.set(0, -128, 0);
+    wavyPlane.rotation.set((-90 * Math.PI) / 180, 0, 0);
+    scene.add(wavyPlane);
 
     postEffect = createPostEffect(backgroundRenderer.texture);
     foregroundScene.add(postEffect);
-
-    // const light = new THREE.AmbientLight( 0xffffff, 0.5 );
-    // light.position.set( 0, -400, 1000 );
-    // scene.add( light );
-
-    const pointLight = new THREE.PointLight( 0xdddddd, 0.1 );
-    // light.position.set( 0, -400, 1000 );
-    scene.add( pointLight );
-
-    camera.position.set(0, 400, 1000);
-    camera.lookAt(0, -400, 0)
+ 
+    camera.position.set(0, 0, 1280);
+    // camera.lookAt(0, -128, 0);
   }
 
   const resizeWindow = () => {
@@ -68,27 +57,21 @@ const Scene = (canvas: HTMLCanvasElement, envMapTexture: Texture) => {
   }
 
   const render = () => {
-    outerSphere.rotation.y += 0.0003;
-    // innerSphere.rotation.x -= 0.004;
-    innerSphere.rotation.y -= 0.002;
-    // innerSphere.rotation.z -= 0.001;
+    wavyPlane.material.uniforms.time.value += 0.01;
     postEffect.material.uniforms.time.value += 0.05;
-
     renderer.setRenderTarget(backgroundRenderer);
     renderer.render(scene, camera);
     renderer.setRenderTarget(null);
     renderer.render(foregroundScene, foregroundCamera);
   }
   
-
   const renderLoop = () => {
     render();
     requestAnimationFrame(renderLoop);
   }
 
   function updateCamera() {
-    camera.lookAt(0, -window.pageYOffset * 4, 0)
-    // camera.position.y = 400 - window.pageYOffset / 2;
+    camera.position.y = -window.pageYOffset;
   }
 
   window.addEventListener("scroll", updateCamera);
@@ -102,7 +85,6 @@ const Scene = (canvas: HTMLCanvasElement, envMapTexture: Texture) => {
   const init = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xeeeeee, 0.0);
-    camera.lookAt(new THREE.Vector3());
 
     on();
     createScene();

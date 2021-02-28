@@ -2,114 +2,158 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { Fragment, useEffect, useState } from "react";
-import "./App.css";
 import Scene from "./Scene";
 import LinkedinIcon from "./social-icons/LinkedinIcon";
 import GithubIcon from "./social-icons/GithubIcon";
-import HackerrankIcon from "./social-icons/HackerrankIcon";
-import logo from "./img/logo-256.png";
-import envMap from "./img/env-map.jpg";
-import ambient from "./audio/ambient.mp3";
+import Logo from "./social-icons/Logo";
 import HeadphonesIcon from "./social-icons/Headphones";
-import * as THREE from "three";
-
-// const copyToClipboard = () => {
-//   const dummy = document.createElement("input");
-//   document.body.appendChild(dummy);
-//   dummy.setAttribute("value", "test@gmail.com");
-//   dummy.select();
-//   document.execCommand("copy");
-//   document.body.removeChild(dummy);
-// };
+import MailIcon from "./social-icons/MailIcon";
+import ambient from "./audio/ambient.mp3";
+import Typed from "typed.js";
 
 const iconSize = 18;
 
+const accentColor = "#fa8072";
+
+let typed: any;
+
 function App() {
-  const [envMapTexture, setEnvMapTexture] = useState<THREE.Texture>();
-
   useEffect(() => {
-    const loadTexture = async () => {
-      const loader = new THREE.TextureLoader();
-
-      // const textureArray = new Array(6).fill(envMap);
-
-      const envMapTexture = await loader.load(envMap);
-
-      const canvas = document.getElementById("canvas") as HTMLCanvasElement;
-
-      setEnvMapTexture(envMapTexture);
-
-      Scene(canvas, envMapTexture);
-    };
-
-    if (!envMapTexture) {
-      loadTexture();
-    }
-  }, [envMapTexture]);
+    Scene();
+  }, []);
 
   const [muted, setMuted] = useState(false);
+
+  const copyToClipboard = () => {
+    if (typed) typed.destroy();
+    const dummyInput = document.createElement("input");
+    document.body.appendChild(dummyInput);
+    dummyInput.setAttribute("value", "hello@tiagofernandes.dev");
+    dummyInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(dummyInput);
+    typed = new Typed("#toast", {
+      strings: ["<u>hello@tiagofernandes.dev</u> copied to clipboard.", ""],
+      backDelay: 3000,
+      showCursor: false,
+      fadeOut: true,
+    });
+  };
 
   return (
     <Fragment>
       <audio src={ambient} autoPlay loop muted={muted}></audio>
       <canvas css={canvasStyle} id="canvas"></canvas>
-      <main css={contentStyle}>
-        <div css={leftColumn}>
-          <div css={iconContainerStyle}>
-            <img src={logo} alt="TF" />
-          </div>
+      <div css={leftColumn}>
+        <div css={iconContainerStyle}>
+          <Logo size={32}></Logo>
         </div>
-        {/* <div css={centerColumn}></div> */}
-        <div css={rightColumn}>
-          <div
-            css={[iconContainerStyle, muted && mutedStyle]}
-            onClick={() => {
-              setMuted(!muted);
-            }}
-          >
-            <HeadphonesIcon size={iconSize}></HeadphonesIcon>
-          </div>
+        <div css={centerPieceStyle}>
+          <header css={headerStyle}>
+            tiago fernandes — front-end web developer
+          </header>
         </div>
+        <div css={iconContainerStyle}></div>
+      </div>
+      <div css={rightColumn}>
+        <div css={iconContainerStyle}></div>
+        <div
+          css={[iconContainerStyle, muted && mutedStyle]}
+          onClick={() => {
+            setMuted(!muted);
+          }}
+        >
+          <HeadphonesIcon size={iconSize}></HeadphonesIcon>
+        </div>
+      </div>
+      <main css={mainContentStyle}>
+        <div></div>
       </main>
       {/* <div css={cornerCounterStyle}>
         <div css={labelStyle}>currently reading</div>
         <div css={numStyle}>Antifragile</div>
       </div> */}
       <div css={callToActionStyle}>
-        <header>tiago fernandes</header>
-        <h1>front-end web developer</h1>
+        <div css={toastStyle}>
+          <span id="toast"></span>
+        </div>
         <div css={socialIconsStyle}>
           <a href="https://github.com/vftiago" target="_blank">
             <GithubIcon size={iconSize}></GithubIcon>
           </a>
-          <a href="https://www.hackerrank.com/vftiago">
-            <HackerrankIcon size={iconSize + 2}></HackerrankIcon>
+          <a onClick={copyToClipboard} target="_blank">
+            <MailIcon size={iconSize}></MailIcon>
           </a>
           <a href="https://linkedin.com/in/vftiago" target="_blank">
             <LinkedinIcon size={iconSize}></LinkedinIcon>
           </a>
         </div>
       </div>
-      {/* <div css={missionStatementStyle}>
-        <p>take control of your digital life</p>
-      </div> */}
+      <div css={missionStatementStyle}>
+        <p>take back control of your digital space.</p>
+      </div>
     </Fragment>
   );
 }
 
-const columnWidth = "88px";
+const columnWidth = 80;
 const logoSize = 36;
+
+const mainContentStyle = css`
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: justify;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 100vh;
+  flex-direction: column;
+`;
+
+const toastStyle = css`
+  width: 287px;
+  height: 16px;
+  ::selection {
+    color: white;
+    background: ${accentColor};
+  }
+`;
+
+const centerPieceStyle = css`
+  transform: rotate(-90deg);
+`;
+
+const headerStyle = css`
+  width: 265px;
+  &::selection {
+    color: white;
+    background: ${accentColor};
+  }
+`;
 
 const iconContainerStyle = css`
   height: ${logoSize + "px"};
   width: ${logoSize + "px"};
-  cursor: pointer;
-  padding: 26px;
+  margin: 16px 0 16px 0;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
+  &:hover {
+    cursor: pointer;
+    svg {
+      fill: ${accentColor};
+    }
+    &::after {
+      background-color: ${accentColor};
+    }
+  }
+  svg {
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    fill: #666;
+  }
   &::after {
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
     background-color: #666;
     content: "";
     position: absolute;
@@ -118,8 +162,7 @@ const iconContainerStyle = css`
     width: ${Math.sqrt(iconSize * iconSize + iconSize * iconSize) + "px"};
     height: 2px;
     margin-top: -1px;
-    margin-left: ${-1 * iconSize * 0.75 + 1 + "px"};
-    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    margin-left: ${-1 * iconSize * 0.75 + "px"};
     transform: rotate(-45deg) scaleX(0);
   }
 `;
@@ -130,31 +173,21 @@ const mutedStyle = css`
   }
 `;
 
-const contentStyle = css`
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: justify;
-  justify-content: space-between;
-  width: 100%;
-  min-height: 100vh;
-  flex-direction: row;
-`;
-
 const columnStyle = css`
-  width: ${columnWidth};
+  position: fixed;
+  z-index: 1;
+  width: ${columnWidth + "px"};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-content: center;
+  align-items: center;
   min-height: 100vh;
-  background-color: rgba(88, 88, 88, 0.01);
+  background-color: rgba(88, 88, 88, 0.02);
 `;
 
 const leftColumn = css`
   ${columnStyle};
-  border-right: 2px solid rgba(128, 128, 128, 0.1);
+  border-right: 1px solid rgba(128, 128, 128, 0.1);
   img {
     height: ${logoSize + "px"};
     width: ${logoSize + "px"};
@@ -163,12 +196,8 @@ const leftColumn = css`
 
 const rightColumn = css`
   ${columnStyle};
-  border-left: 2px solid rgba(128, 128, 128, 0.1);
-`;
-
-const centerColumn = css`
-  border: 1px solid rgba(255, 136, 0, 0.7);
-  min-height: 100vh;
+  right: 0;
+  border-left: 1px solid rgba(128, 128, 128, 0.1);
 `;
 
 const cornerCounterStyle = css`
@@ -210,16 +239,19 @@ const canvasStyle = css`
 const socialIconsStyle = css`
   display: flex;
   align-items: center;
+  margin: 32px;
   svg {
-    padding: 8px;
-    :hover {
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    margin: ${"0 " + iconSize + "px"};
+    fill: #666;
+    &:hover {
       cursor: pointer;
+      fill: ${accentColor};
     }
   }
 `;
 
 const missionStatementStyle = css`
-  /* height: 200px; */
   top: 100vh;
   position: absolute;
   display: flex;
@@ -237,9 +269,6 @@ const callToActionStyle = css`
   width: 100%;
   position: absolute;
   bottom: 0;
-  h1 {
-    font-size: 22px;
-  }
 `;
 
 export default App;
