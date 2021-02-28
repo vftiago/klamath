@@ -8,7 +8,7 @@ import GithubIcon from "./social-icons/GithubIcon";
 import Logo from "./social-icons/Logo";
 import HeadphonesIcon from "./social-icons/Headphones";
 import MailIcon from "./social-icons/MailIcon";
-import ambient from "./audio/ambient.mp3";
+import ambient from "../assets/audio/ambient.mp3";
 import Typed from "typed.js";
 
 const iconSize = 18;

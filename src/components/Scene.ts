@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import debounce from './utils/debounce';
+import debounce from '../utils/debounce';
 import { PerspectiveCamera } from 'three';
 import createBackground from './objects/background';
 import createPostEffect from './objects/postEffect';

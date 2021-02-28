@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Roboto Condensed";
-  src: url("./fonts/RobotoCondensed-Light.ttf") format("truetype"); /* Safari, Android, iOS */
+  src: url("./assets/fonts/RobotoCondensed-Light.ttf") format("truetype"); /* Safari, Android, iOS */
 }
 
 body {

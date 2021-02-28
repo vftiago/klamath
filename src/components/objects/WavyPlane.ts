@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
-import fragmentShader from "../glsl/waves.frag";
-import vertexShader from "../glsl/waves.vert";
+import fragmentShader from "../../assets/glsl/waves.frag";
+import vertexShader from "../../assets/glsl/waves.vert";
 
 const PLANE_DIMENSIONS = 1024;
 
