@@ -42,7 +42,9 @@ function App() {
 
   return (
     <Fragment>
-      <audio src={ambient} autoPlay loop muted={muted}></audio>
+      <audio autoPlay loop muted={muted}>
+        <source src={ambient} type="audio/mp3" />
+      </audio>
       <canvas css={canvasStyle} id="canvas"></canvas>
       <div css={leftColumn}>
         <div css={iconContainerStyle}>
