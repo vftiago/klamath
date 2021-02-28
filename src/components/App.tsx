@@ -8,7 +8,6 @@ import GithubIcon from "./social-icons/GithubIcon";
 import Logo from "./social-icons/Logo";
 import HeadphonesIcon from "./social-icons/Headphones";
 import MailIcon from "./social-icons/MailIcon";
-import ambient from "../assets/audio/ambient.mp3";
 import Typed from "typed.js";
 
 const iconSize = 18;
@@ -17,10 +16,10 @@ const accentColor = "#fa8072";
 
 let typed: any;
 
-function App() {
+function App(props: { ambient: string }) {
   useEffect(() => {
     Scene();
-  }, [ambient]);
+  }, []);
 
   const [muted, setMuted] = useState(false);
 
@@ -53,7 +52,7 @@ function App() {
           console.log("audio playing.");
         }}
       >
-        <source src={ambient} type="audio/mp3" />
+        <source src={props.ambient} type="audio/mp3" />
       </audio>
       <canvas css={canvasStyle} id="canvas"></canvas>
       <div css={leftColumn}>
