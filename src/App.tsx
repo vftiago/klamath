@@ -45,6 +45,7 @@ function App() {
       <audio
         autoPlay
         loop
+        muted={muted}
         onLoad={() => {
           console.log("audio loaded.");
         }}
