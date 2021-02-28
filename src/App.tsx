@@ -42,7 +42,16 @@ function App() {
 
   return (
     <Fragment>
-      <audio autoPlay loop muted={muted}>
+      <audio
+        autoPlay
+        loop
+        onLoad={() => {
+          console.log("audio loaded.");
+        }}
+        onPlay={() => {
+          console.log("audio playing.");
+        }}
+      >
         <source src={ambient} type="audio/mp3" />
       </audio>
       <canvas css={canvasStyle} id="canvas"></canvas>
