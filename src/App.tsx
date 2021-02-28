@@ -20,7 +20,7 @@ let typed: any;
 function App() {
   useEffect(() => {
     Scene();
-  }, []);
+  }, [ambient]);
 
   const [muted, setMuted] = useState(false);
 
