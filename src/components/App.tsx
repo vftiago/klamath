@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, MutableRefObject, useEffect, useRef, useState } from "react";
 import Scene from "./Scene";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import GithubIcon from "./icons/GithubIcon";
@@ -9,6 +9,7 @@ import Logo from "./icons/Logo";
 import HeadphonesIcon from "./icons/Headphones";
 import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
+import tic from "../assets/audio/tic.mp3";
 
 const iconSize = 18;
 
@@ -21,7 +22,19 @@ function App(props: { ambient: string }) {
     Scene();
   }, []);
 
+  const ticAudioElement: MutableRefObject<HTMLAudioElement | null> = useRef(
+    null
+  );
+
   const [muted, setMuted] = useState(false);
+
+  const playTickSound = () => {
+    if (ticAudioElement.current != null) {
+      ticAudioElement.current.pause();
+      ticAudioElement.current.currentTime = 0;
+      ticAudioElement.current.play();
+    }
+  };
 
   const copyToClipboard = () => {
     if (typed) typed.destroy();
@@ -41,6 +54,7 @@ function App(props: { ambient: string }) {
 
   return (
     <Fragment>
+      <audio src={tic} ref={ticAudioElement}></audio>
       <audio
         autoPlay
         loop
@@ -89,13 +103,25 @@ function App(props: { ambient: string }) {
           <span id="toast"></span>
         </div>
         <div css={socialIconsStyle}>
-          <a href="https://github.com/vftiago" target="_blank">
+          <a
+            href="https://github.com/vftiago"
+            target="_blank"
+            onMouseEnter={playTickSound}
+          >
             <GithubIcon size={iconSize}></GithubIcon>
           </a>
-          <a onClick={copyToClipboard} target="_blank">
+          <a
+            onClick={copyToClipboard}
+            target="_blank"
+            onMouseEnter={playTickSound}
+          >
             <MailIcon size={iconSize}></MailIcon>
           </a>
-          <a href="https://linkedin.com/in/vftiago" target="_blank">
+          <a
+            href="https://linkedin.com/in/vftiago"
+            target="_blank"
+            onMouseEnter={playTickSound}
+          >
             <LinkedinIcon size={iconSize}></LinkedinIcon>
           </a>
         </div>
@@ -244,6 +270,7 @@ const socialIconsStyle = css`
   align-items: center;
   justify-content: space-between;
   width: 200px;
+  margin: 32px;
   a {
     height: ${iconSize + "px"};
     width: ${iconSize + "px"};
