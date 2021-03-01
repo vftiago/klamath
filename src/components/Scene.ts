@@ -40,7 +40,7 @@ const Scene = () => {
     postEffect = createPostEffect(backgroundRenderer.texture);
     foregroundScene.add(postEffect);
  
-    camera.position.set(0, 0, 1280);
+    camera.position.set(0, 0, 1024);
     // camera.lookAt(0, -128, 0);
   }
 

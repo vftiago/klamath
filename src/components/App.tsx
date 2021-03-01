@@ -3,11 +3,11 @@
 import { css, jsx } from "@emotion/core";
 import { Fragment, useEffect, useState } from "react";
 import Scene from "./Scene";
-import LinkedinIcon from "./social-icons/LinkedinIcon";
-import GithubIcon from "./social-icons/GithubIcon";
-import Logo from "./social-icons/Logo";
-import HeadphonesIcon from "./social-icons/Headphones";
-import MailIcon from "./social-icons/MailIcon";
+import LinkedinIcon from "./icons/LinkedinIcon";
+import GithubIcon from "./icons/GithubIcon";
+import Logo from "./icons/Logo";
+import HeadphonesIcon from "./icons/Headphones";
+import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 
 const iconSize = 18;
@@ -242,10 +242,15 @@ const canvasStyle = css`
 const socialIconsStyle = css`
   display: flex;
   align-items: center;
-  margin: 32px;
+  justify-content: space-between;
+  width: 200px;
+  a {
+    height: ${iconSize + "px"};
+    width: ${iconSize + "px"};
+  }
   svg {
     transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-    margin: ${"0 " + iconSize + "px"};
+    /* margin: ${"0 " + iconSize + "px"}; */
     fill: #666;
     &:hover {
       cursor: pointer;
