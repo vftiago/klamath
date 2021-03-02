@@ -10,6 +10,7 @@ import HeadphonesIcon from "./icons/Headphones";
 import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import tic from "../assets/audio/tic.mp3";
+import ambient from "../assets/audio/ambient.mp3";
 
 const iconSize = 18;
 
@@ -17,7 +18,7 @@ const accentColor = "#fa8072";
 
 let typed: any;
 
-function App(props: { ambient: string }) {
+function App() {
   useEffect(() => {
     Scene();
   }, []);
@@ -56,18 +57,17 @@ function App(props: { ambient: string }) {
     <Fragment>
       <audio src={tic} ref={ticAudioElement}></audio>
       <audio
+        src={ambient}
+        onCanPlayThrough={() => {
+          console.log("can play through");
+        }}
+        onLoadedData={() => {
+          console.log("audio loaded");
+        }}
         autoPlay
         loop
         muted={muted}
-        onLoad={() => {
-          console.log("audio loaded.");
-        }}
-        onPlay={() => {
-          console.log("audio playing.");
-        }}
-      >
-        <source src={props.ambient} type="audio/mp3" />
-      </audio>
+      ></audio>
       <canvas css={canvasStyle} id="canvas"></canvas>
       <div css={leftColumn}>
         <div css={iconContainerStyle}>

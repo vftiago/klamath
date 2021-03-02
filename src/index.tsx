@@ -1,13 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import ambient from "./assets/audio/ambient.mp3";
 import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App ambient={ambient} />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
