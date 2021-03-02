@@ -11,6 +11,7 @@ import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import tic from "../assets/audio/tic.mp3";
 import ambient from "../assets/audio/ambient.mp3";
+import { copyToClipboard } from "../utils/copyToClipboard";
 
 const iconSize = 18;
 
@@ -27,7 +28,7 @@ function App() {
     null
   );
 
-  const [muted, setMuted] = useState(false);
+  const [muted, setMuted] = useState(true);
 
   const playTickSound = () => {
     if (ticAudioElement.current != null) {
@@ -37,14 +38,11 @@ function App() {
     }
   };
 
-  const copyToClipboard = () => {
+  const handleMailIconClick = () => {
     if (typed) typed.destroy();
-    const dummyInput = document.createElement("input");
-    document.body.appendChild(dummyInput);
-    dummyInput.setAttribute("value", "hello@tiagofernandes.dev");
-    dummyInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(dummyInput);
+
+    copyToClipboard();
+
     typed = new Typed("#toast", {
       strings: ["<u>hello@tiagofernandes.dev</u> copied to clipboard.", ""],
       backDelay: 3000,
@@ -55,7 +53,7 @@ function App() {
 
   return (
     <Fragment>
-      <audio src={tic} ref={ticAudioElement}></audio>
+      <audio src={tic} ref={ticAudioElement} muted={muted}></audio>
       <audio
         src={ambient}
         onCanPlayThrough={() => {
@@ -111,7 +109,7 @@ function App() {
             <GithubIcon size={iconSize}></GithubIcon>
           </a>
           <a
-            onClick={copyToClipboard}
+            onClick={handleMailIconClick}
             target="_blank"
             onMouseEnter={playTickSound}
           >
