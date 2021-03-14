@@ -14,6 +14,8 @@ const iconSize = 18;
 
 const accentColor = "#fa8072";
 
+const email = "tiago@infodump.xyz";
+
 let typed: any;
 
 type Props = {
@@ -32,12 +34,12 @@ function App({
   const handleMailIconClick = () => {
     if (typed) typed.destroy();
 
-    copyToClipboard();
+    copyToClipboard(email);
 
     onButtonClick();
 
     typed = new Typed("#toast", {
-      strings: ["<u>hello@tiagofernandes.dev</u> copied to clipboard.", ""],
+      strings: [`<u>${email}</u> copied to clipboard.`, ""],
       typeSpeed: 1,
       backDelay: 3000,
       showCursor: false,

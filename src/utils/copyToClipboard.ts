@@ -1,4 +1,4 @@
-export const copyToClipboard = (value: string = "hello@tiagofernandes.dev") => {
+export const copyToClipboard = (value: string) => {
     const dummyInput = document.createElement("input");
     document.body.appendChild(dummyInput);
     dummyInput.setAttribute("value", value);
