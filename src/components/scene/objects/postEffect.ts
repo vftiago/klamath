@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
-import fragmentShader from "../../assets/glsl/postEffect.frag";
-import vertexShader from "../../assets/glsl/postEffect.vert";
+import fragmentShader from "../../../assets/glsl/postEffect.frag";
+import vertexShader from "../../../assets/glsl/postEffect.vert";
 
 const createPostEffect = (textureValue: THREE.Texture) => {
     const uniforms = {

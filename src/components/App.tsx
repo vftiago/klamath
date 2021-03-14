@@ -1,17 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Fragment, MutableRefObject, useEffect, useRef, useState } from "react";
-import Scene from "./Scene";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import GithubIcon from "./icons/GithubIcon";
 import Logo from "./icons/Logo";
 import HeadphonesIcon from "./icons/Headphones";
 import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
-import tic from "../assets/audio/tic.mp3";
-import ambient from "../assets/audio/ambient.mp3";
 import { copyToClipboard } from "../utils/copyToClipboard";
+import { motion } from "framer-motion";
 
 const iconSize = 18;
 
@@ -19,29 +16,25 @@ const accentColor = "#fa8072";
 
 let typed: any;
 
-function App() {
-  useEffect(() => {
-    Scene();
-  }, []);
+type Props = {
+  muted: boolean;
+  onButtonClick: () => void;
+  onButtonHover: () => void;
+  onHeadphonesIconClick: () => void;
+};
 
-  const ticAudioElement: MutableRefObject<HTMLAudioElement | null> = useRef(
-    null
-  );
-
-  const [muted, setMuted] = useState(true);
-
-  const playTickSound = () => {
-    if (ticAudioElement.current != null) {
-      ticAudioElement.current.pause();
-      ticAudioElement.current.currentTime = 0;
-      ticAudioElement.current.play();
-    }
-  };
-
+function App({
+  muted,
+  onButtonClick,
+  onButtonHover,
+  onHeadphonesIconClick,
+}: Props) {
   const handleMailIconClick = () => {
     if (typed) typed.destroy();
 
     copyToClipboard();
+
+    onButtonClick();
 
     typed = new Typed("#toast", {
       strings: ["<u>hello@tiagofernandes.dev</u> copied to clipboard.", ""],
@@ -52,21 +45,7 @@ function App() {
   };
 
   return (
-    <Fragment>
-      <audio src={tic} ref={ticAudioElement} muted={muted}></audio>
-      <audio
-        src={ambient}
-        onCanPlayThrough={() => {
-          console.log("can play through");
-        }}
-        onLoadedData={() => {
-          console.log("audio loaded");
-        }}
-        autoPlay
-        loop
-        muted={muted}
-      ></audio>
-      <canvas css={canvasStyle} id="canvas"></canvas>
+    <motion.div initial="hidden" animate="visible" variants={variants}>
       <div css={leftColumn}>
         <div css={iconContainerStyle}>
           <Logo size={32}></Logo>
@@ -82,9 +61,8 @@ function App() {
         <div css={iconContainerStyle}></div>
         <div
           css={[iconContainerStyle, muted && mutedStyle]}
-          onClick={() => {
-            setMuted(!muted);
-          }}
+          onMouseEnter={onButtonHover}
+          onClick={onHeadphonesIconClick}
         >
           <HeadphonesIcon size={iconSize}></HeadphonesIcon>
         </div>
@@ -104,21 +82,23 @@ function App() {
           <a
             href="https://github.com/vftiago"
             target="_blank"
-            onMouseEnter={playTickSound}
+            onMouseEnter={onButtonHover}
+            onClick={onButtonClick}
           >
             <GithubIcon size={iconSize}></GithubIcon>
           </a>
           <a
             onClick={handleMailIconClick}
             target="_blank"
-            onMouseEnter={playTickSound}
+            onMouseEnter={onButtonHover}
           >
             <MailIcon size={iconSize}></MailIcon>
           </a>
           <a
             href="https://linkedin.com/in/vftiago"
             target="_blank"
-            onMouseEnter={playTickSound}
+            onMouseEnter={onButtonHover}
+            onClick={onButtonClick}
           >
             <LinkedinIcon size={iconSize}></LinkedinIcon>
           </a>
@@ -127,9 +107,24 @@ function App() {
       <div css={missionStatementStyle}>
         <p>take back control of your digital space.</p>
       </div>
-    </Fragment>
+    </motion.div>
   );
 }
+
+const variants = {
+  visible: {
+    opacity: 1,
+    cursor: "arrow",
+    transition: {
+      delay: 0.8,
+      duration: 1.2,
+      when: "beforeChildren",
+      staggerChildren: 0.4,
+      ease: "backInOut",
+    },
+  },
+  hidden: { opacity: 0 },
+};
 
 const columnWidth = 80;
 const logoSize = 36;
@@ -252,15 +247,6 @@ const numStyle = css`
   font-size: 24px;
   font-weight: bold;
   position: relative;
-`;
-
-const canvasStyle = css`
-  z-index: -1;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
 `;
 
 const socialIconsStyle = css`

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
-import fragmentShader from "../../assets/glsl/bg.frag";
-import vertexShader from "../../assets/glsl/bg.vert";
+import fragmentShader from "../../../assets/glsl/bg.frag";
+import vertexShader from "../../../assets/glsl/bg.vert";
 
  const createBackground = () => {
     const geometry = new THREE.SphereGeometry(1200, 32, 32);

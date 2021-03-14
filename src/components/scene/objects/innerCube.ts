@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { Texture } from 'three';
-import Scene from '../Scene';
 
 const createInnerCube = (envMapTexture?: Texture) => {
     const geometry = new THREE.BoxBufferGeometry(300, 300, 300, 5, 5, 5);
