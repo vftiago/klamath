@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import App from "./App";
 import Prologue from "./Prologue";
 import Scene from "./scene/Scene";
@@ -11,7 +11,7 @@ import buttonHover from "../assets/audio/button-hover.mp3";
 import playSound from "../utils/playSound";
 
 function AppContainer() {
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(true);
   const [muted, setMuted] = useState(false);
 
   const ambientAudioElement = useRef(null);
@@ -29,6 +29,10 @@ function AppContainer() {
   const onHeadphonesIconClick = () => {
     setMuted(!muted);
   };
+
+  useEffect(() => {
+    playSound(ambientAudioElement);
+  }, []);
 
   return (
     <Fragment>

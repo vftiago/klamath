@@ -117,7 +117,7 @@ const variants = {
     cursor: "arrow",
     transition: {
       delay: 0.8,
-      duration: 1.2,
+      duration: 2.0,
       when: "beforeChildren",
       staggerChildren: 0.4,
       ease: "backInOut",
