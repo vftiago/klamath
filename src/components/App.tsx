@@ -38,6 +38,7 @@ function App({
 
     typed = new Typed("#toast", {
       strings: ["<u>hello@tiagofernandes.dev</u> copied to clipboard.", ""],
+      typeSpeed: 1,
       backDelay: 3000,
       showCursor: false,
       fadeOut: true,
@@ -78,31 +79,34 @@ function App({
         <div css={toastStyle}>
           <span id="toast"></span>
         </div>
-        <div css={socialIconsStyle}>
-          <a
+        <motion.div css={socialIconsStyle}>
+          <motion.a
+            variants={item}
             href="https://github.com/vftiago"
             target="_blank"
             onMouseEnter={onButtonHover}
             onClick={onButtonClick}
           >
             <GithubIcon size={iconSize}></GithubIcon>
-          </a>
-          <a
+          </motion.a>
+          <motion.a
+            variants={item}
             onClick={handleMailIconClick}
             target="_blank"
             onMouseEnter={onButtonHover}
           >
             <MailIcon size={iconSize}></MailIcon>
-          </a>
-          <a
+          </motion.a>
+          <motion.a
+            variants={item}
             href="https://linkedin.com/in/vftiago"
             target="_blank"
             onMouseEnter={onButtonHover}
             onClick={onButtonClick}
           >
             <LinkedinIcon size={iconSize}></LinkedinIcon>
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
       </div>
       <div css={missionStatementStyle}>
         <p>take back control of your digital space.</p>
@@ -114,12 +118,24 @@ function App({
 const variants = {
   visible: {
     opacity: 1,
-    cursor: "arrow",
+    cursor: "default",
     transition: {
       delay: 0.8,
       duration: 2.0,
       when: "beforeChildren",
-      staggerChildren: 0.4,
+      staggerChildren: 0.2,
+      ease: "backInOut",
+    },
+  },
+  hidden: { opacity: 0 },
+};
+
+const item = {
+  visible: {
+    opacity: 1,
+    cursor: "pointer",
+    transition: {
+      duration: 0.8,
       ease: "backInOut",
     },
   },
