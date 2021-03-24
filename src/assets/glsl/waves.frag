@@ -5,7 +5,7 @@ uniform float time;
 varying vec3 vPosition;
 
 const float duration=2.;
-const float delay=.8;
+const float delay=3.;
 const float radius=512.;
 
 vec3 convertHsvToRgb(vec3 c){

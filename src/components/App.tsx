@@ -9,6 +9,7 @@ import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
+import { Fragment } from "react";
 
 const iconSize = 18;
 
@@ -48,8 +49,13 @@ function App({
   };
 
   return (
-    <motion.div initial="hidden" animate="visible" variants={variants}>
-      <div css={leftColumn}>
+    <Fragment>
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={leftColumnVariants}
+        css={leftColumn}
+      >
         <div css={iconContainerStyle}>
           <Logo size={32}></Logo>
         </div>
@@ -59,8 +65,13 @@ function App({
           </header>
         </div>
         <div css={iconContainerStyle}></div>
-      </div>
-      <div css={rightColumn}>
+      </motion.div>
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={rightColumnVariants}
+        css={rightColumn}
+      >
         <div css={iconContainerStyle}></div>
         <div
           css={[iconContainerStyle, muted && mutedStyle]}
@@ -69,7 +80,7 @@ function App({
         >
           <HeadphonesIcon size={iconSize}></HeadphonesIcon>
         </div>
-      </div>
+      </motion.div>
       <main css={mainContentStyle}>
         <div></div>
       </main>
@@ -81,7 +92,12 @@ function App({
         <div css={toastStyle}>
           <span id="toast"></span>
         </div>
-        <motion.div css={socialIconsStyle}>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={socialIconsVariant}
+          css={socialIconsStyle}
+        >
           <motion.a
             variants={item}
             href="https://github.com/vftiago"
@@ -113,22 +129,34 @@ function App({
       <div css={missionStatementStyle}>
         <p>take back control of your digital space.</p>
       </div>
-    </motion.div>
+    </Fragment>
   );
 }
 
-const variants = {
-  visible: {
-    opacity: 1,
-    cursor: "default",
-    transition: {
-      delay: 0.8,
-      duration: 2.0,
-      when: "beforeChildren",
-      staggerChildren: 0.2,
-      ease: "backInOut",
-    },
+const visible = {
+  opacity: 1,
+  x: 0,
+  transition: {
+    delay: 0.2,
+    duration: 0.8,
+    when: "beforeChildren",
+    staggerChildren: 0.2,
+    ease: "backInOut",
   },
+};
+
+const leftColumnVariants = {
+  visible,
+  hidden: { opacity: 0, x: "-88px" },
+};
+
+const rightColumnVariants = {
+  visible,
+  hidden: { opacity: 0, x: "88px" },
+};
+
+const socialIconsVariant = {
+  visible,
   hidden: { opacity: 0 },
 };
 
@@ -240,32 +268,32 @@ const rightColumn = css`
   border-left: 1px solid rgba(128, 128, 128, 0.1);
 `;
 
-const cornerCounterStyle = css`
-  position: absolute;
-  left: 128px;
-  bottom: 28px;
-  text-transform: uppercase;
-  z-index: 1;
-  background-color: rgba(88, 88, 88, 0.01);
-`;
+// const cornerCounterStyle = css`
+//   position: absolute;
+//   left: 128px;
+//   bottom: 28px;
+//   text-transform: uppercase;
+//   z-index: 1;
+//   background-color: rgba(88, 88, 88, 0.01);
+// `;
 
-const labelStyle = css`
-  /* transform: rotate(-90deg); */
-  /* margin-bottom: -10px; */
-  letter-spacing: 0.165em;
-  font-size: 12px;
-  /* position: relative;
-  left: -46px;
-  bottom: 64px; */
-  width: 120px;
-  opacity: 0.4;
-`;
+// const labelStyle = css`
+//   /* transform: rotate(-90deg); */
+//   /* margin-bottom: -10px; */
+//   letter-spacing: 0.165em;
+//   font-size: 12px;
+//   /* position: relative;
+//   left: -46px;
+//   bottom: 64px; */
+//   width: 120px;
+//   opacity: 0.4;
+// `;
 
-const numStyle = css`
-  font-size: 24px;
-  font-weight: bold;
-  position: relative;
-`;
+// const numStyle = css`
+//   font-size: 24px;
+//   font-weight: bold;
+//   position: relative;
+// `;
 
 const socialIconsStyle = css`
   display: flex;

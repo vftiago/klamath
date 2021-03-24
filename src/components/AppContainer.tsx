@@ -1,20 +1,18 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import App from "./App";
 import Prologue from "./Prologue";
 import Scene from "./scene/Scene";
-import ambient from "../assets/audio/ambient.mp3";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
 import playSound from "../utils/playSound";
 
 function AppContainer() {
-  const [ready, setReady] = useState(true);
-  const [muted, setMuted] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [muted, setMuted] = useState(true);
 
-  const ambientAudioElement = useRef(null);
   const buttonClickAudioElement = useRef(null);
   const buttonHoverAudioElement = useRef(null);
 
@@ -30,13 +28,8 @@ function AppContainer() {
     setMuted(!muted);
   };
 
-  useEffect(() => {
-    playSound(ambientAudioElement);
-  }, []);
-
   return (
     <Fragment>
-      <audio src={ambient} ref={ambientAudioElement} loop muted={muted}></audio>
       <audio
         src={buttonClick}
         ref={buttonClickAudioElement}
@@ -61,10 +54,15 @@ function AppContainer() {
         />
       ) : (
         <Prologue
+          onModalVisible={() => {
+            setMuted(false);
+          }}
+          onReady={() => {
+            setMuted(false);
+            setReady(true);
+          }}
           onButtonClick={() => {
             playSound(buttonClickAudioElement);
-            playSound(ambientAudioElement);
-            setReady(true);
           }}
           onButtonHover={() => {
             playSound(buttonHoverAudioElement);

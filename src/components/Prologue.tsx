@@ -1,28 +1,37 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Fragment, MutableRefObject, useEffect, useRef } from "react";
-import Typed from "typed.js";
+import { Fragment, useState } from "react";
+// import Typed from "typed.js";
 import { motion } from "framer-motion";
 
 type Props = {
   onButtonClick: () => void;
   onButtonHover: () => void;
+  onModalVisible: () => void;
+  onReady: () => void;
 };
 
 function Prologue(props: Props) {
-  const { onButtonClick, onButtonHover } = props;
+  const { onButtonClick, onButtonHover, onModalVisible, onReady } = props;
 
-  let typedMurakamiQuote: Typed;
-  let typedAttribution: Typed;
+  const [userHasClicked, setUserHasClicked] = useState(false);
+
+  // let typedMurakamiQuote: Typed;
+  // let typedAttribution: Typed;
 
   const handleButtonClick = () => {
+    setUserHasClicked(true);
     onButtonClick();
   };
 
   const handleButtonHover = () => {
     onButtonHover();
   };
+
+  // const onTypeAttributionComplete = () => {
+  //   setTypeAttributionComplete(true);
+  // };
 
   // const typeAttribution = () => {
   //   typedAttribution = new Typed("#murakami-attribution", {
@@ -31,9 +40,7 @@ function Prologue(props: Props) {
   //     typeSpeed: 10,
   //     showCursor: false,
   //     fadeOut: true,
-  //     onComplete: () => {
-  //       onTypeAttributionComplete();
-  //     },
+  //     onComplete: onTypeAttributionComplete,
   //   });
   // };
 
@@ -52,33 +59,43 @@ function Prologue(props: Props) {
   //   });
   // };
 
-  useEffect(() => {
-    if (typedMurakamiQuote) typedMurakamiQuote.destroy();
-    if (typedAttribution) typedAttribution.destroy();
-    // typeQuote();
-  }, []);
+  // useEffect(() => {
+  //   if (typedMurakamiQuote) typedMurakamiQuote.destroy();
+  //   if (typedAttribution) typedAttribution.destroy();
+  //   typeQuote();
+  // }, []);
 
   return (
     <Fragment>
       <motion.div
         initial="hidden"
-        animate="visible"
-        variants={variants}
-        exit={{ opacity: 0 }}
+        animate={userHasClicked ? "hidden" : "visible"}
+        variants={modalVariants}
         css={prologueContainerStyle}
+        onAnimationComplete={(definition: string) => {
+          if (definition === "visible") {
+            onModalVisible();
+          }
+          if (definition === "hidden") {
+            onReady();
+          }
+        }}
       >
         <div css={quoteWindowStyle}>
-          <motion.h1 variants={item} id="murakami-quote">
+          <h1 id="murakami-quote">
             Unfortunately, the clock is ticking, the hours are going by. The
             past increases, the future recedes. Possibilities decreasing,
             regrets mounting.
-          </motion.h1>
-          <motion.h2 variants={item} id="murakami-attribution">
+          </h1>
+          <motion.h2 variants={headerVariants} id="murakami-attribution">
             — Haruki Murakami
           </motion.h2>
-          <div css={buttonContainerStyles}>
+          <div
+            // animate={typeAttributionComplete && "visible"}
+            css={buttonContainerStyles}
+          >
             <motion.button
-              variants={item}
+              variants={buttonVariants}
               css={buttonStyles}
               onClick={handleButtonClick}
               onMouseEnter={handleButtonHover}
@@ -86,7 +103,7 @@ function Prologue(props: Props) {
               I Understand
             </motion.button>
             <motion.button
-              variants={item}
+              variants={buttonVariants}
               css={buttonStyles}
               onClick={handleButtonClick}
               onMouseEnter={handleButtonHover}
@@ -99,24 +116,44 @@ function Prologue(props: Props) {
     </Fragment>
   );
 }
-// ar" | "easeIn" | "easeOut" | "easeInOut" | "circIn" | "circOut" | "circInOut" | "backIn" | "backOut" | "backInOut" | "anticipate"
 
-const variants = {
+const transitionIn = {
+  delay: 0.6,
+  duration: 0.8,
+  staggerChildren: 0.2,
+  when: "beforeChildren",
+  ease: "backInOut",
+};
+
+const transitionOut = {
+  ease: "backInOut",
+};
+
+const modalVariants = {
   visible: {
     opacity: 1,
-    cursor: "arrow",
+    y: 0,
+    transition: transitionIn,
+  },
+  hidden: {
+    opacity: 0,
+    y: -24,
+    transition: transitionOut,
+  },
+};
+
+const headerVariants = {
+  visible: {
+    opacity: 1,
     transition: {
-      delay: 0.8,
       duration: 0.8,
-      when: "beforeChildren",
-      staggerChildren: 0.4,
       ease: "backInOut",
     },
   },
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, transition: transitionOut },
 };
 
-const item = {
+const buttonVariants = {
   visible: {
     opacity: 1,
     cursor: "pointer",
@@ -125,10 +162,10 @@ const item = {
       ease: "backInOut",
     },
   },
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, transition: transitionOut },
 };
 
-const accentColor = "#fa8072";
+// const accentColor = "#ff7200";
 
 const prologueContainerStyle = css`
   display: flex;
@@ -136,14 +173,15 @@ const prologueContainerStyle = css`
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  overflow-x: hidden;
 `;
 
 const quoteWindowStyle = css`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  padding: 60px;
-  background-color: rgba(88, 88, 88, 0.02);
+  padding: 48px;
+  background-color: rgba(88, 88, 88, 0.03);
   border: 1px solid rgba(128, 128, 128, 0.1);
   height: 300px;
   width: 600px;
@@ -153,7 +191,7 @@ const quoteWindowStyle = css`
     margin: 0;
   }
   h2 {
-    color: #dfdfdf;
+    color: #d4d4d4;
     margin: 0;
   }
 `;
@@ -164,8 +202,8 @@ const buttonContainerStyles = css`
 `;
 
 const hoverButtonStyles = css`
-  border: 1px solid ${accentColor};
-  background-color: rgba(250, 128, 114, 0.2);
+  border: 1px solid rgba(255, 114, 0, 0.2);
+  background-color: rgba(250, 128, 114, 0.3);
 `;
 
 const buttonStyles = css`

@@ -10,9 +10,9 @@ import createPostEffect from "./objects/postEffect";
 import createWavyPlane from "./objects/WavyPlane";
 
 const Scene = () => {
-  let scene = new THREE.Scene();
-
   useEffect(() => {
+    let scene = new THREE.Scene();
+
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
     const renderer = new THREE.WebGLRenderer({
