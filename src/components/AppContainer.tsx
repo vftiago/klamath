@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import App from "./App";
 import Prologue from "./Prologue";
 import Scene from "./scene/Scene";
@@ -16,13 +16,20 @@ function AppContainer() {
   const buttonClickAudioElement = useRef(null);
   const buttonHoverAudioElement = useRef(null);
 
-  document.addEventListener("visibilitychange", () => {
+  const handleVisibilityChange = () => {
     if (document.hidden) {
       setMuted(true);
     } else {
       setMuted(false);
     }
-  });
+  };
+
+  useEffect(() => {
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
 
   const onHeadphonesIconClick = () => {
     setMuted(!muted);

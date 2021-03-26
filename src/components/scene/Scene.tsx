@@ -64,7 +64,7 @@ const Scene = () => {
       renderer.setSize(document.body.clientWidth, window.innerHeight);
       backgroundRenderer.setSize(document.body.clientWidth, window.innerHeight);
       renderer.setPixelRatio(window.devicePixelRatio);
-      renderer.setClearColor(0xeeeeee, 1.0);
+      renderer.setClearColor(0xfefefe, 1.0);
       postEffect.material.uniforms.resolution.value.set(
         document.body.clientWidth,
         window.innerHeight
