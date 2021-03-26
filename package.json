@@ -32,7 +32,16 @@
     "start": "rescripts start",
     "build": "rescripts build && rm -rf dist && mv build dist",
     "test": "rescripts test",
-    "eject": "rescripts eject"
+    "eject": "rescripts eject",
+    "postinstall": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   },
   "eslintConfig": {
     "extends": [
@@ -54,6 +63,8 @@
   },
   "devDependencies": {
     "@rescripts/cli": "^0.0.16",
-    "@types/three": "^0.103.2"
+    "@types/three": "^0.103.2",
+    "husky": "^5.2.0",
+    "prettier": "^2.2.1"
   }
 }

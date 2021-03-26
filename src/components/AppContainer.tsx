@@ -17,11 +17,7 @@ function AppContainer() {
   const buttonHoverAudioElement = useRef(null);
 
   const handleVisibilityChange = () => {
-    if (document.hidden) {
-      setMuted(true);
-    } else {
-      setMuted(false);
-    }
+    document.hidden ? setMuted(true) : setMuted(false);
   };
 
   useEffect(() => {
