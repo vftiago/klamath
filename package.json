@@ -41,7 +41,7 @@
     }
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "prettier --write"
   },
   "eslintConfig": {
     "extends": [

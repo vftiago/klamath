@@ -330,7 +330,7 @@ const callToActionStyle = css`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 200px;
+  height: 300px;
   width: 100%;
   position: absolute;
   bottom: 0;

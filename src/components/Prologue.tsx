@@ -108,7 +108,7 @@ function Prologue(props: Props) {
               onClick={handleButtonClick}
               onMouseEnter={handleButtonHover}
             >
-              Remain ignorant
+              Remain Ignorant
             </motion.button>
           </div>
         </div>
