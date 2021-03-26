@@ -36,7 +36,7 @@
     "postinstall": "husky install"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": "pretty-quick --staged"
+    "*.**": "pretty-quick --staged"
   },
   "eslintConfig": {
     "extends": [

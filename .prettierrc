@@ -1,7 +1,7 @@
 {
-  "singleQuote": true,
+  "printWidth": 80,
   "trailingComma": "all",
-  "printWidth": 100,
   "quoteProps": "consistent",
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "singleQuote": false
 }

@@ -1,19 +1,19 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from '@emotion/core';
-import { useEffect } from 'react';
-import * as THREE from 'three';
-import { PerspectiveCamera } from 'three';
-import debounce from '../../utils/debounce';
-import createBackground from './objects/background';
-import createPostEffect from './objects/postEffect';
-import createWavyPlane from './objects/WavyPlane';
+import { css, jsx } from "@emotion/core";
+import { useEffect } from "react";
+import * as THREE from "three";
+import { PerspectiveCamera } from "three";
+import debounce from "../../utils/debounce";
+import createBackground from "./objects/background";
+import createPostEffect from "./objects/postEffect";
+import createWavyPlane from "./objects/WavyPlane";
 
 const Scene = () => {
   useEffect(() => {
     let scene = new THREE.Scene();
 
-    const canvas = document.getElementById('canvas') as HTMLCanvasElement;
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
@@ -28,14 +28,19 @@ const Scene = () => {
     const foregroundScene = new THREE.Scene();
 
     const foregroundCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-    const camera = new PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
+    const camera = new PerspectiveCamera(
+      40,
+      window.innerWidth / window.innerHeight,
+      1,
+      10000,
+    );
 
     let background = null;
     let postEffect: any = null;
     let wavyPlane: any = null;
 
     const createScene = () => {
-      console.log('creating scene');
+      console.log("creating scene");
       postEffect = createPostEffect(backgroundRenderer.texture);
       foregroundScene.add(postEffect);
 
@@ -85,11 +90,11 @@ const Scene = () => {
       camera.position.y = -window.pageYOffset;
     }
 
-    window.addEventListener('scroll', updateCamera);
+    window.addEventListener("scroll", updateCamera);
 
     const on = () => {
       window.addEventListener(
-        'resize',
+        "resize",
         debounce(() => {
           resizeWindow();
         }, 1),
