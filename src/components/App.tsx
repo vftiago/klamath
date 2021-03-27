@@ -11,6 +11,7 @@ import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
 import { iconSize, logoSize } from "../common/breakpoints";
+import VisibilitySensor from "react-visibility-sensor";
 
 const accentColor = "#fa8072";
 
@@ -18,6 +19,7 @@ const email = "tiago@infodump.xyz";
 
 let typedExternalLink: Typed;
 let typedMail: Typed;
+let typedMissionStatement: Typed;
 
 type Props = {
   muted: boolean;
@@ -46,6 +48,19 @@ function App({
       showCursor: false,
       fadeOut: true,
     });
+  };
+
+  const handleMissionStatementVisibilityChange = (isVisible: boolean) => {
+    // console.log("Element is now %s", isVisible ? "visible" : "hidden");
+    if (isVisible) {
+      if (typedMissionStatement) return;
+
+      typedMissionStatement = new Typed("#mission-statement", {
+        strings: [`take back control of your digital <span>space.</span>`],
+        typeSpeed: 10,
+        showCursor: false,
+      });
+    }
   };
 
   const handleLogoClick = () => {
@@ -124,16 +139,16 @@ function App({
         <div css={labelStyle}>currently reading</div>
         <div css={numStyle}>Antifragile</div>
       </div> */}
-      <div css={callToActionStyle}>
+      <motion.div
+        css={callToActionStyle}
+        initial="hidden"
+        animate="visible"
+        variants={socialIconsVariant}
+      >
         <div css={toastStyle}>
           <span id="toast"></span>
         </div>
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={socialIconsVariant}
-          css={socialIconsStyle}
-        >
+        <div css={socialIconsStyle}>
           <motion.a
             variants={item}
             href="https://github.com/vftiago"
@@ -160,16 +175,20 @@ function App({
           >
             <LinkedinIcon size={iconSize}></LinkedinIcon>
           </motion.a>
-        </motion.div>
-        <div css={waterfallStyle}>
-          <span></span>
-          <span></span>
-          <span></span>
         </div>
-      </div>
-      <div css={missionStatementStyle}>
-        <p>take back control of your digital space.</p>
-      </div>
+        <motion.div css={waterfallStyle} variants={item}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </motion.div>
+      </motion.div>
+      <VisibilitySensor onChange={handleMissionStatementVisibilityChange}>
+        <div css={missionStatementStyle}>
+          <div>
+            <p id="mission-statement"></p>
+          </div>
+        </div>
+      </VisibilitySensor>
     </Fragment>
   );
 }
@@ -365,7 +384,13 @@ const missionStatementStyle = css`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100vh;
+  height: 30vh;
+  div {
+    width: 241px;
+  }
+  span {
+    color: ${accentColor};
+  }
 `;
 
 const callToActionStyle = css`
