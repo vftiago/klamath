@@ -11,12 +11,14 @@ import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
 import { iconSize, logoSize } from "../common/breakpoints";
+import ArrowRight from "./icons/ArrowRightIcon";
 
 const accentColor = "#fa8072";
 
 const email = "tiago@infodump.xyz";
 
-let typed: any;
+let typedExternalLink: Typed;
+let typedMail: Typed;
 
 type Props = {
   muted: boolean;
@@ -32,13 +34,13 @@ function App({
   onHeadphonesIconClick,
 }: Props) {
   const handleMailIconClick = () => {
-    if (typed) typed.destroy();
+    if (typedMail) typedMail.destroy();
 
     copyToClipboard(email);
 
     onButtonClick();
 
-    typed = new Typed("#toast", {
+    typedMail = new Typed("#toast", {
       strings: [`<u>${email}</u> copied to clipboard.`, ""],
       typeSpeed: 1,
       backDelay: 3000,
@@ -47,15 +49,51 @@ function App({
     });
   };
 
+  const handleLogoClick = () => {
+    if (typedExternalLink) typedExternalLink.destroy();
+
+    copyToClipboard(email);
+
+    onButtonClick();
+
+    typedExternalLink = new Typed("#external-link", {
+      strings: [
+        `<p>go to <a href="https://lightradius.com" target="_blank">lightradius.com</a> →</p>`,
+        "",
+      ],
+      typeSpeed: 1,
+      backDelay: 6000,
+      showCursor: false,
+      fadeOut: true,
+    });
+  };
+
   return (
     <Fragment>
+      <div
+        id="external-link"
+        css={css`
+          height: 68px;
+          display: flex;
+          align-items: center;
+          position: fixed;
+          left: 100px;
+          p {
+            font-size: 14px;
+            margin: 0 8px;
+          }
+          a {
+            color: ${accentColor};
+          }
+        `}
+      ></div>
       <motion.div
         initial="hidden"
         animate="visible"
         variants={leftColumnVariants}
         css={leftColumn}
       >
-        <div css={iconContainerStyle}>
+        <div css={iconContainerStyle} onClick={handleLogoClick}>
           <Logo size={logoSize}></Logo>
         </div>
         <div css={centerPieceStyle}>
@@ -328,6 +366,7 @@ const missionStatementStyle = css`
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 100vh;
 `;
 
 const callToActionStyle = css`
@@ -354,6 +393,7 @@ const waterfallStyle = css`
   height: 40px;
   overflow: hidden;
   position: absolute;
+  bottom: 0;
   span {
     width: 1px;
     height: 100%;

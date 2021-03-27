@@ -87,7 +87,7 @@ const Scene = () => {
     };
 
     function updateCamera() {
-      camera.position.y = -window.pageYOffset;
+      camera.position.y = -window.pageYOffset / 4;
     }
 
     window.addEventListener("scroll", updateCamera);
