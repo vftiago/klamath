@@ -11,7 +11,6 @@ import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
 import { iconSize, logoSize } from "../common/breakpoints";
-import ArrowRight from "./icons/ArrowRightIcon";
 
 const accentColor = "#fa8072";
 
