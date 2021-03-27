@@ -124,6 +124,11 @@ function App({
             <LinkedinIcon size={iconSize}></LinkedinIcon>
           </motion.a>
         </motion.div>
+        <div css={waterfallStyle}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
       <div css={missionStatementStyle}>
         <p>take back control of your digital space.</p>
@@ -334,6 +339,43 @@ const callToActionStyle = css`
   width: 100%;
   position: absolute;
   bottom: 0;
+`;
+
+const waterfallStyle = css`
+  @keyframes waterfall {
+    0% {
+      transform: translateY(-100.5%);
+    }
+    100% {
+      transform: translateY(100.5%);
+    }
+  }
+  width: 15px;
+  height: 40px;
+  overflow: hidden;
+  position: absolute;
+  span {
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background-color: #888;
+    animation-name: waterfall;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    &:nth-child(1) {
+      left: 0;
+    }
+    &:nth-child(2) {
+      left: 50%;
+      margin-left: -1px;
+      animation-delay: 0.3s;
+    }
+    &:nth-child(3) {
+      right: 0;
+      animation-delay: 0.15s;
+    }
+  }
 `;
 
 export default App;

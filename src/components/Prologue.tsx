@@ -184,20 +184,17 @@ const buttonContainerStyles = css`
 
 const hoverButtonStyles = css`
   border: 1px solid rgba(255, 114, 0, 0.3);
-  border: none;
-  background-color: rgba(250, 128, 114, 0.3);
+  background-color: rgba(250, 128, 114, 0.7);
 `;
 
 const buttonStyles = css`
   font-size: 16px;
   background-color: rgba(240, 240, 240, 0.7);
   border: 1px solid rgba(128, 128, 128, 0.1);
-  border: none;
-
   margin-left: 16px;
   padding: 10px 20px;
   transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-  box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
+  box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.06);
   &:focus {
     outline: none;
   }
