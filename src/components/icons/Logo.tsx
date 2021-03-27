@@ -1,9 +1,8 @@
 import React from "react";
 
-const Icon = ({ size = 16, fill = "#666" }) => (
+const Icon = ({ size = 16 }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    style={{ fill }}
     data-name="Layer 1"
     viewBox="0 0 143.72 224.57"
     width={size}

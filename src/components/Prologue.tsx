@@ -4,6 +4,7 @@ import { css, jsx } from "@emotion/core";
 import { Fragment, useState } from "react";
 // import Typed from "typed.js";
 import { motion } from "framer-motion";
+import GlassPane from "../common/GlassPane";
 
 type Props = {
   onButtonClick: () => void;
@@ -81,7 +82,7 @@ function Prologue(props: Props) {
           }
         }}
       >
-        <div css={quoteWindowStyle}>
+        <GlassPane>
           <h1 id="murakami-quote">
             Unfortunately, the clock is ticking, the hours are going by. The
             past increases, the future recedes. Possibilities decreasing,
@@ -111,7 +112,7 @@ function Prologue(props: Props) {
               Remain Ignorant
             </motion.button>
           </div>
-        </div>
+        </GlassPane>
       </motion.div>
     </Fragment>
   );
@@ -176,33 +177,14 @@ const prologueContainerStyle = css`
   overflow-x: hidden;
 `;
 
-const quoteWindowStyle = css`
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  padding: 48px;
-  background-color: rgba(88, 88, 88, 0.03);
-  border: 1px solid rgba(128, 128, 128, 0.1);
-  height: 300px;
-  width: 600px;
-  transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-  h1 {
-    line-height: 1.2;
-    margin: 0;
-  }
-  h2 {
-    color: #d4d4d4;
-    margin: 0;
-  }
-`;
-
 const buttonContainerStyles = css`
   display: flex;
   justify-content: flex-end;
 `;
 
 const hoverButtonStyles = css`
-  border: 1px solid rgba(255, 114, 0, 0.2);
+  border: 1px solid rgba(255, 114, 0, 0.3);
+  border: none;
   background-color: rgba(250, 128, 114, 0.3);
 `;
 
@@ -210,9 +192,12 @@ const buttonStyles = css`
   font-size: 16px;
   background-color: rgba(240, 240, 240, 0.7);
   border: 1px solid rgba(128, 128, 128, 0.1);
+  border: none;
+
   margin-left: 16px;
   padding: 10px 20px;
   transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
   &:focus {
     outline: none;
   }

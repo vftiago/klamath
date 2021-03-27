@@ -10,8 +10,7 @@ import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment } from "react";
-
-const iconSize = 18;
+import { iconSize, logoSize } from "../common/breakpoints";
 
 const accentColor = "#fa8072";
 
@@ -57,7 +56,7 @@ function App({
         css={leftColumn}
       >
         <div css={iconContainerStyle}>
-          <Logo size={32}></Logo>
+          <Logo size={logoSize}></Logo>
         </div>
         <div css={centerPieceStyle}>
           <header css={headerStyle}>
@@ -173,7 +172,6 @@ const item = {
 };
 
 const columnWidth = 80;
-const logoSize = 36;
 
 const mainContentStyle = css`
   top: 0;
@@ -256,6 +254,7 @@ const columnStyle = css`
 const leftColumn = css`
   ${columnStyle};
   border-right: 1px solid rgba(128, 128, 128, 0.1);
+  box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
   img {
     height: ${logoSize + "px"};
     width: ${logoSize + "px"};
@@ -266,6 +265,7 @@ const rightColumn = css`
   ${columnStyle};
   right: 0;
   border-left: 1px solid rgba(128, 128, 128, 0.1);
+  box-shadow: -3px 3px 3px 0px rgba(88, 88, 88, 0.03);
 `;
 
 // const cornerCounterStyle = css`

@@ -1,13 +1,15 @@
-const size = {
+export const logoSize = 36;
+
+export const iconSize = 16;
+
+export const screenSize = {
   xs: "320px",
   sm: "768px",
   lg: "1200px",
 };
 
-const device = {
-  xs: `(min-width: ${size.xs})`,
-  sm: `(min-width: ${size.sm})`,
-  lg: `(min-width: ${size.lg})`,
+export const device = {
+  xs: `(min-width: ${screenSize.xs})`,
+  sm: `(min-width: ${screenSize.sm})`,
+  lg: `(min-width: ${screenSize.lg})`,
 };
-
-export default { size, device };
