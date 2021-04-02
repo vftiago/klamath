@@ -7,6 +7,10 @@ declare module "*.vert" {
   const value: string;
   export default value;
 }
+declare module "*.obj" {
+  const value: string;
+  export default value;
+}
 
 declare module "*.mp3" {
   const value: string;

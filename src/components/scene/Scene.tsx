@@ -5,11 +5,11 @@ import { useEffect } from "react";
 import * as THREE from "three";
 import { PerspectiveCamera } from "three";
 import debounce from "../../utils/debounce";
-import createBackground from "./objects/background";
+// import createBackground from "./objects/background";
 import createPostEffect from "./objects/postEffect";
 import createWavyPlane from "./objects/WavyPlane";
 
-const Scene = () => {
+const Scene = ({ object }: { object: THREE.Group | null }) => {
   useEffect(() => {
     let scene = new THREE.Scene();
 
@@ -40,7 +40,6 @@ const Scene = () => {
     let wavyPlane: any = null;
 
     const createScene = () => {
-      console.log("creating scene");
       postEffect = createPostEffect(backgroundRenderer.texture);
       foregroundScene.add(postEffect);
 
@@ -51,6 +50,10 @@ const Scene = () => {
       wavyPlane.position.set(0, -128, 0);
       wavyPlane.rotation.set((-90 * Math.PI) / 180, 0, 0);
       scene.add(wavyPlane);
+
+      if (object) {
+        scene.add(object.children[0]);
+      }
 
       camera.position.set(0, 0, 1024);
       // camera.lookAt(0, -128, 0);

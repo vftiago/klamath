@@ -1,5 +1,18 @@
 const { edit, getPaths } = require("@rescripts/utilities");
 
+const customLoaders = [
+  {
+    test: /\.(glsl|frag|vert)$/,
+    exclude: [/node_modules/],
+    use: ["raw-loader", "glslify-loader"],
+  },
+  {
+    test: /\.(obj)$/,
+    exclude: [/node_modules/],
+    use: ["url-loader"],
+  },
+];
+
 const predicate = (valueToTest) => {
   return valueToTest.oneOf;
 };
@@ -7,14 +20,9 @@ const predicate = (valueToTest) => {
 const transform = (match) => ({
   ...match,
   oneOf: [
-    // need to add as second-to-last to avoid being intercepted by the file-loader in CRA
     ...match.oneOf.slice(0, -1),
-    {
-      test: /\.(glsl|frag|vert)$/,
-      exclude: [/node_modules/],
-      use: ["raw-loader", "glslify-loader"],
-    },
-    ...match.oneOf.slice(-1),
+    ...customLoaders,
+    ...match.oneOf.slice(-1), // need to add as second-to-last to avoid being intercepted by the file-loader in CRA
   ],
 });
 
