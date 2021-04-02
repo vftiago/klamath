@@ -185,6 +185,7 @@ const buttonContainerStyles = css`
 const hoverButtonStyles = css`
   border: 1px solid rgba(255, 114, 0, 0.3);
   background-color: rgba(250, 128, 114, 0.7);
+  /* box-shadow: 1px 1px 0px 0px rgba(250, 128, 114, 0.6); */
 `;
 
 const buttonStyles = css`
@@ -193,8 +194,15 @@ const buttonStyles = css`
   border: 1px solid rgba(128, 128, 128, 0.1);
   margin-left: 16px;
   padding: 10px 20px;
-  transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-  box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.06);
+  border: 1px solid rgba(128, 128, 128, 0.3);
+  transition: background-color 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  box-shadow: 1px 1px 0px 0px rgba(128, 128, 128, 0.6);
+  &:active {
+    position: relative;
+    top: 1px;
+    left: 1px;
+    box-shadow: none;
+  }
   &:focus {
     outline: none;
   }
