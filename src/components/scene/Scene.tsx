@@ -32,7 +32,7 @@ const Scene = ({ object }: { object: THREE.Group | null }) => {
       40,
       window.innerWidth / window.innerHeight,
       1,
-      10000,
+      100000,
     );
 
     let background = null;
@@ -51,8 +51,11 @@ const Scene = ({ object }: { object: THREE.Group | null }) => {
       wavyPlane.rotation.set((-90 * Math.PI) / 180, 0, 0);
       scene.add(wavyPlane);
 
+      object!.position.set(0, -400, -12000);
+      object!.rotation.set(0, 12, 0);
+
       if (object) {
-        scene.add(object.children[0]);
+        scene.add(object);
       }
 
       camera.position.set(0, 0, 1024);

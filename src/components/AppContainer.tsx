@@ -8,7 +8,7 @@ import Scene from "./scene/Scene";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
 import playSound from "../utils/playSound";
-import stringObject from "../assets/obj/object.obj";
+import stringObject from "../assets/obj/structure.obj";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import * as THREE from "three";
 import fragmentShader from "../assets/glsl/object.frag";
@@ -18,21 +18,8 @@ const material = new THREE.RawShaderMaterial({
   wireframe: true,
   fragmentShader,
   vertexShader,
+  // side: THREE.FrontSide,
 });
-
-const loadObject = async (cb: (obj: THREE.Group) => void) => {
-  const loader = new OBJLoader();
-
-  await loader.load(stringObject, (object: THREE.Group) => {
-    object.traverse(function (child) {
-      if (child instanceof THREE.Mesh) {
-        child.material = material;
-      }
-    });
-
-    cb(object);
-  });
-};
 
 function AppContainer() {
   const [ready, setReady] = useState(false);
@@ -49,10 +36,21 @@ function AppContainer() {
   useEffect(() => {
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
-    if (!object)
-      loadObject((object) => {
+    const loadObject = async () => {
+      const loader = new OBJLoader();
+
+      await loader.load(stringObject, (object: THREE.Group) => {
+        object.traverse(function (child) {
+          if (child instanceof THREE.Mesh) {
+            child.material = material;
+          }
+        });
+
         setObject(object);
       });
+    };
+
+    if (!object) loadObject();
 
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
