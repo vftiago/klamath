@@ -9,8 +9,9 @@ import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { iconSize, logoSize } from "../common/breakpoints";
+// import Projects from "./Projects";
 // import { animateScroll } from "react-scroll";
 
 const accentColor = "#fa8072";
@@ -39,7 +40,7 @@ function App({
     if (typedName) typedName.destroy();
 
     typedName = new Typed("#typed-name", {
-      strings: [`Tiago Fernandes</br>^800Front-end Web Developer`],
+      strings: [`Tiago Fernandes Front-end Web Developer`],
       typeSpeed: 40,
       showCursor: true,
       cursorChar: "_",
@@ -86,7 +87,7 @@ function App({
   // };
 
   return (
-    <div css={appContainerStyles}>
+    <Fragment>
       <div
         id="external-link"
         css={css`
@@ -104,97 +105,100 @@ function App({
           }
         `}
       ></div>
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={leftColumnVariants}
-        css={leftColumn}
-      >
-        <div css={iconContainerStyle} onClick={handleLogoClick}>
-          <Logo size={logoSize}></Logo>
-        </div>
-        <div css={centerPieceStyle}>
-          <header css={headerStyle}></header>
-        </div>
-        <div css={iconContainerStyle}></div>
-      </motion.div>
-      <motion.div
-        initial="hidden"
-        animate="visible"
-        variants={rightColumnVariants}
-        css={rightColumn}
-      >
-        <div css={iconContainerStyle}></div>
-        <div
-          css={[iconContainerStyle, muted && mutedStyle]}
-          onMouseEnter={onButtonHover}
-          onClick={onHeadphonesIconClick}
+      <div css={appContainerStyles}>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={leftColumnVariants}
+          css={leftColumn}
         >
-          <HeadphonesIcon size={iconSize}></HeadphonesIcon>
-        </div>
-      </motion.div>
-      <main css={mainContentStyle}>
-        <div
-          css={css`
-            width: 200px;
-            margin: 32px;
-          `}
+          <div css={iconContainerStyle} onClick={handleLogoClick}>
+            <Logo size={logoSize}></Logo>
+          </div>
+          <div css={centerPieceStyle}>
+            <header css={headerStyle}></header>
+          </div>
+          <div css={iconContainerStyle}></div>
+        </motion.div>
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={rightColumnVariants}
+          css={rightColumn}
         >
-          <span id="typed-name"></span>
-        </div>
-      </main>
-      {/* <div css={cornerCounterStyle}>
+          <div css={iconContainerStyle}></div>
+          <div
+            css={[iconContainerStyle, muted && mutedStyle]}
+            onMouseEnter={onButtonHover}
+            onClick={onHeadphonesIconClick}
+          >
+            <HeadphonesIcon size={iconSize}></HeadphonesIcon>
+          </div>
+        </motion.div>
+        <main css={mainContentStyle}>
+          <div
+            css={css`
+              width: 269px;
+              margin: 32px;
+            `}
+          >
+            <span id="typed-name"></span>
+          </div>
+        </main>
+        {/* <div css={cornerCounterStyle}>
         <div css={labelStyle}>currently reading</div>
         <div css={numStyle}>Antifragile</div>
       </div> */}
-      <motion.div
-        css={callToActionStyle}
-        initial="hidden"
-        animate="visible"
-        variants={socialIconsVariant}
-      >
-        <div css={toastStyle}>
-          <span id="toast"></span>
-        </div>
-        <div css={socialIconsStyle}>
-          <motion.a
-            variants={item}
-            href="https://github.com/vftiago"
-            target="_blank"
-            onMouseEnter={onButtonHover}
-            onClick={onButtonClick}
-          >
-            <GithubIcon size={iconSize}></GithubIcon>
-          </motion.a>
-          <motion.a
-            variants={item}
-            onClick={handleMailIconClick}
-            target="_blank"
-            onMouseEnter={onButtonHover}
-          >
-            <MailIcon size={iconSize}></MailIcon>
-          </motion.a>
-          <motion.a
-            variants={item}
-            href="https://linkedin.com/in/vftiago"
-            target="_blank"
-            onMouseEnter={onButtonHover}
-            onClick={onButtonClick}
-          >
-            <LinkedinIcon size={iconSize}></LinkedinIcon>
-          </motion.a>
-        </div>
         <motion.div
-          css={waterfallStyle}
-          variants={item}
-          // onClick={handleWaterfallClick}
+          css={callToActionStyle}
+          initial="hidden"
+          animate="visible"
+          variants={socialIconsVariant}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <div css={toastStyle}>
+            <span id="toast"></span>
+          </div>
+          <div css={socialIconsStyle}>
+            <motion.a
+              variants={item}
+              href="https://github.com/vftiago"
+              target="_blank"
+              onMouseEnter={onButtonHover}
+              onClick={onButtonClick}
+            >
+              <GithubIcon size={iconSize}></GithubIcon>
+            </motion.a>
+            <motion.a
+              variants={item}
+              onClick={handleMailIconClick}
+              target="_blank"
+              onMouseEnter={onButtonHover}
+            >
+              <MailIcon size={iconSize}></MailIcon>
+            </motion.a>
+            <motion.a
+              variants={item}
+              href="https://linkedin.com/in/vftiago"
+              target="_blank"
+              onMouseEnter={onButtonHover}
+              onClick={onButtonClick}
+            >
+              <LinkedinIcon size={iconSize}></LinkedinIcon>
+            </motion.a>
+          </div>
+          <motion.div
+            css={waterfallStyle}
+            variants={item}
+            // onClick={handleWaterfallClick}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </motion.div>
+          {/* <Projects /> */}
         </motion.div>
-      </motion.div>
-    </div>
+      </div>
+    </Fragment>
   );
 }
 
