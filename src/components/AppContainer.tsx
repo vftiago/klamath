@@ -8,7 +8,7 @@ import Scene from "./scene/Scene";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
 import playSound from "../utils/playSound";
-import stringObject from "../assets/obj/structure.obj";
+import stringObject from "../assets/obj/cube.obj";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import * as THREE from "three";
 import fragmentShader from "../assets/glsl/object.frag";

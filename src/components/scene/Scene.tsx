@@ -51,8 +51,8 @@ const Scene = ({ object }: { object: THREE.Group | null }) => {
       wavyPlane.rotation.set((-90 * Math.PI) / 180, 0, 0);
       scene.add(wavyPlane);
 
-      object!.position.set(0, -400, -12000);
-      object!.rotation.set(0, 12, 0);
+      object!.position.set(-1080, -690, -300);
+      object!.rotation.set(6, 12, 0);
 
       if (object) {
         scene.add(object);
