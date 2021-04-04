@@ -9,9 +9,9 @@ import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
-import { Fragment } from "react";
+import { useEffect } from "react";
 import { iconSize, logoSize } from "../common/breakpoints";
-import VisibilitySensor from "react-visibility-sensor";
+// import { animateScroll } from "react-scroll";
 
 const accentColor = "#fa8072";
 
@@ -19,7 +19,8 @@ const email = "tiago@infodump.xyz";
 
 let typedExternalLink: Typed;
 let typedMail: Typed;
-let typedMissionStatement: Typed;
+let typedName: Typed;
+let typedJob: Typed;
 
 type Props = {
   muted: boolean;
@@ -34,6 +35,17 @@ function App({
   onButtonHover,
   onHeadphonesIconClick,
 }: Props) {
+  useEffect(() => {
+    if (typedName) typedName.destroy();
+
+    typedName = new Typed("#typed-name", {
+      strings: [`Tiago Fernandes</br>^800Front-end Web Developer`],
+      typeSpeed: 40,
+      showCursor: true,
+      cursorChar: "_",
+    });
+  }, []);
+
   const handleMailIconClick = () => {
     if (typedMail) typedMail.destroy();
 
@@ -48,19 +60,6 @@ function App({
       showCursor: false,
       fadeOut: true,
     });
-  };
-
-  const handleMissionStatementVisibilityChange = (isVisible: boolean) => {
-    // console.log("Element is now %s", isVisible ? "visible" : "hidden");
-    if (isVisible) {
-      if (typedMissionStatement) return;
-
-      typedMissionStatement = new Typed("#mission-statement", {
-        strings: [`take back control of your digital <span>space.</span>`],
-        typeSpeed: 10,
-        showCursor: false,
-      });
-    }
   };
 
   const handleLogoClick = () => {
@@ -82,8 +81,12 @@ function App({
     });
   };
 
+  // const handleWaterfallClick = () => {
+  //   animateScroll.scrollToBottom();
+  // };
+
   return (
-    <Fragment>
+    <div css={appContainerStyles}>
       <div
         id="external-link"
         css={css`
@@ -111,9 +114,7 @@ function App({
           <Logo size={logoSize}></Logo>
         </div>
         <div css={centerPieceStyle}>
-          <header css={headerStyle}>
-            tiago fernandes — front-end web developer
-          </header>
+          <header css={headerStyle}></header>
         </div>
         <div css={iconContainerStyle}></div>
       </motion.div>
@@ -133,7 +134,14 @@ function App({
         </div>
       </motion.div>
       <main css={mainContentStyle}>
-        <div></div>
+        <div
+          css={css`
+            width: 200px;
+            margin: 32px;
+          `}
+        >
+          <span id="typed-name"></span>
+        </div>
       </main>
       {/* <div css={cornerCounterStyle}>
         <div css={labelStyle}>currently reading</div>
@@ -176,22 +184,28 @@ function App({
             <LinkedinIcon size={iconSize}></LinkedinIcon>
           </motion.a>
         </div>
-        <motion.div css={waterfallStyle} variants={item}>
+        <motion.div
+          css={waterfallStyle}
+          variants={item}
+          // onClick={handleWaterfallClick}
+        >
           <span></span>
           <span></span>
           <span></span>
         </motion.div>
       </motion.div>
-      <VisibilitySensor onChange={handleMissionStatementVisibilityChange}>
-        <div css={missionStatementStyle}>
-          <div>
-            <p id="mission-statement"></p>
-          </div>
-        </div>
-      </VisibilitySensor>
-    </Fragment>
+    </div>
   );
 }
+
+const appContainerStyles = css`
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+`;
 
 const visible = {
   opacity: 1,
@@ -238,11 +252,14 @@ const mainContentStyle = css`
   top: 0;
   left: 0;
   display: flex;
-  align-items: justify;
-  justify-content: space-between;
   width: 100%;
   min-height: 100vh;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  p {
+    margin: 0;
+  }
 `;
 
 const toastStyle = css`
@@ -377,22 +394,6 @@ const socialIconsStyle = css`
   }
 `;
 
-const missionStatementStyle = css`
-  top: 100vh;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 30vh;
-  div {
-    width: 241px;
-  }
-  span {
-    color: ${accentColor};
-  }
-`;
-
 const callToActionStyle = css`
   display: flex;
   justify-content: center;
@@ -418,6 +419,11 @@ const waterfallStyle = css`
   overflow: hidden;
   position: absolute;
   bottom: 0;
+  &:hover {
+    span {
+      background-color: ${accentColor};
+    }
+  }
   span {
     width: 1px;
     height: 100%;
@@ -427,6 +433,7 @@ const waterfallStyle = css`
     animation-name: waterfall;
     animation-duration: 1s;
     animation-iteration-count: infinite;
+    transition: background-color 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
     &:nth-child(1) {
       left: 0;
     }

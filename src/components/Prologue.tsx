@@ -67,54 +67,52 @@ function Prologue(props: Props) {
   // }, []);
 
   return (
-    <Fragment>
-      <motion.div
-        initial="hidden"
-        animate={userHasClicked ? "hidden" : "visible"}
-        variants={modalVariants}
-        css={prologueContainerStyle}
-        onAnimationComplete={(definition: string) => {
-          if (definition === "visible") {
-            onModalVisible();
-          }
-          if (definition === "hidden") {
-            onReady();
-          }
-        }}
-      >
-        <GlassPane>
-          <h1 id="murakami-quote">
-            Unfortunately, the clock is ticking, the hours are going by. The
-            past increases, the future recedes. Possibilities decreasing,
-            regrets mounting.
-          </h1>
-          <motion.h2 variants={headerVariants} id="murakami-attribution">
-            — Haruki Murakami
-          </motion.h2>
-          <div
-            // animate={typeAttributionComplete && "visible"}
-            css={buttonContainerStyles}
+    <motion.div
+      initial="hidden"
+      animate={userHasClicked ? "hidden" : "visible"}
+      variants={modalVariants}
+      css={prologueContainerStyle}
+      onAnimationComplete={(definition: string) => {
+        if (definition === "visible") {
+          onModalVisible();
+        }
+        if (definition === "hidden") {
+          onReady();
+        }
+      }}
+    >
+      <GlassPane>
+        <h1 id="murakami-quote">
+          Unfortunately, the clock is ticking, the hours are going by. The past
+          increases, the future recedes. Possibilities decreasing, regrets
+          mounting.
+        </h1>
+        <motion.h2 variants={headerVariants} id="murakami-attribution">
+          — Haruki Murakami
+        </motion.h2>
+        <div
+          // animate={typeAttributionComplete && "visible"}
+          css={buttonContainerStyles}
+        >
+          <motion.button
+            variants={buttonVariants}
+            css={buttonStyles}
+            onClick={handleButtonClick}
+            onMouseEnter={handleButtonHover}
           >
-            <motion.button
-              variants={buttonVariants}
-              css={buttonStyles}
-              onClick={handleButtonClick}
-              onMouseEnter={handleButtonHover}
-            >
-              I Understand
-            </motion.button>
-            <motion.button
-              variants={buttonVariants}
-              css={buttonStyles}
-              onClick={handleButtonClick}
-              onMouseEnter={handleButtonHover}
-            >
-              Remain Ignorant
-            </motion.button>
-          </div>
-        </GlassPane>
-      </motion.div>
-    </Fragment>
+            I Understand
+          </motion.button>
+          <motion.button
+            variants={buttonVariants}
+            css={buttonStyles}
+            onClick={handleButtonClick}
+            onMouseEnter={handleButtonHover}
+          >
+            Remain Ignorant
+          </motion.button>
+        </div>
+      </GlassPane>
+    </motion.div>
   );
 }
 
@@ -173,7 +171,7 @@ const prologueContainerStyle = css`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   overflow-x: hidden;
 `;
 

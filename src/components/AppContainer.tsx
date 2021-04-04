@@ -8,6 +8,7 @@ import Scene from "./scene/Scene";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
 import playSound from "../utils/playSound";
+import Footer from "./Footer";
 
 function AppContainer() {
   const [ready, setReady] = useState(false);
@@ -73,6 +74,7 @@ function AppContainer() {
           }}
         />
       )}
+      <Footer />
     </Fragment>
   );
 }

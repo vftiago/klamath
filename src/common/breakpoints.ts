@@ -2,6 +2,9 @@ export const logoSize = 36;
 
 export const iconSize = 16;
 
+export const accentColor = "#fa8072";
+// export const accentColor = "#ff7200";
+
 export const screenSize = {
   xs: "320px",
   sm: "768px",
