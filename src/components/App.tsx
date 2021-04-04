@@ -195,9 +195,9 @@ function App({
             <span></span>
             <span></span>
           </motion.div>
-          {/* <Projects /> */}
         </motion.div>
       </div>
+      <Projects />
     </Fragment>
   );
 }
