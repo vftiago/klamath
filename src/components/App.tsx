@@ -11,7 +11,7 @@ import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment, useEffect } from "react";
 import { iconSize, logoSize } from "../common/breakpoints";
-import Projects from "./Projects";
+// import Projects from "./Projects";
 // import { animateScroll } from "react-scroll";
 
 const accentColor = "#fa8072";
@@ -197,7 +197,7 @@ function App({
           </motion.div>
         </motion.div>
       </div>
-      <Projects />
+      {/* <Projects /> */}
     </Fragment>
   );
 }
