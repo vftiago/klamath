@@ -1,10 +1,11 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Fragment, useState } from "react";
+import { useEffect, useState } from "react";
 // import Typed from "typed.js";
 import { motion } from "framer-motion";
 import GlassPane from "../common/GlassPane";
+import Typed from "typed.js";
 
 type Props = {
   onButtonClick: () => void;
@@ -17,9 +18,10 @@ function Prologue(props: Props) {
   const { onButtonClick, onButtonHover, onModalVisible, onReady } = props;
 
   const [userHasClicked, setUserHasClicked] = useState(false);
+  const [typeAttributionComplete, setTypeAttributionComplete] = useState(false);
 
-  // let typedMurakamiQuote: Typed;
-  // let typedAttribution: Typed;
+  let typedMurakamiQuote: Typed;
+  let typedAttribution: Typed;
 
   const handleButtonClick = () => {
     setUserHasClicked(true);
@@ -30,41 +32,41 @@ function Prologue(props: Props) {
     onButtonHover();
   };
 
-  // const onTypeAttributionComplete = () => {
-  //   setTypeAttributionComplete(true);
-  // };
+  const onTypeAttributionComplete = () => {
+    setTypeAttributionComplete(true);
+  };
 
-  // const typeAttribution = () => {
-  //   typedAttribution = new Typed("#murakami-attribution", {
-  //     strings: ["— Haruki Murakami"],
-  //     startDelay: 100,
-  //     typeSpeed: 10,
-  //     showCursor: false,
-  //     fadeOut: true,
-  //     onComplete: onTypeAttributionComplete,
-  //   });
-  // };
+  const typeAttribution = () => {
+    typedAttribution = new Typed("#murakami-attribution", {
+      strings: ["— Haruki Murakami"],
+      startDelay: 100,
+      typeSpeed: 10,
+      showCursor: false,
+      fadeOut: true,
+      onComplete: onTypeAttributionComplete,
+    });
+  };
 
-  // const typeQuote = () => {
-  //   typedMurakamiQuote = new Typed("#murakami-quote", {
-  //     strings: [
-  //       "Unfortunately, the clock is ticking, the hours are going by. The past increases, the future recedes. Possibilities decreasing, regrets mounting.",
-  //     ],
-  //     startDelay: 800,
-  //     typeSpeed: 10,
-  //     showCursor: false,
-  //     fadeOut: true,
-  //     onComplete: () => {
-  //       if (document.getElementById("murakami-attribution")) typeAttribution();
-  //     },
-  //   });
-  // };
+  const typeQuote = () => {
+    typedMurakamiQuote = new Typed("#murakami-quote", {
+      strings: [
+        "Unfortunately, the clock is ticking, the hours are going by. The past increases, the future recedes. Possibilities decreasing, regrets mounting.",
+      ],
+      startDelay: 800,
+      typeSpeed: 10,
+      showCursor: false,
+      fadeOut: true,
+      onComplete: () => {
+        if (document.getElementById("murakami-attribution")) typeAttribution();
+      },
+    });
+  };
 
-  // useEffect(() => {
-  //   if (typedMurakamiQuote) typedMurakamiQuote.destroy();
-  //   if (typedAttribution) typedAttribution.destroy();
-  //   typeQuote();
-  // }, []);
+  useEffect(() => {
+    if (typedMurakamiQuote) typedMurakamiQuote.destroy();
+    if (typedAttribution) typedAttribution.destroy();
+    typeQuote();
+  }, []);
 
   return (
     <motion.div
@@ -82,17 +84,20 @@ function Prologue(props: Props) {
       }}
     >
       <GlassPane>
-        <h1 id="murakami-quote">
-          Unfortunately, the clock is ticking, the hours are going by. The past
-          increases, the future recedes. Possibilities decreasing, regrets
-          mounting.
-        </h1>
-        <motion.h2 variants={headerVariants} id="murakami-attribution">
-          — Haruki Murakami
-        </motion.h2>
-        <div
-          // animate={typeAttributionComplete && "visible"}
+        <h1
+          id="murakami-quote"
+          css={css`
+            height: 150px;
+          `}
+        ></h1>
+        <motion.h2
+          variants={headerVariants}
+          id="murakami-attribution"
+        ></motion.h2>
+        <motion.div
+          animate={typeAttributionComplete ? "visible" : "hidden"}
           css={buttonContainerStyles}
+          variants={buttonContainerVariants}
         >
           <motion.button
             variants={buttonVariants}
@@ -110,7 +115,7 @@ function Prologue(props: Props) {
           >
             Remain Ignorant
           </motion.button>
-        </div>
+        </motion.div>
       </GlassPane>
     </motion.div>
   );
@@ -133,6 +138,21 @@ const modalVariants = {
     opacity: 1,
     y: 0,
     transition: transitionIn,
+  },
+  hidden: {
+    opacity: 0,
+    y: -24,
+    transition: transitionOut,
+  },
+};
+
+const buttonContainerVariants = {
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.2,
+    },
   },
   hidden: {
     opacity: 0,
