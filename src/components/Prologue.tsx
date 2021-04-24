@@ -184,8 +184,6 @@ const buttonVariants = {
   hidden: { opacity: 0, transition: transitionOut },
 };
 
-// const accentColor = "#ff7200";
-
 const prologueContainerStyle = css`
   display: flex;
   align-items: center;

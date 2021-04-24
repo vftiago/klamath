@@ -10,18 +10,15 @@ import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment, useEffect } from "react";
-import { iconSize, logoSize } from "../common/breakpoints";
+import { accentColor, iconSize, logoSize } from "../common/breakpoints";
 // import Projects from "./Projects";
 // import { animateScroll } from "react-scroll";
-
-const accentColor = "#fa8072";
 
 const email = "tiago@infodump.xyz";
 
 let typedExternalLink: Typed;
 let typedMail: Typed;
 let typedName: Typed;
-let typedJob: Typed;
 
 type Props = {
   muted: boolean;
