@@ -15,17 +15,16 @@ function AppContainer() {
 	const buttonClickAudioElement = useRef(null);
 	const buttonHoverAudioElement = useRef(null);
 
-	const handleVisibilityChange = () => {
-		if (muted) return;
-		document.hidden ? setMuted(true) : setMuted(false);
-	};
-
 	useEffect(() => {
+		const handleVisibilityChange = () => {
+			if (muted) return;
+			document.hidden ? setMuted(true) : setMuted(false);
+		};
 		document.addEventListener("visibilitychange", handleVisibilityChange);
 		return () => {
 			document.removeEventListener("visibilitychange", handleVisibilityChange);
 		};
-	}, [handleVisibilityChange]);
+	}, []);
 
 	const onHeadphonesIconClick = () => {
 		setMuted(!muted);
@@ -33,16 +32,8 @@ function AppContainer() {
 
 	return (
 		<Fragment>
-			<audio
-				src={buttonClick}
-				ref={buttonClickAudioElement}
-				muted={muted}
-			></audio>
-			<audio
-				src={buttonHover}
-				ref={buttonHoverAudioElement}
-				muted={muted}
-			></audio>
+			<audio src={buttonClick} ref={buttonClickAudioElement} muted={muted}></audio>
+			<audio src={buttonHover} ref={buttonHoverAudioElement} muted={muted}></audio>
 			<Scene />
 			<App
 				muted={muted}

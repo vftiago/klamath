@@ -2,60 +2,88 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import VisibilitySensor from "react-visibility-sensor";
-import { accentColor } from "../common/breakpoints";
+import { accentColor } from "../breakpoints";
 import { Octokit } from "@octokit/core";
-import { useEffect, useState } from "react";
-import { OctokitResponse } from "@octokit/types";
+import { useState } from "react";
+import GlassPane from "./common/GlassPane";
 
 const octokit = new Octokit({
-  auth: process.env.REACT_APP_GITHUB_AUTH_TOKEN,
+	auth: process.env.REACT_APP_GITHUB_AUTH_TOKEN,
 });
 
 function Projects() {
-  const [data, setData] = useState<OctokitResponse<any, number> | null>(null);
+	const [data, setData] = useState<any[] | null>(null);
 
-  let projectList: any;
+	const loadCrap = async () => {
+		if (!data) {
+			const response = await octokit.request("GET /users/{username}/projects", {
+				username: "vftiago",
+				mediaType: {
+					previews: ["inertia"],
+				},
+			});
 
-  const loadCrap = async () => {
-    const response = await octokit.request("GET /repos/vftiago/klamath/events");
+			console.log(response.data);
 
-    setData(response.data);
-    buildProjectSection(response.data);
-  };
+			setData(response.data);
+		}
+	};
 
-  //   useEffect(() => {}, []);
+	const buildProjectSection = () => {
+		if (!data) return;
 
-  const buildProjectSection = (data: any[]) => {
-    // data.map();
-    return <div></div>;
-  };
+		return (
+			<ul css={projectListStyle}>
+				{data.map((item, index) => {
+					return (
+						<li key={index}>
+							<GlassPane css={projectCardStyle}>{item.name}</GlassPane>
+						</li>
+					);
+				})}
+			</ul>
+		);
+	};
 
-  const handleVisibilityChange = (isVisible: boolean) => {
-    console.log(isVisible);
-    if (isVisible) {
-      loadCrap();
-    }
-  };
+	const handleVisibilityChange = (isVisible: boolean) => {
+		if (isVisible) {
+			loadCrap();
+		}
+	};
 
-  return (
-    <VisibilitySensor onChange={handleVisibilityChange}>
-      <div css={projectSectionStyle}>{}</div>
-    </VisibilitySensor>
-  );
+	return (
+		<div css={projectSectionStyle}>
+			<VisibilitySensor onChange={handleVisibilityChange}>
+				<h1>Projects</h1>
+			</VisibilitySensor>
+			<div>{data && buildProjectSection()}</div>
+		</div>
+	);
 }
 
+const projectListStyle = css`
+	padding: 0;
+	display: flex;
+	flex: 0 1 800px;
+	min-width: 800px;
+	justify-content: space-between;
+	list-style: none;
+`;
+
+const projectCardStyle = css`
+	margin: 0;
+`;
+
 const projectSectionStyle = css`
-  height: 200px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  div {
-    width: 241px;
-  }
-  span {
-    color: ${accentColor};
-  }
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	span {
+		color: ${accentColor};
+	}
 `;
 
 export default Projects;
