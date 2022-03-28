@@ -2,6 +2,10 @@
   "name": "klamath",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+      "node": ">=16.14",
+      "npm": ">=8"
+  },
   "dependencies": {
     "@emotion/core": "10.0.35",
     "@octokit/core": "^3.3.1",
