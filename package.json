@@ -22,7 +22,7 @@
     "react": "^17.0.1",
     "react-animations": "^1.0.0",
     "react-dom": "^17.0.1",
-    "react-scripts": "^4.0.0",
+    "react-scripts": "5.0.0",
     "react-scroll": "^1.8.2",
     "react-visibility-sensor": "^5.1.1",
     "three": "^0.122.0",

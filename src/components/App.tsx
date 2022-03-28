@@ -11,7 +11,6 @@ import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment, useEffect } from "react";
 import { accentColor, iconSize, logoSize } from "../breakpoints";
-import Projects from "./Projects";
 import Waterfall from "./Waterfalll";
 
 const email = "tiago@infodump.xyz";
