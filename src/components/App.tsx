@@ -77,8 +77,6 @@ function App({ muted, onButtonClick, onButtonHover, onHeadphonesIconClick }: Pro
 	const handleLogoClick = () => {
 		if (typedExternalLink) typedExternalLink.destroy();
 
-		copyToClipboard(email);
-
 		onButtonClick();
 
 		typedExternalLink = new Typed("#external-link", {
