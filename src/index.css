@@ -1,9 +1,4 @@
-@font-face {
-	font-family: "Roboto Condensed";
-	src: url("./assets/fonts/RobotoCondensed-Light.ttf") format("truetype"); /* Safari, Android, iOS */
-}
-
-@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto+Condensed:wght@300&display=swap");
 
 body {
 	height: 100vh;
@@ -21,7 +16,8 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
 	font-family: "Orbitron";
 	margin: 8px 0;
 }

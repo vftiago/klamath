@@ -2,10 +2,10 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import VisibilitySensor from "react-visibility-sensor";
-import { accentColor } from "../breakpoints";
 import { Octokit } from "@octokit/core";
 import { useState } from "react";
 import GlassPane from "./common/GlassPane";
+import { Element } from "react-scroll";
 
 const octokit = new Octokit({
 	auth: process.env.REACT_APP_GITHUB_AUTH_TOKEN,
@@ -37,7 +37,10 @@ function Projects() {
 				{data.map((item, index) => {
 					return (
 						<li key={index}>
-							<GlassPane css={projectCardStyle}>{item.name}</GlassPane>
+							<GlassPane css={projectCardStyle}>
+								<h4>{item.name}</h4>
+								<p>{item.body}</p>
+							</GlassPane>
 						</li>
 					);
 				})}
@@ -52,38 +55,46 @@ function Projects() {
 	};
 
 	return (
-		<div css={projectSectionStyle}>
+		<Element css={projectSectionStyle} name="projectSection">
 			<VisibilitySensor onChange={handleVisibilityChange}>
-				<h1>Projects</h1>
+				<h2>Projects</h2>
 			</VisibilitySensor>
 			<div>{data && buildProjectSection()}</div>
-		</div>
+		</Element>
 	);
 }
-
-const projectListStyle = css`
-	padding: 0;
-	display: flex;
-	flex: 0 1 800px;
-	min-width: 800px;
-	justify-content: space-between;
-	list-style: none;
-`;
-
-const projectCardStyle = css`
-	margin: 0;
-`;
 
 const projectSectionStyle = css`
 	height: 100%;
 	width: 100%;
 	display: flex;
-	align-items: center;
-	justify-content: center;
 	flex-direction: column;
-	span {
-		color: ${accentColor};
+	align-items: center;
+	margin-bottom: 40px;
+`;
+
+const projectListStyle = css`
+	display: grid;
+	grid-gap: 16px;
+	grid-template-columns: auto auto auto;
+	flex: 0 1 800px;
+	min-width: 800px;
+	list-style: none;
+	padding: 0;
+
+	li {
+		position: relative;
+		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+		top: 0;
+		&:hover {
+			top: -3px;
+		}
 	}
+`;
+
+const projectCardStyle = css`
+	margin: 0;
 `;
 
 export default Projects;

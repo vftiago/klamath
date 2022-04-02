@@ -3,11 +3,13 @@
 import { css, jsx } from "@emotion/core";
 import { accentColor } from "../breakpoints";
 import { motion } from "framer-motion";
-import { animateScroll } from "react-scroll";
+import { scroller } from "react-scroll";
 
 const Waterfall = () => {
 	const handleWaterfallClick = () => {
-		animateScroll.scrollToBottom();
+		scroller.scrollTo("projectSection", {
+			smooth: true,
+		});
 	};
 
 	return (
