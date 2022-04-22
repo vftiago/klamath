@@ -2,32 +2,39 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import Typed from "typed.js";
-import VisibilitySensor from "react-visibility-sensor";
-import { accentColor } from "../breakpoints";
+import { accentColor } from "../theme";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 let typedMissionStatement: Typed;
 
 function Footer() {
-	const handleMissionStatementVisibilityChange = (isVisible: boolean) => {
-		if (isVisible) {
-			if (typedMissionStatement) return;
+	const handleMissionStatementVisibilityChange = () => {
+		if (typedMissionStatement) return;
 
-			typedMissionStatement = new Typed("#mission-statement", {
-				strings: [`take back control of your digital <span>space.</span>`],
-				typeSpeed: 10,
-				showCursor: false,
-			});
-		}
+		typedMissionStatement = new Typed("#mission-statement", {
+			strings: [`take back control of your digital <span>space.</span>`],
+			typeSpeed: 10,
+			showCursor: false,
+		});
 	};
 
+	const { ref, inView } = useInView();
+
+	useEffect(() => {
+		if (inView) {
+			handleMissionStatementVisibilityChange();
+		}
+	}, [inView]);
+
 	return (
-		<VisibilitySensor onChange={handleMissionStatementVisibilityChange}>
+		<div ref={ref}>
 			<div css={footerStyle}>
 				<div>
 					<p id="mission-statement"></p>
 				</div>
 			</div>
-		</VisibilitySensor>
+		</div>
 	);
 }
 

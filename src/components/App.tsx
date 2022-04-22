@@ -10,8 +10,11 @@ import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment, useEffect } from "react";
-import { accentColor, iconSize, logoSize } from "../breakpoints";
+import { iconSize, logoSize } from "../breakpoints";
+import { accentColor } from "../theme";
 import Waterfall from "./Waterfalll";
+import ProjectSection from "./ProjectSection";
+import RepositorySection from "./RepositorySection";
 
 const email = "tiago@infodump.xyz";
 
@@ -44,7 +47,12 @@ const typedJob = (self: any) => {
 	}, 2900);
 };
 
-function App({ muted, onButtonClick, onButtonHover, onHeadphonesIconClick }: Props) {
+function App({
+	muted,
+	onButtonClick,
+	onButtonHover,
+	onHeadphonesIconClick,
+}: Props) {
 	useEffect(() => {
 		typedName = new Typed("#typed-name", {
 			...defaultTypedOptions,
@@ -80,7 +88,10 @@ function App({ muted, onButtonClick, onButtonHover, onHeadphonesIconClick }: Pro
 		onButtonClick();
 
 		typedExternalLink = new Typed("#external-link", {
-			strings: [`<p>go to <a href="https://lightradius.com" target="_blank">lightradius.com</a> →</p>`, ""],
+			strings: [
+				`<p>go to <a href="https://lightradius.com" target="_blank">lightradius.com</a> →</p>`,
+				"",
+			],
 			typeSpeed: 1,
 			backDelay: 6000,
 			showCursor: false,
@@ -108,7 +119,12 @@ function App({ muted, onButtonClick, onButtonHover, onHeadphonesIconClick }: Pro
 				`}
 			></div>
 			<div css={appContainerStyles}>
-				<motion.div initial="hidden" animate="visible" variants={leftColumnVariants} css={leftColumn}>
+				<motion.div
+					initial="hidden"
+					animate="visible"
+					variants={leftColumnVariants}
+					css={leftColumn}
+				>
 					<div css={iconContainerStyle} onClick={handleLogoClick}>
 						<Logo size={logoSize}></Logo>
 					</div>
@@ -117,7 +133,12 @@ function App({ muted, onButtonClick, onButtonHover, onHeadphonesIconClick }: Pro
 					</div>
 					<div css={iconContainerStyle}></div>
 				</motion.div>
-				<motion.div initial="hidden" animate="visible" variants={rightColumnVariants} css={rightColumn}>
+				<motion.div
+					initial="hidden"
+					animate="visible"
+					variants={rightColumnVariants}
+					css={rightColumn}
+				>
 					<div css={iconContainerStyle}></div>
 					<div
 						css={[iconContainerStyle, muted && mutedStyle]}
@@ -137,7 +158,12 @@ function App({ muted, onButtonClick, onButtonHover, onHeadphonesIconClick }: Pro
 						</h3>
 					</div>
 				</main>
-				<motion.div css={callToActionStyle} initial="hidden" animate="visible" variants={socialIconsVariant}>
+				<motion.div
+					css={callToActionStyle}
+					initial="hidden"
+					animate="visible"
+					variants={socialIconsVariant}
+				>
 					<div css={toastStyle}>
 						<span id="toast"></span>
 					</div>
@@ -151,7 +177,12 @@ function App({ muted, onButtonClick, onButtonHover, onHeadphonesIconClick }: Pro
 						>
 							<GithubIcon size={iconSize}></GithubIcon>
 						</motion.a>
-						<motion.a variants={item} onClick={handleMailIconClick} target="_blank" onMouseEnter={onButtonHover}>
+						<motion.a
+							variants={item}
+							onClick={handleMailIconClick}
+							target="_blank"
+							onMouseEnter={onButtonHover}
+						>
 							<MailIcon size={iconSize}></MailIcon>
 						</motion.a>
 						<motion.a
@@ -167,7 +198,7 @@ function App({ muted, onButtonClick, onButtonHover, onHeadphonesIconClick }: Pro
 					<Waterfall />
 				</motion.div>
 			</div>
-			{/* <Projects /> */}
+			<RepositorySection />
 		</Fragment>
 	);
 }

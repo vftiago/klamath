@@ -1,9 +1,8 @@
+export const GOLDEN_RATIO = 1.618;
+
 export const logoSize = 36;
 
 export const iconSize = 16;
-
-export const accentColor = "#e6503f";
-// export const accentColor = "#ff7200";
 
 export const screenSize = {
 	xs: "320px",

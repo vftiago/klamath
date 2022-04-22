@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@emotion/core": "10.0.35",
-    "@octokit/core": "^3.3.1",
+    "@octokit/rest": "^18.12.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -18,23 +18,26 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "dompurify": "^2.3.6",
     "framer-motion": "^3.10.3",
     "glsl-easings": "^1.0.0",
     "glsl-noise": "^0.0.0",
     "glslify-loader": "^2.0.0",
+    "marked": "^4.0.13",
     "raw-loader": "^4.0.2",
     "react": "^17.0.1",
     "react-animations": "^1.0.0",
     "react-dom": "^17.0.1",
+    "react-intersection-observer": "^8.33.1",
     "react-scripts": "5.0.0",
     "react-scroll": "^1.8.2",
-    "react-visibility-sensor": "^5.1.1",
-    "three": "^0.122.0",
+    "three": "^0.139.2",
     "typed.js": "^2.0.11",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'dist/static/js/*.js' --html result.html",
     "start": "rescripts start",
     "build": "rescripts build && rm -rf dist && mv build dist",
     "test": "rescripts test",
@@ -65,11 +68,15 @@
   "devDependencies": {
     "@octokit/types": "^6.34.0",
     "@rescripts/cli": "^0.0.16",
+    "@types/dompurify": "^2.3.3",
+    "@types/marked": "^4.0.3",
     "@types/react-scroll": "^1.8.2",
-    "@types/three": "^0.103.2",
+    "@types/three": "^0.139.0",
     "husky": "^5.2.0",
     "lint-staged": "^10.5.4",
     "prettier": "2.2.1",
-    "pretty-quick": "^3.1.0"
+    "pretty-quick": "^3.1.0",
+    "source-map-explorer": "^2.5.2",
+    "yarn-audit-fix": "^9.2.2"
   }
 }
