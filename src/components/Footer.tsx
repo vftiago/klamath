@@ -2,7 +2,7 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import Typed from "typed.js";
-import { accentColor } from "../theme";
+import { colors } from "../theme";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -48,7 +48,7 @@ const footerStyle = css`
 		width: 241px;
 	}
 	span {
-		color: ${accentColor};
+		color: ${colors.text.accent};
 	}
 `;
 

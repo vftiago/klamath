@@ -11,7 +11,7 @@ import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment, useEffect } from "react";
 import { iconSize, logoSize } from "../breakpoints";
-import { accentColor } from "../theme";
+import { colors } from "../theme";
 import Waterfall from "./Waterfalll";
 import RepositorySection from "./RepositorySection";
 
@@ -113,7 +113,7 @@ function App({
 						margin: 0 8px;
 					}
 					a {
-						color: ${accentColor};
+						color: ${colors.text.accent};
 					}
 				`}
 			></div>
@@ -290,10 +290,10 @@ const iconContainerStyle = css`
 	&:hover {
 		cursor: pointer;
 		svg {
-			fill: ${accentColor};
+			fill: ${colors.icon.accent};
 		}
 		&::after {
-			background-color: ${accentColor};
+			background-color: ${colors.icon.accent};
 		}
 	}
 	svg {
@@ -366,7 +366,7 @@ const socialIconsStyle = css`
 		fill: #333;
 		&:hover {
 			cursor: pointer;
-			fill: ${accentColor};
+			fill: ${colors.icon.accent};
 		}
 	}
 `;

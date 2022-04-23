@@ -4,7 +4,7 @@ import { css, jsx } from "@emotion/core";
 import { useEffect, useState } from "react";
 import { getRepositoryCommits, RepositoryCommits } from "../../api/octokit-api";
 import GlassPane from "../../glass-ui/GlassPane";
-import { colors, mutedBorder } from "../../theme";
+import { colors } from "../../theme";
 import GitCommitIcon from "../icons/GitCommitIcon";
 
 type RepositoryCardProps = {
@@ -90,7 +90,7 @@ const repositoryCardTitleStyle = css`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	border-bottom: 1px solid ${mutedBorder};
+	border-bottom: 1px solid ${colors.border.muted};
 `;
 
 const repositoryCardBodyStyle = css`
