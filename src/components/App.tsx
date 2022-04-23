@@ -13,7 +13,6 @@ import { Fragment, useEffect } from "react";
 import { iconSize, logoSize } from "../breakpoints";
 import { accentColor } from "../theme";
 import Waterfall from "./Waterfalll";
-import ProjectSection from "./ProjectSection";
 import RepositorySection from "./RepositorySection";
 
 const email = "tiago@infodump.xyz";
