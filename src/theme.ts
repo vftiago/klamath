@@ -12,6 +12,14 @@ export const colors = {
 	},
 };
 
+export const sizes = {
+	text: {
+		xs: "12px",
+		s: "14px",
+		m: "16px",
+	},
+};
+
 export const logoSize = 36;
 
 export const iconSize = 16;

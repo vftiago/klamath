@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 import { Fragment, useEffect, useRef, useState } from "react";
 import App from "./MainSection";
 import Scene from "./scene/Scene";
@@ -10,6 +10,7 @@ import playSound from "../utils/playSound";
 import Footer from "./Footer";
 import RepositorySection from "./RepositorySection";
 import MainSection from "./MainSection";
+import NavigationBars from "./NavigationBars";
 
 function AppContainer() {
 	const [muted, setMuted] = useState(true);
@@ -33,7 +34,7 @@ function AppContainer() {
 	};
 
 	return (
-		<Fragment>
+		<div css={appContainerStyles}>
 			<audio
 				src={buttonClick}
 				ref={buttonClickAudioElement}
@@ -45,6 +46,16 @@ function AppContainer() {
 				muted={muted}
 			></audio>
 			<Scene />
+			<NavigationBars
+				muted={muted}
+				onHeadphonesIconClick={onHeadphonesIconClick}
+				onButtonClick={() => {
+					playSound(buttonClickAudioElement);
+				}}
+				onButtonHover={() => {
+					playSound(buttonHoverAudioElement);
+				}}
+			/>
 			<MainSection
 				muted={muted}
 				onHeadphonesIconClick={onHeadphonesIconClick}
@@ -57,8 +68,14 @@ function AppContainer() {
 			/>
 			<RepositorySection />
 			<Footer />
-		</Fragment>
+		</div>
 	);
 }
+
+const appContainerStyles = css`
+	display: flex;
+	flex-direction: column;
+	gap: 200px;
+`;
 
 export default AppContainer;

@@ -3,19 +3,16 @@
 import { css, jsx } from "@emotion/core";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import GithubIcon from "./icons/GithubIcon";
-import Logo from "./icons/Logo";
-import HeadphonesIcon from "./icons/Headphones";
 import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment, useEffect } from "react";
-import { iconSize, logoSize } from "../theme";
+import { iconSize } from "../theme";
 import { colors } from "../theme";
 import Waterfall from "./Waterfalll";
 import { EMAIL } from "../constants";
 
-let typedExternalLink: Typed;
 let typedMail: Typed;
 let typedName: Typed;
 
@@ -57,16 +54,6 @@ const visible = {
 	},
 };
 
-const leftColumnVariants = {
-	visible,
-	hidden: { opacity: 0, x: "-88px" },
-};
-
-const rightColumnVariants = {
-	visible,
-	hidden: { opacity: 0, x: "88px" },
-};
-
 const socialIconsVariant = {
 	visible,
 	hidden: { opacity: 0 },
@@ -85,12 +72,7 @@ const item = {
 };
 // #endregion framer-animations
 
-function MainSection({
-	muted,
-	onButtonClick,
-	onButtonHover,
-	onHeadphonesIconClick,
-}: Props) {
+function MainSection({ muted, onButtonClick, onButtonHover }: Props) {
 	useEffect(() => {
 		typedName = new Typed("#typed-name", {
 			...defaultTypedOptions,
@@ -120,23 +102,6 @@ function MainSection({
 		});
 	};
 
-	const handleLogoClick = () => {
-		if (typedExternalLink) typedExternalLink.destroy();
-
-		onButtonClick();
-
-		typedExternalLink = new Typed("#external-link", {
-			strings: [
-				`<p>go to <a href="https://lightradius.com" target="_blank">lightradius.com</a> →</p>`,
-				"",
-			],
-			typeSpeed: 1,
-			backDelay: 6000,
-			showCursor: false,
-			fadeOut: true,
-		});
-	};
-
 	return (
 		<Fragment>
 			<div
@@ -157,35 +122,6 @@ function MainSection({
 				`}
 			></div>
 			<div css={appContainerStyles}>
-				<motion.div
-					initial="hidden"
-					animate="visible"
-					variants={leftColumnVariants}
-					css={leftColumn}
-				>
-					<div css={iconContainerStyle} onClick={handleLogoClick}>
-						<Logo size={logoSize}></Logo>
-					</div>
-					<div css={centerPieceStyle}>
-						<header css={headerStyle}></header>
-					</div>
-					<div css={iconContainerStyle}></div>
-				</motion.div>
-				<motion.div
-					initial="hidden"
-					animate="visible"
-					variants={rightColumnVariants}
-					css={rightColumn}
-				>
-					<div css={iconContainerStyle}></div>
-					<div
-						css={[iconContainerStyle, muted && mutedStyle]}
-						onMouseEnter={onButtonHover}
-						onClick={onHeadphonesIconClick}
-					>
-						<HeadphonesIcon size={iconSize}></HeadphonesIcon>
-					</div>
-				</motion.div>
 				<main css={mainContentStyle}>
 					<div css={typedTitle}>
 						<h1>
@@ -268,85 +204,6 @@ const mainContentStyle = css`
 const toastStyle = css`
 	width: 253px;
 	height: 16px;
-`;
-
-const centerPieceStyle = css`
-	transform: rotate(-90deg);
-`;
-
-const headerStyle = css`
-	width: 265px;
-`;
-
-const iconContainerStyle = css`
-	height: ${logoSize + "px"};
-	width: ${logoSize + "px"};
-	margin: 16px 0 16px 0;
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	&:hover {
-		cursor: pointer;
-		svg {
-			fill: ${colors.icon.accent};
-		}
-		&::after {
-			background-color: ${colors.icon.accent};
-		}
-	}
-	svg {
-		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-		fill: #333;
-	}
-	&::after {
-		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-		background-color: #666;
-		content: "";
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		width: ${Math.sqrt(iconSize * iconSize + iconSize * iconSize) + "px"};
-		height: 2px;
-		margin-top: -1px;
-		margin-left: ${-1 * iconSize * 0.75 + "px"};
-		transform: rotate(-45deg) scaleX(0);
-	}
-`;
-
-const mutedStyle = css`
-	&::after {
-		transform: rotate(-45deg) scaleX(1);
-	}
-`;
-
-const columnStyle = css`
-	position: fixed;
-	z-index: 1;
-	width: ${columnWidth + "px"};
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	align-items: center;
-	min-height: 100vh;
-	background-color: rgba(88, 88, 88, 0.02);
-`;
-
-const leftColumn = css`
-	${columnStyle};
-	border-right: 1px solid rgba(128, 128, 128, 0.1);
-	box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
-	img {
-		height: ${logoSize + "px"};
-		width: ${logoSize + "px"};
-	}
-`;
-
-const rightColumn = css`
-	${columnStyle};
-	right: 0;
-	border-left: 1px solid rgba(128, 128, 128, 0.1);
-	box-shadow: -3px 3px 3px 0px rgba(88, 88, 88, 0.03);
 `;
 
 const socialIconsStyle = css`
