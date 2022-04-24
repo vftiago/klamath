@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { accentColor } from "../theme";
+import { colors } from "../theme";
 import { motion } from "framer-motion";
 import { scroller } from "react-scroll";
 
@@ -53,7 +53,7 @@ const waterfallStyle = css`
 	bottom: 0;
 	&:hover {
 		span {
-			background-color: ${accentColor};
+			background-color: ${colors.icon.accent};
 		}
 	}
 	span {

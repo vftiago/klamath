@@ -1,7 +1,6 @@
 {
   "name": "klamath",
   "version": "0.1.0",
-  "private": true,
   "engines": {
     "node": ">=16.14",
     "yarn": "3.2.0"
@@ -34,10 +33,10 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'dist/static/js/*.js' --html result.html",
-    "start": "rescripts start",
-    "build": "rescripts build && rm -rf dist && mv build dist",
-    "test": "rescripts test",
-    "eject": "rescripts eject",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build && rm -rf dist && mv build dist",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
     "postinstall": "husky install"
   },
   "lint-staged": {
@@ -63,7 +62,6 @@
   },
   "devDependencies": {
     "@octokit/types": "^6.34.0",
-    "@rescripts/cli": "^0.0.16",
     "@types/dat.gui": "0.7.7",
     "@types/dompurify": "^2.3.3",
     "@types/jest": "27.4.1",
@@ -77,6 +75,7 @@
     "lint-staged": "^10.5.4",
     "prettier": "2.2.1",
     "pretty-quick": "^3.1.0",
+    "react-app-rewired": "^2.2.1",
     "source-map-explorer": "^2.5.2",
     "yarn-audit-fix": "^9.2.2"
   },

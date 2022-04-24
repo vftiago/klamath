@@ -3,7 +3,7 @@
 import { css, jsx, SerializedStyles } from "@emotion/core";
 import cx from "@emotion/css";
 import { ReactNode } from "react";
-import { GOLDEN_RATIO } from "../breakpoints";
+import { GOLDEN_RATIO } from "../constants";
 
 type Orientation = "horizontal" | "vertical";
 type Size = "s" | "m" | "l";

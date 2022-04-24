@@ -10,12 +10,10 @@ import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment, useEffect } from "react";
-import { iconSize, logoSize } from "../breakpoints";
+import { iconSize, logoSize } from "../theme";
 import { colors } from "../theme";
 import Waterfall from "./Waterfalll";
-import RepositorySection from "./RepositorySection";
-
-const email = "tiago@infodump.xyz";
+import { EMAIL } from "../constants";
 
 let typedExternalLink: Typed;
 let typedMail: Typed;
@@ -46,7 +44,48 @@ const typedJob = (self: any) => {
 	}, 2900);
 };
 
-function App({
+// #region framer-animations
+const visible = {
+	opacity: 1,
+	x: 0,
+	transition: {
+		delay: 0.2,
+		duration: 0.8,
+		when: "beforeChildren",
+		staggerChildren: 0.2,
+		ease: "backInOut",
+	},
+};
+
+const leftColumnVariants = {
+	visible,
+	hidden: { opacity: 0, x: "-88px" },
+};
+
+const rightColumnVariants = {
+	visible,
+	hidden: { opacity: 0, x: "88px" },
+};
+
+const socialIconsVariant = {
+	visible,
+	hidden: { opacity: 0 },
+};
+
+const item = {
+	visible: {
+		opacity: 1,
+		cursor: "pointer",
+		transition: {
+			duration: 0.8,
+			ease: "backInOut",
+		},
+	},
+	hidden: { opacity: 0 },
+};
+// #endregion framer-animations
+
+function MainSection({
 	muted,
 	onButtonClick,
 	onButtonHover,
@@ -68,12 +107,12 @@ function App({
 	const handleMailIconClick = () => {
 		if (typedMail) typedMail.destroy();
 
-		copyToClipboard(email);
+		copyToClipboard(EMAIL);
 
 		onButtonClick();
 
 		typedMail = new Typed("#toast", {
-			strings: [`<u>${email}</u> copied to clipboard.`, ""],
+			strings: [`<u>${EMAIL}</u> copied to clipboard.`, ""],
 			typeSpeed: 1,
 			backDelay: 3000,
 			showCursor: false,
@@ -197,7 +236,6 @@ function App({
 					<Waterfall />
 				</motion.div>
 			</div>
-			<RepositorySection />
 		</Fragment>
 	);
 }
@@ -210,45 +248,6 @@ const appContainerStyles = css`
 	width: 100%;
 	overflow-x: hidden;
 `;
-
-const visible = {
-	opacity: 1,
-	x: 0,
-	transition: {
-		delay: 0.2,
-		duration: 0.8,
-		when: "beforeChildren",
-		staggerChildren: 0.2,
-		ease: "backInOut",
-	},
-};
-
-const leftColumnVariants = {
-	visible,
-	hidden: { opacity: 0, x: "-88px" },
-};
-
-const rightColumnVariants = {
-	visible,
-	hidden: { opacity: 0, x: "88px" },
-};
-
-const socialIconsVariant = {
-	visible,
-	hidden: { opacity: 0 },
-};
-
-const item = {
-	visible: {
-		opacity: 1,
-		cursor: "pointer",
-		transition: {
-			duration: 0.8,
-			ease: "backInOut",
-		},
-	},
-	hidden: { opacity: 0 },
-};
 
 const columnWidth = 80;
 
@@ -397,4 +396,4 @@ const typedTitle = css`
 	}
 `;
 
-export default App;
+export default MainSection;

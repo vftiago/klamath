@@ -2,12 +2,14 @@
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 import { Fragment, useEffect, useRef, useState } from "react";
-import App from "./App";
+import App from "./MainSection";
 import Scene from "./scene/Scene";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
 import playSound from "../utils/playSound";
 import Footer from "./Footer";
+import RepositorySection from "./RepositorySection";
+import MainSection from "./MainSection";
 
 function AppContainer() {
 	const [muted, setMuted] = useState(true);
@@ -32,10 +34,18 @@ function AppContainer() {
 
 	return (
 		<Fragment>
-			<audio src={buttonClick} ref={buttonClickAudioElement} muted={muted}></audio>
-			<audio src={buttonHover} ref={buttonHoverAudioElement} muted={muted}></audio>
+			<audio
+				src={buttonClick}
+				ref={buttonClickAudioElement}
+				muted={muted}
+			></audio>
+			<audio
+				src={buttonHover}
+				ref={buttonHoverAudioElement}
+				muted={muted}
+			></audio>
 			<Scene />
-			<App
+			<MainSection
 				muted={muted}
 				onHeadphonesIconClick={onHeadphonesIconClick}
 				onButtonClick={() => {
@@ -45,7 +55,7 @@ function AppContainer() {
 					playSound(buttonHoverAudioElement);
 				}}
 			/>
-
+			<RepositorySection />
 			<Footer />
 		</Fragment>
 	);
