@@ -28,10 +28,10 @@ const leftColumnVariants = {
 	hidden: { opacity: 0, x: "-88px" },
 };
 
-const rightColumnVariants = {
-	visible,
-	hidden: { opacity: 0, x: "88px" },
-};
+// const rightColumnVariants = {
+// 	visible,
+// 	hidden: { opacity: 0, x: "88px" },
+// };
 // #endregion framer-animations
 
 let typedExternalLink: Typed;
@@ -56,7 +56,7 @@ const NavigationBars = ({
 
 		typedExternalLink = new Typed("#external-link", {
 			strings: [
-				`<p>go to <a href="https://lightradius.com" target="_blank">lightradius.com</a> →</p>`,
+				`<p>go to <a href="https://lightradius.com" target="_blank" rel="noreferrer">lightradius.com</a> →</p>`,
 				"",
 			],
 			typeSpeed: 1,
@@ -78,9 +78,15 @@ const NavigationBars = ({
 					<Logo size={logoSize}></Logo>
 				</div>
 				<div />
-				<div css={iconContainerStyle}></div>
+				<div
+					css={[iconContainerStyle, muted && mutedStyle]}
+					onMouseEnter={onButtonHover}
+					onClick={onHeadphonesIconClick}
+				>
+					<HeadphonesIcon size={iconSize}></HeadphonesIcon>
+				</div>
 			</motion.div>
-			<motion.div
+			{/* <motion.div
 				initial="hidden"
 				animate="visible"
 				variants={rightColumnVariants}
@@ -94,7 +100,7 @@ const NavigationBars = ({
 				>
 					<HeadphonesIcon size={iconSize}></HeadphonesIcon>
 				</div>
-			</motion.div>
+			</motion.div> */}
 		</Fragment>
 	);
 };
@@ -163,11 +169,11 @@ const leftColumn = css`
 	}
 `;
 
-const rightColumn = css`
-	${columnStyle};
-	right: 0;
-	border-left: 1px solid rgba(128, 128, 128, 0.1);
-	box-shadow: -3px 3px 3px 0px rgba(88, 88, 88, 0.03);
-`;
+// const rightColumn = css`
+// 	${columnStyle};
+// 	right: 0;
+// 	border-left: 1px solid rgba(128, 128, 128, 0.1);
+// 	box-shadow: -3px 3px 3px 0px rgba(88, 88, 88, 0.03);
+// `;
 
 export default NavigationBars;

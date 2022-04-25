@@ -19,8 +19,8 @@ function RepositoryCard(props: RepositoryCardProps) {
 	const [data, setData] = useState<RepositoryCommits | null>(null);
 	const [error, setError] = useState<Error | null>(null);
 
-	const fetchRepositoryCommits = async () => {
-		if (!data) {
+	useEffect(() => {
+		const fetchRepositoryCommits = async () => {
 			try {
 				const commits = await getRepositoryCommits(name);
 
@@ -28,12 +28,12 @@ function RepositoryCard(props: RepositoryCardProps) {
 			} catch (e: any) {
 				setError(e);
 			}
-		}
-	};
+		};
 
-	useEffect(() => {
-		fetchRepositoryCommits();
-	}, []);
+		if (!data) {
+			fetchRepositoryCommits();
+		}
+	}, [data, name]);
 
 	return (
 		<GlassPane
@@ -45,7 +45,7 @@ function RepositoryCard(props: RepositoryCardProps) {
 				<h4>{name}</h4>
 
 				{homepage && (
-					<a target="_blank" href={homepage}>
+					<a target="_blank" rel="noreferrer" href={homepage}>
 						{homepage}
 					</a>
 				)}
@@ -76,7 +76,11 @@ function RepositoryCard(props: RepositoryCardProps) {
 					"Nothing to see here."
 				)}
 			</div>
-			<div css={repositoryCardFooterStyle}></div>
+			<div css={repositoryCardFooterStyle}>
+				<a target="_blank" rel="noreferrer" href={htmlUrl}>
+					GitHub
+				</a>
+			</div>
 		</GlassPane>
 	);
 }
@@ -92,6 +96,7 @@ const repositoryCardTitleStyle = css`
 	justify-content: space-between;
 	border-bottom: 1px solid ${colors.border.muted};
 	a {
+		color: ${colors.text.accent};
 		font-size: ${sizes.text.s};
 	}
 `;
@@ -105,8 +110,9 @@ const repositoryCardBodyStyle = css`
 
 const repositoryCardFooterStyle = css`
 	display: flex;
-	align-self: flex-end;
+	/* align-self: flex-end; */
 	a {
+		color: ${colors.text.muted};
 		font-size: ${sizes.text.xs};
 	}
 `;

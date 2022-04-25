@@ -1,8 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Fragment, useEffect, useRef, useState } from "react";
-import App from "./MainSection";
+import { useRef, useState } from "react";
 import Scene from "./scene/Scene";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
@@ -18,16 +17,18 @@ function AppContainer() {
 	const buttonClickAudioElement = useRef(null);
 	const buttonHoverAudioElement = useRef(null);
 
-	useEffect(() => {
-		const handleVisibilityChange = () => {
-			if (muted) return;
-			document.hidden ? setMuted(true) : setMuted(false);
-		};
-		document.addEventListener("visibilitychange", handleVisibilityChange);
-		return () => {
-			document.removeEventListener("visibilitychange", handleVisibilityChange);
-		};
-	}, []);
+	// useEffect(() => {
+	// 	const handleVisibilityChange = () => {
+	// 		if (muted) return;
+	// 		document.hidden ? setMuted(true) : setMuted(false);
+	// 	};
+
+	// 	document.addEventListener("visibilitychange", handleVisibilityChange);
+
+	// 	return () => {
+	// 		document.removeEventListener("visibilitychange", handleVisibilityChange);
+	// 	};
+	// }, [muted]);
 
 	const onHeadphonesIconClick = () => {
 		setMuted(!muted);
@@ -50,9 +51,11 @@ function AppContainer() {
 				muted={muted}
 				onHeadphonesIconClick={onHeadphonesIconClick}
 				onButtonClick={() => {
+					if (muted) return;
 					playSound(buttonClickAudioElement);
 				}}
 				onButtonHover={() => {
+					if (muted) return;
 					playSound(buttonHoverAudioElement);
 				}}
 			/>
@@ -60,9 +63,11 @@ function AppContainer() {
 				muted={muted}
 				onHeadphonesIconClick={onHeadphonesIconClick}
 				onButtonClick={() => {
+					if (muted) return;
 					playSound(buttonClickAudioElement);
 				}}
 				onButtonHover={() => {
+					if (muted) return;
 					playSound(buttonHoverAudioElement);
 				}}
 			/>

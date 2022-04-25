@@ -38,16 +38,6 @@ const projectListItemAnimation = {
 function RepositorySection() {
 	const [data, setData] = useState<Repositories | null>(null);
 
-	const loadProjects = async () => {
-		if (!data) {
-			const repos = await getRepos();
-
-			const data = repos.filter((repo) => !repo.fork && !repo.archived);
-
-			setData(data);
-		}
-	};
-
 	const { ref, inView } = useInView({
 		threshold: 1,
 	});
@@ -78,10 +68,20 @@ function RepositorySection() {
 	};
 
 	useEffect(() => {
-		if (inView) {
+		const loadProjects = async () => {
+			if (!data) {
+				const repos = await getRepos();
+
+				const data = repos.filter((repo) => !repo.fork && !repo.archived);
+
+				setData(data);
+			}
+		};
+
+		if (inView && !data) {
 			loadProjects();
 		}
-	}, [inView]);
+	}, [inView, data]);
 
 	return (
 		<Element css={projectSectionStyle} name="repositorySection">

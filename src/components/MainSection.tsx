@@ -146,6 +146,7 @@ function MainSection({ muted, onButtonClick, onButtonHover }: Props) {
 							variants={item}
 							href="https://github.com/vftiago"
 							target="_blank"
+							rel="noreferrer"
 							onMouseEnter={onButtonHover}
 							onClick={onButtonClick}
 						>
@@ -155,6 +156,7 @@ function MainSection({ muted, onButtonClick, onButtonHover }: Props) {
 							variants={item}
 							onClick={handleMailIconClick}
 							target="_blank"
+							rel="noreferrer"
 							onMouseEnter={onButtonHover}
 						>
 							<MailIcon size={iconSize}></MailIcon>
@@ -163,6 +165,7 @@ function MainSection({ muted, onButtonClick, onButtonHover }: Props) {
 							variants={item}
 							href="https://linkedin.com/in/vftiago"
 							target="_blank"
+							rel="noreferrer"
 							onMouseEnter={onButtonHover}
 							onClick={onButtonClick}
 						>
@@ -184,8 +187,6 @@ const appContainerStyles = css`
 	width: 100%;
 	overflow-x: hidden;
 `;
-
-const columnWidth = 80;
 
 const mainContentStyle = css`
 	top: 0;
