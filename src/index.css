@@ -8,8 +8,8 @@ body {
 	background-color: #eeeeee;
 	color: #333;
 	margin: 0;
-	font-family: "Roboto Condensed", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
+	font-family: "Roboto Condensed", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -27,8 +27,8 @@ h4 {
 }
 
 button {
-	font-family: "Roboto Condensed", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
+	font-family: "Roboto Condensed", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+		"Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 ::selection {

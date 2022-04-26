@@ -1,19 +1,23 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { accentColor } from "../breakpoints";
+import { colors } from "../theme";
 import { motion } from "framer-motion";
 import { scroller } from "react-scroll";
 
 const Waterfall = () => {
 	const handleWaterfallClick = () => {
-		scroller.scrollTo("projectSection", {
+		scroller.scrollTo("repositorySection", {
 			smooth: true,
 		});
 	};
 
 	return (
-		<motion.div css={waterfallStyle} variants={item} onClick={handleWaterfallClick}>
+		<motion.div
+			css={waterfallStyle}
+			variants={item}
+			onClick={handleWaterfallClick}
+		>
 			<span></span>
 			<span></span>
 			<span></span>
@@ -49,7 +53,7 @@ const waterfallStyle = css`
 	bottom: 0;
 	&:hover {
 		span {
-			background-color: ${accentColor};
+			background-color: ${colors.icon.accent};
 		}
 	}
 	span {
