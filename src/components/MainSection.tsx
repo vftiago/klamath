@@ -7,39 +7,12 @@ import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { iconSize } from "../theme";
 import { colors } from "../theme";
 import Waterfall from "./Waterfalll";
 import { EMAIL } from "../constants";
-
-let typedMail: Typed;
-let typedName: Typed;
-
-type Props = {
-	muted: boolean;
-	onButtonClick: () => void;
-	onButtonHover: () => void;
-	onHeadphonesIconClick: () => void;
-};
-
-const defaultTypedOptions = {
-	typeSpeed: 20,
-	showCursor: true,
-	cursorChar: "_",
-};
-
-const typedJob = (self: any) => {
-	setTimeout(() => {
-		new Typed("#typed-job", {
-			...defaultTypedOptions,
-			strings: [`Frontend web developer^16000?`],
-			startDelay: 1200,
-		});
-
-		self.cursor.remove();
-	}, 2900);
-};
+import { useInView } from "react-intersection-observer";
 
 // #region framer-animations
 const visible = {
@@ -72,7 +45,43 @@ const item = {
 };
 // #endregion framer-animations
 
-function MainSection({ muted, onButtonClick, onButtonHover }: Props) {
+let typedMail: Typed;
+let typedName: Typed;
+
+const defaultTypedOptions = {
+	typeSpeed: 20,
+	showCursor: true,
+	cursorChar: "_",
+};
+
+const typedJob = (self: any) => {
+	setTimeout(() => {
+		new Typed("#typed-job", {
+			...defaultTypedOptions,
+			strings: [`Frontend web developer^16000?`],
+			startDelay: 1200,
+		});
+
+		self.cursor.remove();
+	}, 2900);
+};
+
+type Props = {
+	onButtonClick: () => void;
+	onButtonHover: () => void;
+	onHeadphonesIconClick: () => void;
+	onVisibilityChange: (page: number, inView: boolean) => void;
+};
+
+function MainSection({
+	onButtonClick,
+	onButtonHover,
+	onVisibilityChange,
+}: Props) {
+	const { ref, inView } = useInView({
+		threshold: 1,
+	});
+
 	useEffect(() => {
 		typedName = new Typed("#typed-name", {
 			...defaultTypedOptions,
@@ -85,6 +94,10 @@ function MainSection({ muted, onButtonClick, onButtonHover }: Props) {
 			typedName.destroy();
 		};
 	}, []);
+
+	useEffect(() => {
+		onVisibilityChange(0, inView);
+	}, [inView]);
 
 	const handleMailIconClick = () => {
 		if (typedMail) typedMail.destroy();
@@ -107,11 +120,11 @@ function MainSection({ muted, onButtonClick, onButtonHover }: Props) {
 			<div
 				id="external-link"
 				css={css`
-					height: 68px;
+					height: 80px;
 					display: flex;
 					align-items: center;
 					position: fixed;
-					left: 100px;
+					left: 90px;
 					p {
 						font-size: 14px;
 						margin: 0 8px;
@@ -124,7 +137,7 @@ function MainSection({ muted, onButtonClick, onButtonHover }: Props) {
 			<div css={appContainerStyles}>
 				<main css={mainContentStyle}>
 					<div css={typedTitle}>
-						<h1>
+						<h1 ref={ref}>
 							<span id="typed-name"></span>
 						</h1>
 						<h3>

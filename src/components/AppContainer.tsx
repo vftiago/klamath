@@ -11,8 +11,28 @@ import RepositorySection from "./RepositorySection";
 import MainSection from "./MainSection";
 import NavigationBars from "./NavigationBars";
 
+export type Page = {
+	inView: boolean;
+	headers: string[];
+};
+
+const pages: Page[] = [
+	{ inView: true, headers: ["Hello World"] },
+	{
+		inView: true,
+		headers: ["Stuff I've been working on lately"],
+	},
+];
+
 function AppContainer() {
-	const [muted, setMuted] = useState(true);
+	const [muted, setMuted] = useState<boolean>(true);
+	const [currentPageHeader, setCurrentPageHeader] = useState<string>(
+		pages[0].headers[0],
+	);
+	const pageVisibilityRef = useRef<Partial<Page>[]>([
+		{ inView: true },
+		{ inView: false },
+	]);
 
 	const buttonClickAudioElement = useRef(null);
 	const buttonHoverAudioElement = useRef(null);
@@ -30,8 +50,24 @@ function AppContainer() {
 	// 	};
 	// }, [muted]);
 
-	const onHeadphonesIconClick = () => {
+	const handleHeadphonesIconClick = () => {
 		setMuted(!muted);
+	};
+
+	const handleVisibilityChange = (page: number, inView: boolean) => {
+		pageVisibilityRef.current.splice(page, 1, { inView });
+
+		const firstVisiblePage = pageVisibilityRef.current.findIndex(
+			(page) => page.inView,
+		);
+
+		if (firstVisiblePage > -1) {
+			setCurrentPageHeader(
+				pages[firstVisiblePage].headers[
+					Math.ceil(Math.random() * pages[firstVisiblePage].headers.length - 1)
+				],
+			);
+		}
 	};
 
 	return (
@@ -48,8 +84,9 @@ function AppContainer() {
 			></audio>
 			<Scene />
 			<NavigationBars
+				currentPageHeader={currentPageHeader}
 				muted={muted}
-				onHeadphonesIconClick={onHeadphonesIconClick}
+				onHeadphonesIconClick={handleHeadphonesIconClick}
 				onButtonClick={() => {
 					if (muted) return;
 					playSound(buttonClickAudioElement);
@@ -60,8 +97,8 @@ function AppContainer() {
 				}}
 			/>
 			<MainSection
-				muted={muted}
-				onHeadphonesIconClick={onHeadphonesIconClick}
+				onVisibilityChange={handleVisibilityChange}
+				onHeadphonesIconClick={handleHeadphonesIconClick}
 				onButtonClick={() => {
 					if (muted) return;
 					playSound(buttonClickAudioElement);
@@ -71,7 +108,7 @@ function AppContainer() {
 					playSound(buttonHoverAudioElement);
 				}}
 			/>
-			<RepositorySection />
+			<RepositorySection onVisibilityChange={handleVisibilityChange} />
 			<Footer />
 		</div>
 	);

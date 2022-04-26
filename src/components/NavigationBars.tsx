@@ -1,12 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { motion } from "framer-motion";
 import Logo from "./icons/Logo";
 import HeadphonesIcon from "./icons/Headphones";
 import { colors, iconSize, logoSize } from "../theme";
 import Typed from "typed.js";
+import { Page } from "./AppContainer";
 
 const columnWidth = 80;
 
@@ -38,6 +39,7 @@ let typedExternalLink: Typed;
 
 type Props = {
 	muted: boolean;
+	currentPageHeader: string;
 	onButtonClick: () => void;
 	onButtonHover: () => void;
 	onHeadphonesIconClick: () => void;
@@ -45,6 +47,7 @@ type Props = {
 
 const NavigationBars = ({
 	muted,
+	currentPageHeader,
 	onButtonClick,
 	onButtonHover,
 	onHeadphonesIconClick,
@@ -66,6 +69,18 @@ const NavigationBars = ({
 		});
 	};
 
+	useEffect(() => {
+		const typedCurrentPageHeader = new Typed("#current-page-header", {
+			strings: [currentPageHeader],
+			typeSpeed: 20,
+			showCursor: false,
+		});
+
+		return () => {
+			typedCurrentPageHeader.destroy();
+		};
+	}, [currentPageHeader]);
+
 	return (
 		<Fragment>
 			<motion.div
@@ -74,16 +89,26 @@ const NavigationBars = ({
 				variants={leftColumnVariants}
 				css={leftColumn}
 			>
-				<div css={iconContainerStyle} onClick={handleLogoClick}>
-					<Logo size={logoSize}></Logo>
+				<div css={iconContainerStyle}>
+					<span
+						css={logoStyle}
+						onMouseEnter={onButtonHover}
+						onClick={handleLogoClick}
+					>
+						<Logo size={logoSize}></Logo>
+					</span>
 				</div>
-				<div />
-				<div
-					css={[iconContainerStyle, muted && mutedStyle]}
-					onMouseEnter={onButtonHover}
-					onClick={onHeadphonesIconClick}
-				>
-					<HeadphonesIcon size={iconSize}></HeadphonesIcon>
+				<div css={centerPieceStyle}>
+					<p id="current-page-header" css={rotatedNavbarHeaderStyle}></p>
+				</div>
+				<div css={iconContainerStyle}>
+					<span
+						css={[soundIconStyle, muted && mutedStyle]}
+						onMouseEnter={onButtonHover}
+						onClick={onHeadphonesIconClick}
+					>
+						<HeadphonesIcon size={iconSize}></HeadphonesIcon>
+					</span>
 				</div>
 			</motion.div>
 			{/* <motion.div
@@ -105,20 +130,36 @@ const NavigationBars = ({
 	);
 };
 
-const mutedStyle = css`
-	&::after {
-		transform: rotate(-45deg) scaleX(1);
-	}
+const rotatedNavbarHeaderStyle = css`
+	width: 100vh;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform: translate(-50vh) rotate(-90deg);
+	margin-left: 40px;
+`;
+
+const centerPieceStyle = css`
+	height: 80px;
+	display: flex;
+	align-items: center;
 `;
 
 const iconContainerStyle = css`
-	height: ${logoSize + "px"};
-	width: ${logoSize + "px"};
-	margin: 16px 0 16px 0;
+	z-index: 1;
 	position: relative;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+`;
+
+const soundIconStyle = css`
+	height: 16px;
+	svg {
+		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+		fill: #333;
+	}
 	&:hover {
 		cursor: pointer;
 		svg {
@@ -128,11 +169,7 @@ const iconContainerStyle = css`
 			background-color: ${colors.icon.accent};
 		}
 	}
-	svg {
-		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-		fill: #333;
-	}
-	&::after {
+	&:after {
 		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 		background-color: #666;
 		content: "";
@@ -147,13 +184,35 @@ const iconContainerStyle = css`
 	}
 `;
 
+const mutedStyle = css`
+	&:after {
+		transform: rotate(-45deg) scaleX(1);
+	}
+`;
+
+const logoStyle = css`
+	height: 36px;
+	svg {
+		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+		fill: #333;
+	}
+	&:hover {
+		cursor: pointer;
+		svg {
+			fill: ${colors.icon.accent};
+		}
+		&::after {
+			background-color: ${colors.icon.accent};
+		}
+	}
+`;
+
 const columnStyle = css`
 	position: fixed;
 	z-index: 1;
-	width: ${columnWidth + "px"};
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+	width: 80px;
+	display: grid;
+	grid-template-rows: 80px auto 80px;
 	align-items: center;
 	min-height: 100vh;
 	background-color: rgba(88, 88, 88, 0.02);

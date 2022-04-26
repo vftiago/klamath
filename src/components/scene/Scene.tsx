@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { PerspectiveCamera } from "three";
 import debounce from "../../utils/debounce";
@@ -20,7 +20,13 @@ const debrisCoordinates = [
 ];
 
 const Scene = () => {
+	const didCreateScene = useRef(false);
+
 	useEffect(() => {
+		if (didCreateScene.current) return;
+
+		didCreateScene.current = true;
+
 		let scene = new THREE.Scene();
 
 		const canvas = document.getElementById("canvas") as HTMLCanvasElement;

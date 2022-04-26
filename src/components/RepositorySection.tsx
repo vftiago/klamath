@@ -35,7 +35,11 @@ const projectListItemAnimation = {
 };
 // #endregion framer-animations
 
-function RepositorySection() {
+type Props = {
+	onVisibilityChange: (page: number, inView: boolean) => void;
+};
+
+function RepositorySection({ onVisibilityChange }: Props) {
 	const [data, setData] = useState<Repositories | null>(null);
 
 	const { ref, inView } = useInView({
@@ -82,6 +86,10 @@ function RepositorySection() {
 			loadProjects();
 		}
 	}, [inView, data]);
+
+	useEffect(() => {
+		onVisibilityChange(1, inView);
+	}, [inView]);
 
 	return (
 		<Element css={projectSectionStyle} name="repositorySection">
