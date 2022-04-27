@@ -1,7 +1,7 @@
 {
   "name": "klamath",
   "version": "0.1.0",
-  "license": "AGPL-3.0-or-later",
+  "license": "MPL-2.0",
   "engines": {
     "node": "16",
     "yarn": "1"
