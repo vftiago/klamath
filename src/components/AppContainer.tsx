@@ -1,8 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useRef, useState } from "react";
-import Scene from "./scene/Scene";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
 import playSound from "../utils/playSound";
@@ -10,6 +9,11 @@ import Footer from "./Footer";
 import RepositorySection from "./RepositorySection";
 import MainSection from "./MainSection";
 import NavigationBars from "./NavigationBars";
+import debounce from "../utils/debounce";
+import { screenSize } from "../theme";
+import ThreeScene from "./scene/ThreeScene";
+
+const Scene = React.lazy(() => import("./scene/Scene"));
 
 export type Page = {
 	inView: boolean;
@@ -26,6 +30,9 @@ const pages: Page[] = [
 
 function AppContainer() {
 	const [muted, setMuted] = useState<boolean>(true);
+	const [showScene, setShowScene] = useState<boolean>(
+		window.innerWidth > screenSize.lg,
+	);
 	const [currentPageHeader, setCurrentPageHeader] = useState<string>(
 		pages[0].headers[0],
 	);
@@ -50,6 +57,14 @@ function AppContainer() {
 	// 	};
 	// }, [muted]);
 
+	const handleResize = () => {
+		if (window.innerWidth > screenSize.lg) {
+			setShowScene(true);
+		} else {
+			setShowScene(false);
+		}
+	};
+
 	const handleHeadphonesIconClick = () => {
 		setMuted(!muted);
 	};
@@ -70,6 +85,13 @@ function AppContainer() {
 		}
 	};
 
+	useEffect(() => {
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, []);
+
+	const backgroundScene = useMemo(() => <ThreeScene />, []);
+
 	return (
 		<div css={appContainerStyles}>
 			<audio
@@ -82,7 +104,7 @@ function AppContainer() {
 				ref={buttonHoverAudioElement}
 				muted={muted}
 			></audio>
-			<Scene />
+			<Suspense fallback={null}>{showScene && backgroundScene}</Suspense>
 			<NavigationBars
 				currentPageHeader={currentPageHeader}
 				muted={muted}

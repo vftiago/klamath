@@ -39,7 +39,7 @@ function Footer() {
 }
 
 const footerStyle = css`
-	height: 200px;
+	height: 10000px;
 	width: 100%;
 	display: flex;
 	align-items: center;

@@ -19,130 +19,126 @@ const debrisCoordinates = [
 	[150, -1500, -10],
 ];
 
-const Scene = () => {
-	const didCreateScene = useRef(false);
+const createScene = () => {
+	console.log("creating scene");
 
-	useEffect(() => {
-		if (didCreateScene.current) return;
+	let postEffect: any = null;
+	let wavyPlane: any = null;
+	let debrisArray: any[] = [];
 
-		didCreateScene.current = true;
+	let scene = new THREE.Scene();
 
-		let scene = new THREE.Scene();
+	const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 
-		const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+	const renderer = new THREE.WebGLRenderer({
+		antialias: true,
+		canvas: canvas,
+	});
 
-		const renderer = new THREE.WebGLRenderer({
-			antialias: true,
-			canvas: canvas,
-		});
+	renderer.setSize(document.body.clientWidth, window.innerHeight);
+	renderer.setClearColor(0xeeeeee, 1.0);
 
-		const backgroundRenderer = new THREE.WebGLRenderTarget(
-			document.body.clientWidth,
-			window.innerHeight,
+	const renderTarget = new THREE.WebGLRenderTarget(
+		document.body.clientWidth,
+		window.innerHeight,
+	);
+
+	const dummyScene = new THREE.Scene();
+
+	const dummycam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+	const camera = new PerspectiveCamera(
+		40,
+		window.innerWidth / window.innerHeight,
+		1,
+		10000,
+	);
+
+	postEffect = createPostEffect(renderTarget.texture);
+	dummyScene.add(postEffect);
+
+	debrisCoordinates.forEach((coordinateSet) => {
+		const newDebris = createDebris();
+		newDebris.position.set(
+			coordinateSet[0],
+			coordinateSet[1],
+			coordinateSet[2],
 		);
 
-		const foregroundScene = new THREE.Scene();
+		debrisArray.push(newDebris);
+		scene.add(newDebris);
+	});
 
-		const foregroundCamera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-		const camera = new PerspectiveCamera(
-			40,
-			window.innerWidth / window.innerHeight,
-			1,
-			10000,
-		);
+	wavyPlane = createWavyPlane();
+	wavyPlane.position.set(0, -128, 0);
+	wavyPlane.rotation.set((-90 * Math.PI) / 180, 0, 0);
+	scene.add(wavyPlane);
 
-		// let background = null;
-		let postEffect: any = null;
-		let wavyPlane: any = null;
-		let debrisArray: any[] = [];
+	camera.position.set(0, 0, 1024);
+	// camera.lookAt(0, -128, 0);
 
-		const createScene = () => {
-			console.log("creating scene");
-			postEffect = createPostEffect(backgroundRenderer.texture);
-			foregroundScene.add(postEffect);
-
-			debrisCoordinates.forEach((coordinateSet) => {
-				const newDebris = createDebris();
-				newDebris.position.set(
-					coordinateSet[0],
-					coordinateSet[1],
-					coordinateSet[2],
-				);
-
-				debrisArray.push(newDebris);
-				scene.add(newDebris);
-			});
-
-			wavyPlane = createWavyPlane();
-			wavyPlane.position.set(0, -128, 0);
-			wavyPlane.rotation.set((-90 * Math.PI) / 180, 0, 0);
-			scene.add(wavyPlane);
-
-			camera.position.set(0, 0, 1024);
-			// camera.lookAt(0, -128, 0);
-		};
-
-		const resizeWindow = () => {
+	return {
+		handleWindowScroll: () => {
+			camera.position.y = -window.pageYOffset / 4;
+		},
+		handleWindowResize: () => {
+			console.log("resizing");
 			canvas.width = document.body.clientWidth;
 			canvas.height = window.innerHeight;
 			camera.aspect = document.body.clientWidth / window.innerHeight;
 			camera.updateProjectionMatrix();
-			renderer.setSize(document.body.clientWidth, window.innerHeight);
-			backgroundRenderer.setSize(document.body.clientWidth, window.innerHeight);
+			renderTarget.setSize(document.body.clientWidth, window.innerHeight);
 			renderer.setPixelRatio(window.devicePixelRatio);
+			renderer.setSize(document.body.clientWidth, window.innerHeight);
 			renderer.setClearColor(0xeeeeee, 1.0);
 			postEffect.material.uniforms.resolution.value.set(
 				document.body.clientWidth,
 				window.innerHeight,
 			);
-		};
-
-		const render = () => {
+		},
+		render: () => {
 			wavyPlane.material.uniforms.time.value += 0.01;
 			debrisArray.map(
 				(debris: any) => (debris.material.uniforms.time.value += 0.01),
 			);
 			postEffect.material.uniforms.time.value += 0.05;
 
-			renderer.setRenderTarget(backgroundRenderer);
+			renderer.setRenderTarget(renderTarget);
 			renderer.render(scene, camera);
 			renderer.setRenderTarget(null);
-			renderer.render(foregroundScene, foregroundCamera);
-		};
+			renderer.render(dummyScene, dummycam);
+		},
+	};
+};
+
+const Scene = () => {
+	const didCreateScene = useRef(false);
+
+	useEffect(() => {
+		// if (didCreateScene.current) return;
+
+		const { handleWindowScroll, handleWindowResize, render } = createScene();
+
+		didCreateScene.current = true;
 
 		const renderLoop = () => {
 			render();
 			requestAnimationFrame(renderLoop);
 		};
 
-		function updateCamera() {
-			camera.position.y = -window.pageYOffset / 4;
-		}
+		window.addEventListener("scroll", handleWindowScroll);
+		window.addEventListener("resize", handleWindowResize);
 
-		window.addEventListener("scroll", updateCamera);
+		handleWindowResize();
+		renderLoop();
 
-		const on = () => {
-			window.addEventListener(
-				"resize",
-				debounce(() => {
-					resizeWindow();
-				}, 1),
-			);
+		return () => {
+			console.log(1);
+			window.removeEventListener("scroll", handleWindowScroll);
+			window.removeEventListener("resize", handleWindowResize);
 		};
-
-		const init = () => {
-			renderer.setSize(window.innerWidth, window.innerHeight);
-			renderer.setClearColor(0xeeeeee, 0.0);
-
-			on();
-			createScene();
-			resizeWindow();
-			renderLoop();
-		};
-		init();
 	}, []);
 
-	return <canvas css={canvasStyle} id="canvas"></canvas>;
+	return <canvas css={canvasStyle} id="canvas" />;
 };
 
 const canvasStyle = css`

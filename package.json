@@ -9,6 +9,9 @@
   "dependencies": {
     "@emotion/core": "10.0.35",
     "@octokit/rest": "18.12.0",
+    "@react-three/drei": "^9.6.2",
+    "@react-three/fiber": "^8.0.12",
+    "@react-three/postprocessing": "^2.3.2",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.1.1",
@@ -33,7 +36,7 @@
     "web-vitals": "2.1.4"
   },
   "scripts": {
-    "analyze": "source-map-explorer 'dist/static/js/*.js' --html result.html",
+    "analyze": "bundle-analyzer 'dist/static/js'",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build && rm -rf dist && mv build dist",
     "test": "react-app-rewired test",
@@ -72,12 +75,12 @@
     "@types/react-dom": "18.0.2",
     "@types/react-scroll": "^1.8.2",
     "@types/three": "^0.139.0",
+    "bundle-analyzer": "^0.0.6",
     "husky": "^5.2.0",
     "lint-staged": "^10.5.4",
     "prettier": "2.2.1",
     "pretty-quick": "^3.1.0",
     "react-app-rewired": "^2.2.1",
-    "source-map-explorer": "^2.5.2",
     "yarn-audit-fix": "^9.2.2"
   },
   "packageManager": "yarn@1.22.18"

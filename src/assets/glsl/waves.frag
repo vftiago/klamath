@@ -17,7 +17,7 @@ vec3 convertHsvToRgb(vec3 c){
 void main(){
   float now=clamp((time-delay)/duration,0.,1.);
   float opacity=(1.-length(vPosition.xy/vec2(radius)))*.6*now;
-  // vec3 v=normalize(vPosition);
-  // vec3 rgb=convertHsvToRgb(vec3(.5+(v.x+v.y+v.x)/40.+time*.1,.4,1.));
+//   vec3 v=normalize(vPosition);
+//   vec3 rgb=convertHsvToRgb(vec3(.5+(v.x+v.y+v.x)/40.+time*.1,.4,1.));
   gl_FragColor=vec4(vec3(.8,.8,.8),opacity);
 }
