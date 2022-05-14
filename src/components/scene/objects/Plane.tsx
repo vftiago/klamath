@@ -1,25 +1,24 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
-import { useFBO } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import fragmentShader from "../../../assets/glsl/waves.frag";
 import vertexShader from "../../../assets/glsl/waves.vert";
 
-const PLANE_DIMENSIONS = 800;
+const PLANE_DIMENSIONS = 1024;
 
 const Plane = () => {
-	const ref = useRef<THREE.Mesh>(null!);
-	const materialRef = useRef<THREE.RawShaderMaterial>(null!);
+	const meshRef = useRef<THREE.Mesh>(null!);
+	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null!);
 
 	useEffect(() => {
-		ref.current.position.set(0, -128, 0);
-		ref.current.rotation.set((-90 * Math.PI) / 180, 0, 0);
+		meshRef.current.position.set(0, -128, 0);
+		meshRef.current.rotation.set((-90 * Math.PI) / 180, 0, 0);
 	}, []);
 
 	useFrame(() => {
-		materialRef.current.uniforms.time.value += 0.01;
+		rawShaderMaterialRef.current.uniforms.time.value += 0.01;
 	});
 
 	const uniforms = {
@@ -30,7 +29,7 @@ const Plane = () => {
 	};
 
 	return (
-		<mesh ref={ref}>
+		<mesh ref={meshRef}>
 			<planeBufferGeometry
 				args={[
 					PLANE_DIMENSIONS,
@@ -40,7 +39,7 @@ const Plane = () => {
 				]}
 			/>
 			<rawShaderMaterial
-				ref={materialRef}
+				ref={rawShaderMaterialRef}
 				uniforms={uniforms}
 				vertexShader={vertexShader}
 				fragmentShader={fragmentShader}

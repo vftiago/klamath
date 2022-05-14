@@ -3,29 +3,49 @@
 import * as THREE from "three";
 
 import { jsx } from "@emotion/core";
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import { useFBO } from "@react-three/drei";
 import fragmentShader from "../../../assets/glsl/postEffect.frag";
 import vertexShader from "../../../assets/glsl/postEffect.vert";
 
 const PostEffect = () => {
-	const materialRef = useRef<THREE.RawShaderMaterial>(null!);
+	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null!);
 
-	const target = useFBO();
+	const target = new THREE.WebGLRenderTarget(
+		document.body.clientWidth,
+		window.innerHeight,
+	);
 
-	const [orthoCamera] = useState(
+	const handleWindowResize = () => {
+		target.setSize(document.body.clientWidth, window.innerHeight);
+		rawShaderMaterialRef.current.uniforms.resolution.value.set(
+			document.body.clientWidth,
+			window.innerHeight,
+		);
+	};
+
+	const [camera] = useState(
 		() => new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1),
 	);
 
-	const [orthoScene] = useState(() => new THREE.Scene());
+	const [scene] = useState(() => new THREE.Scene());
+
+	useEffect(() => {
+		window.addEventListener("resize", handleWindowResize);
+
+		return () => {
+			window.removeEventListener("resize", handleWindowResize);
+		};
+	}, []);
 
 	useFrame((state) => {
-		materialRef.current.uniforms.time.value += 0.05;
+		rawShaderMaterialRef.current.uniforms.time.value += 1;
+		rawShaderMaterialRef.current.visible = false;
 		state.gl.setRenderTarget(target);
 		state.gl.render(state.scene, state.camera);
+		rawShaderMaterialRef.current.visible = true;
 		state.gl.setRenderTarget(null);
-		state.gl.render(orthoScene, orthoCamera);
+		state.gl.render(scene, camera);
 	});
 
 	const uniforms = {
@@ -47,7 +67,7 @@ const PostEffect = () => {
 		<mesh>
 			<planeBufferGeometry args={[2, 2]} />
 			<rawShaderMaterial
-				ref={materialRef}
+				ref={rawShaderMaterialRef}
 				uniforms={uniforms}
 				vertexShader={vertexShader}
 				fragmentShader={fragmentShader}

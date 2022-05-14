@@ -13,22 +13,32 @@ const ThreeScene = () => {
 	const [camera] = useState(
 		() =>
 			new THREE.PerspectiveCamera(
-				40,
+				45,
 				window.innerWidth / window.innerHeight,
 				1,
 				10000,
 			),
 	);
 
-	camera.position.set(0, 0, 1024);
+	camera.position.set(0, 0, 2048);
 
 	const handleWindowScroll = () => {
-		camera.position.y = -window.pageYOffset / 4;
+		camera.position.y = -window.scrollY / 4;
+	};
+
+	const handleWindowResize = () => {
+		camera.aspect = document.body.clientWidth / window.innerHeight;
+		camera.updateProjectionMatrix();
 	};
 
 	useEffect(() => {
+		window.addEventListener("resize", handleWindowResize);
 		window.addEventListener("scroll", handleWindowScroll);
-		return () => window.removeEventListener("scroll", handleWindowScroll);
+
+		return () => {
+			window.removeEventListener("resize", handleWindowResize);
+			window.removeEventListener("scroll", handleWindowScroll);
+		};
 	}, []);
 
 	return (
@@ -39,7 +49,7 @@ const ThreeScene = () => {
 					antialias: true,
 				}}
 			>
-				<ClearColor></ClearColor>
+				<ClearColor />
 				<Plane />
 				<Box position={[400, -500, 200]}></Box>
 				<Box position={[-350, -600, -5]}></Box>

@@ -31,7 +31,7 @@ void main() {
   float monitor = monitor1 - monitor2;
 
   float vignetteMask = smoothstep(0.8, 1.4, length(vUv * 2.0 - 1.0));
-  vec3 vignette = vignetteMask * vec3(0,0,0) * 0.1;
+  vec3 vignette = vignetteMask * vec3(1.,1.,1.) * 0.1;
 
   float r = texture2D(texture, vUv - vec2(2.0, 0.0) / resolution).r;
   float g = texture2D(texture, vUv).g;
