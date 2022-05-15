@@ -100,7 +100,7 @@ const createScene = () => {
 			debrisArray.map(
 				(debris: any) => (debris.material.uniforms.time.value += 0.01),
 			);
-			postEffect.material.uniforms.time.value += 0.05;
+			postEffect.material.uniforms.time.value += 0.01;
 
 			renderer.setRenderTarget(renderTarget);
 			renderer.render(scene, camera);
