@@ -2,8 +2,8 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import * as THREE from "three";
-import { useEffect, useMemo, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
 import Box from "./objects/Box";
 import Plane from "./objects/Plane";
 import PostEffect from "./objects/PostEffect";

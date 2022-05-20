@@ -7,7 +7,7 @@ import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
-import { Fragment, useEffect, useRef } from "react";
+import { Fragment, useEffect } from "react";
 import { iconSize } from "../theme";
 import { colors } from "../theme";
 import Waterfall from "./Waterfalll";

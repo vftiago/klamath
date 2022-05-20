@@ -4,7 +4,6 @@ import { css, jsx } from "@emotion/core";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { PerspectiveCamera } from "three";
-import debounce from "../../utils/debounce";
 import createPostEffect from "./objects/postEffect";
 import createWavyPlane from "./objects/WavyPlane";
 import createDebris from "./objects/debris";
