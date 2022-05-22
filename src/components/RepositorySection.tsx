@@ -48,8 +48,6 @@ function RepositorySection({ onVisibilityChange }: Props) {
 			>
 				<h2 ref={ref}>Project Wall</h2>
 			</div>
-			<div>projects</div>
-			<div>repos</div>
 			<Suspense fallback={<LoadingIcon />}>
 				{data && <RepositoryWall data={data} />}
 			</Suspense>
