@@ -7,7 +7,7 @@ import { scroller } from "react-scroll";
 
 const Waterfall = () => {
 	const handleWaterfallClick = () => {
-		scroller.scrollTo("repositorySection", {
+		scroller.scrollTo("repository-section", {
 			smooth: true,
 		});
 	};

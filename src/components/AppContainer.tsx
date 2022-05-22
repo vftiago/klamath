@@ -9,11 +9,8 @@ import Footer from "./Footer";
 import RepositorySection from "./RepositorySection";
 import MainSection from "./MainSection";
 import NavigationBars from "./NavigationBars";
-import debounce from "../utils/debounce";
 import { screenSize } from "../theme";
-import ThreeScene from "./scene/ThreeScene";
-
-const Scene = React.lazy(() => import("./scene/Scene"));
+const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
 
 export type Page = {
 	inView: boolean;
@@ -65,6 +62,16 @@ function AppContainer() {
 		}
 	};
 
+	const handleButtonClick = () => {
+		if (muted) return;
+		playSound(buttonClickAudioElement);
+	};
+
+	const handleButtonHover = () => {
+		if (muted) return;
+		playSound(buttonHoverAudioElement);
+	};
+
 	const handleHeadphonesIconClick = () => {
 		setMuted(!muted);
 	};
@@ -109,26 +116,14 @@ function AppContainer() {
 				currentPageHeader={currentPageHeader}
 				muted={muted}
 				onHeadphonesIconClick={handleHeadphonesIconClick}
-				onButtonClick={() => {
-					if (muted) return;
-					playSound(buttonClickAudioElement);
-				}}
-				onButtonHover={() => {
-					if (muted) return;
-					playSound(buttonHoverAudioElement);
-				}}
+				onButtonClick={handleButtonClick}
+				onButtonHover={handleButtonHover}
 			/>
 			<MainSection
 				onVisibilityChange={handleVisibilityChange}
 				onHeadphonesIconClick={handleHeadphonesIconClick}
-				onButtonClick={() => {
-					if (muted) return;
-					playSound(buttonClickAudioElement);
-				}}
-				onButtonHover={() => {
-					if (muted) return;
-					playSound(buttonHoverAudioElement);
-				}}
+				onButtonClick={handleButtonClick}
+				onButtonHover={handleButtonHover}
 			/>
 			<RepositorySection onVisibilityChange={handleVisibilityChange} />
 			<Footer />
