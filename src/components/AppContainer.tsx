@@ -10,6 +10,7 @@ import RepositorySection from "./RepositorySection";
 import MainSection from "./MainSection";
 import NavigationBars from "./NavigationBars";
 import { screenSize } from "../theme";
+import ProjectSection from "./ProjectSection";
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
 
 export type Page = {
@@ -21,7 +22,7 @@ const pages: Page[] = [
 	{ inView: true, headers: ["Hello World"] },
 	{
 		inView: true,
-		headers: ["Stuff I've been working on lately"],
+		headers: ["Stuff I've been working on lately", "What's cooking"],
 	},
 ];
 
@@ -126,6 +127,7 @@ function AppContainer() {
 				onButtonHover={handleButtonHover}
 			/>
 			<RepositorySection onVisibilityChange={handleVisibilityChange} />
+			<ProjectSection onVisibilityChange={handleVisibilityChange} />
 			<Footer />
 		</div>
 	);

@@ -1,9 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Repositories } from "../api/octokit-api";
+import { Projects, Repositories } from "../api/octokit-api";
 import { motion } from "framer-motion";
 import RepositoryCard from "./common/RepositoryCard";
+import ProjectCard from "./common/ProjectCard";
 
 // #region framer-animations
 const projectListAnimation = {
@@ -32,36 +33,28 @@ const projectListItemAnimation = {
 };
 // #endregion framer-animations
 
-const RepositoryWall = ({ data }: { data: Repositories }) => {
+const ProjectWall = ({ data }: { data: Projects }) => {
 	return (
 		<motion.ul
 			initial="hidden"
 			animate="visible"
-			variants={projectListAnimation}
 			css={projectListStyle}
+			variants={projectListAnimation}
 		>
-			{data.map((repo, index) => {
+			{data.map((project, index) => {
 				return (
 					<motion.li key={index} variants={projectListItemAnimation}>
-						<RepositoryCard
-							htmlUrl={repo.html_url}
-							name={repo.name}
-							homepage={repo.homepage}
-						></RepositoryCard>
+						<ProjectCard
+							projectId={project.id}
+							projectName={project.name}
+							projectDescription={project.body}
+						></ProjectCard>
 					</motion.li>
 				);
 			})}
 		</motion.ul>
 	);
 };
-
-const projectSectionStyle = css`
-	min-height: 100vh;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
 
 const projectListStyle = css`
 	display: grid;
@@ -72,4 +65,4 @@ const projectListStyle = css`
 	padding: 0;
 `;
 
-export default RepositoryWall;
+export default ProjectWall;

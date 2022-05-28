@@ -46,7 +46,7 @@ function ProjectCard(props: ProjectCardProps) {
 	}, []);
 
 	return (
-		<GlassPane size="s" orientation="horizontal" css={projectCardStyle}>
+		<GlassPane size="m" orientation="horizontal" css={projectCardStyle}>
 			<h4>{projectName}</h4>
 			{projectDescription && <span>{projectDescription}</span>}
 			{data ? (

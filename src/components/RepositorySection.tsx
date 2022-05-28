@@ -4,8 +4,9 @@ import { css, jsx } from "@emotion/core";
 import { useInView } from "react-intersection-observer";
 import React, { Suspense, useEffect, useState } from "react";
 import { Element } from "react-scroll";
-import { getRepos, Repositories } from "../api/octokit-api";
+import { getRepos, Projects, Repositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
+import ProjectWall from "./ProjectWall";
 const RepositoryWall = React.lazy(() => import("./RepositoryWall"));
 
 type Props = {
@@ -13,27 +14,31 @@ type Props = {
 };
 
 function RepositorySection({ onVisibilityChange }: Props) {
-	const [data, setData] = useState<Repositories | null>(null);
+	const [repositoryData, setRepositoryData] = useState<Repositories | null>(
+		null,
+	);
 
 	const { ref, inView } = useInView({
 		threshold: 1,
 	});
 
 	useEffect(() => {
-		const loadProjects = async () => {
-			if (!data) {
+		const loadRepositories = async () => {
+			if (!repositoryData) {
 				const repos = await getRepos();
 
-				const data = repos.filter((repo) => !repo.fork && !repo.archived);
+				const repositoryData = repos.filter(
+					(repo) => !repo.fork && !repo.archived,
+				);
 
-				setData(data);
+				setRepositoryData(repositoryData);
 			}
 		};
 
-		if (inView && !data) {
-			loadProjects();
+		if (inView && !repositoryData) {
+			loadRepositories();
 		}
-	}, [inView, data]);
+	}, [inView, repositoryData]);
 
 	useEffect(() => {
 		onVisibilityChange(1, inView);
@@ -41,19 +46,41 @@ function RepositorySection({ onVisibilityChange }: Props) {
 
 	return (
 		<Element css={projectSectionStyle} name="repository-section">
-			<div
-				css={css`
-					margin: 80px 0 120px 0;
-				`}
-			>
-				<h2 ref={ref}>Project Wall</h2>
+			<div css={projectSectionTitleStyle} ref={ref}>
+				<h2>Projects</h2>
+				<h2>|</h2>
+				<h2>Repos</h2>
 			</div>
 			<Suspense fallback={<LoadingIcon />}>
-				{data && <RepositoryWall data={data} />}
+				{repositoryData && <RepositoryWall data={repositoryData} />}
 			</Suspense>
 		</Element>
 	);
 }
+
+const projectSectionTitleStyle = css`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 80px 0 120px 0;
+	width: 100%;
+	h2 {
+		justify-content: center;
+		margin: 0 8px;
+		&:first-of-type {
+			cursor: pointer;
+			flex: 1;
+			display: flex;
+			justify-content: flex-end;
+		}
+		&:last-of-type {
+			cursor: pointer;
+			flex: 1;
+			display: flex;
+			justify-content: flex-start;
+		}
+	}
+`;
 
 const projectSectionStyle = css`
 	min-height: 100vh;

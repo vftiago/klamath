@@ -14,7 +14,7 @@ const projectListAnimation = {
 			delay: 0.2,
 			duration: 0.8,
 			when: "beforeChildren",
-			staggerChildren: 0.2,
+			staggerChildren: 0.1,
 			ease: "backInOut",
 		},
 	},
@@ -38,7 +38,7 @@ const RepositoryWall = ({ data }: { data: Repositories }) => {
 			initial="hidden"
 			animate="visible"
 			variants={projectListAnimation}
-			css={projectListStyle}
+			css={repostoryListStyle}
 		>
 			{data.map((repo, index) => {
 				return (
@@ -55,15 +55,7 @@ const RepositoryWall = ({ data }: { data: Repositories }) => {
 	);
 };
 
-const projectSectionStyle = css`
-	min-height: 100vh;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
-
-const projectListStyle = css`
+const repostoryListStyle = css`
 	display: grid;
 	grid-column-gap: 32px;
 	grid-row-gap: 40px;
