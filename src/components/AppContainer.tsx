@@ -8,15 +8,19 @@ import playSound from "../utils/playSound";
 import Footer from "./Footer";
 import RepositorySection from "./RepositorySection";
 import MainSection from "./MainSection";
-import NavigationBars from "./NavigationBars";
+import Navbar from "./Navbar";
 import { screenSize } from "../theme";
-import ProjectSection from "./ProjectSection";
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
 
 export type Page = {
 	inView: boolean;
 	headers: string[];
 };
+
+export enum Orientation {
+	Horizontal = "horizontal",
+	Vertical = "vertical",
+}
 
 const pages: Page[] = [
 	{ inView: true, headers: ["Hello World"] },
@@ -28,7 +32,7 @@ const pages: Page[] = [
 
 function AppContainer() {
 	const [muted, setMuted] = useState<boolean>(true);
-	const [showScene, setShowScene] = useState<boolean>(
+	const [largeScreen, setLargeScreen] = useState<boolean>(
 		window.innerWidth > screenSize.lg,
 	);
 	const [currentPageHeader, setCurrentPageHeader] = useState<string>(
@@ -57,9 +61,9 @@ function AppContainer() {
 
 	const handleResize = () => {
 		if (window.innerWidth > screenSize.lg) {
-			setShowScene(true);
+			setLargeScreen(true);
 		} else {
-			setShowScene(false);
+			setLargeScreen(false);
 		}
 	};
 
@@ -112,9 +116,12 @@ function AppContainer() {
 				ref={buttonHoverAudioElement}
 				muted={muted}
 			></audio>
-			<Suspense fallback={null}>{showScene && backgroundScene}</Suspense>
-			<NavigationBars
+			<Suspense fallback={null}>{largeScreen && backgroundScene}</Suspense>
+			<Navbar
 				currentPageHeader={currentPageHeader}
+				orientation={
+					largeScreen ? Orientation.Vertical : Orientation.Horizontal
+				}
 				muted={muted}
 				onHeadphonesIconClick={handleHeadphonesIconClick}
 				onButtonClick={handleButtonClick}
@@ -126,8 +133,13 @@ function AppContainer() {
 				onButtonClick={handleButtonClick}
 				onButtonHover={handleButtonHover}
 			/>
-			<RepositorySection onVisibilityChange={handleVisibilityChange} />
-			<ProjectSection onVisibilityChange={handleVisibilityChange} />
+			<RepositorySection
+				onVisibilityChange={handleVisibilityChange}
+				orientation={
+					largeScreen ? Orientation.Vertical : Orientation.Horizontal
+				}
+			/>
+			{/* <ProjectSection onVisibilityChange={handleVisibilityChange} /> */}
 			<Footer />
 		</div>
 	);

@@ -11,10 +11,16 @@ import { Page } from "./AppContainer";
 
 const columnWidth = 80;
 
+enum Orientation {
+	Horizontal = "horizontal",
+	Vertical = "vertical",
+}
+
 // #region framer-animations
 const visible = {
 	opacity: 1,
 	x: 0,
+	y: 0,
 	transition: {
 		delay: 0.2,
 		duration: 0.8,
@@ -24,35 +30,38 @@ const visible = {
 	},
 };
 
-const leftColumnVariants = {
+const leftNavbarVariants = {
 	visible,
 	hidden: { opacity: 0, x: "-88px" },
 };
 
-// const rightColumnVariants = {
-// 	visible,
-// 	hidden: { opacity: 0, x: "88px" },
-// };
-// #endregion framer-animations
+const topNavbarVariants = {
+	visible,
+	hidden: { opacity: 0, y: "-88px" },
+};
 
 let typedExternalLink: Typed;
 
 type Props = {
 	muted: boolean;
+	orientation?: Orientation;
 	currentPageHeader: string;
 	onButtonClick: () => void;
 	onButtonHover: () => void;
 	onHeadphonesIconClick: () => void;
 };
 
-const NavigationBars = ({
+const Navbar = ({
 	muted,
+	orientation = Orientation.Vertical,
 	currentPageHeader,
 	onButtonClick,
 	onButtonHover,
 	onHeadphonesIconClick,
 }: Props) => {
 	const handleLogoClick = () => {
+		if (orientation === Orientation.Horizontal) return;
+
 		if (typedExternalLink) typedExternalLink.destroy();
 
 		onButtonClick();
@@ -86,8 +95,12 @@ const NavigationBars = ({
 			<motion.div
 				initial="hidden"
 				animate="visible"
-				variants={leftColumnVariants}
-				css={leftColumn}
+				variants={
+					orientation === Orientation.Horizontal
+						? topNavbarVariants
+						: leftNavbarVariants
+				}
+				css={getNavbarStyles(orientation)}
 			>
 				<div css={iconContainerStyle}>
 					<span
@@ -98,8 +111,8 @@ const NavigationBars = ({
 						<Logo size={logoSize}></Logo>
 					</span>
 				</div>
-				<div css={centerPieceStyle}>
-					<p id="current-page-header" css={rotatedNavbarHeaderStyle}></p>
+				<div css={getCenterPieceStyles(orientation)}>
+					<p id="current-page-header"></p>
 				</div>
 				<div css={iconContainerStyle}>
 					<span
@@ -111,40 +124,81 @@ const NavigationBars = ({
 					</span>
 				</div>
 			</motion.div>
-			{/* <motion.div
-				initial="hidden"
-				animate="visible"
-				variants={rightColumnVariants}
-				css={rightColumn}
-			>
-				<div css={iconContainerStyle}></div>
-				<div
-					css={[iconContainerStyle, muted && mutedStyle]}
-					onMouseEnter={onButtonHover}
-					onClick={onHeadphonesIconClick}
-				>
-					<HeadphonesIcon size={iconSize}></HeadphonesIcon>
-				</div>
-			</motion.div> */}
 		</Fragment>
 	);
 };
 
-const rotatedNavbarHeaderStyle = css`
-	width: 100vh;
-	position: absolute;
-	display: flex;
+const horizontalBarStyles = css`
+	position: fixed;
+	z-index: 1;
+	height: 80px;
+	display: grid;
+	grid-template-columns: 80px auto 80px;
 	align-items: center;
-	justify-content: center;
-	transform: translate(-50vh) rotate(-90deg);
-	margin-left: 40px;
+	width: 100%;
+	background-color: rgba(236, 236, 236, 0.9);
 `;
 
-const centerPieceStyle = css`
-	height: 80px;
-	display: flex;
+const verticalBarStyles = css`
+	position: fixed;
+	z-index: 1;
+	width: 80px;
+	display: grid;
+	grid-template-rows: 80px auto 80px;
 	align-items: center;
+	min-height: 100vh;
+	background-color: rgba(88, 88, 88, 0.02);
 `;
+
+const getNavbarStyles = (orientation: Orientation) => {
+	const navbarStyles =
+		orientation === "horizontal" ? horizontalBarStyles : verticalBarStyles;
+
+	return css`
+		${navbarStyles};
+		border-right: 1px solid rgba(128, 128, 128, 0.1);
+		box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
+		img {
+			height: ${logoSize + "px"};
+			width: ${logoSize + "px"};
+		}
+	`;
+};
+
+const getCenterPieceStyles = (orientation: Orientation) => {
+	const horizontalParagraphStyles = css`
+		p {
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	`;
+
+	const verticalParagraphStyles = css`
+		p {
+			width: 100vh;
+			position: absolute;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform: translate(-50vh) rotate(-90deg);
+			margin-left: 40px;
+		}
+	`;
+
+	const paragraphStyles =
+		orientation === "horizontal"
+			? horizontalParagraphStyles
+			: verticalParagraphStyles;
+
+	return css`
+		height: 80px;
+		display: flex;
+		align-items: center;
+		${paragraphStyles}
+	`;
+};
 
 const iconContainerStyle = css`
 	z-index: 1;
@@ -207,32 +261,4 @@ const logoStyle = css`
 	}
 `;
 
-const columnStyle = css`
-	position: fixed;
-	z-index: 1;
-	width: 80px;
-	display: grid;
-	grid-template-rows: 80px auto 80px;
-	align-items: center;
-	min-height: 100vh;
-	background-color: rgba(88, 88, 88, 0.02);
-`;
-
-const leftColumn = css`
-	${columnStyle};
-	border-right: 1px solid rgba(128, 128, 128, 0.1);
-	box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
-	img {
-		height: ${logoSize + "px"};
-		width: ${logoSize + "px"};
-	}
-`;
-
-// const rightColumn = css`
-// 	${columnStyle};
-// 	right: 0;
-// 	border-left: 1px solid rgba(128, 128, 128, 0.1);
-// 	box-shadow: -3px 3px 3px 0px rgba(88, 88, 88, 0.03);
-// `;
-
-export default NavigationBars;
+export default Navbar;

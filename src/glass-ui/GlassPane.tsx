@@ -6,6 +6,7 @@ import { ReactNode } from "react";
 import { GOLDEN_RATIO } from "../constants";
 
 type Orientation = "horizontal" | "vertical";
+
 type Size = "s" | "m" | "l";
 
 type Props = {
@@ -48,7 +49,7 @@ const buildCardStyle = (orientation: Orientation, size: Size) => {
 		background-color: rgba(88, 88, 88, 0.03);
 		border: 1px solid rgba(128, 128, 128, 0.1);
 		height: ${`${height}px`};
-		width: ${`${width}px`};
+		/* width: ${`${width}px`}; */
 		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 		box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
 	`;

@@ -22,9 +22,11 @@ void main() {
 
   float monitor1 = abs(sin(vUv.y * resolution.y * 2.0 + time * 6.0)) * 0.04;
   float monitor2 = abs(sin(vUv.y * resolution.y * 1.0 + time * 3.0)) * 0.04;
+  
   float monitor = monitor1 - monitor2;
 
   float vignetteMask = smoothstep(0.8, 1.4, length(vUv * 2.0 - 1.0));
+
   vec3 vignette = vignetteMask * vec3(1.,1.,1.) * 0.1;
 
   float r = texture2D(texture, vUv - vec2(2.0, 0.0) / resolution).r;
