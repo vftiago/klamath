@@ -123,13 +123,15 @@ const Navbar = ({
 
 const horizontalBarStyles = css`
 	position: fixed;
+	top: 0;
 	z-index: 1;
 	height: 80px;
 	display: grid;
 	grid-template-columns: 80px auto 80px;
 	align-items: center;
 	width: 100%;
-	background-color: rgba(236, 236, 236, 0.9);
+	background-color: rgba(235, 235, 235, 0.9);
+	box-shadow: 0 3px 3px 0px rgba(88, 88, 88, 0.1);
 `;
 
 const verticalBarStyles = css`
@@ -141,6 +143,7 @@ const verticalBarStyles = css`
 	align-items: center;
 	min-height: 100vh;
 	background-color: rgba(88, 88, 88, 0.02);
+	box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
 `;
 
 const getNavbarStyles = (orientation: Orientation) => {
@@ -150,7 +153,6 @@ const getNavbarStyles = (orientation: Orientation) => {
 	return css`
 		${navbarStyles};
 		border-right: 1px solid rgba(128, 128, 128, 0.1);
-		box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
 		backdrop-filter: blur(4px);
 		img {
 			height: ${logoSize + "px"};
