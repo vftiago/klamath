@@ -7,9 +7,6 @@ import Logo from "./icons/Logo";
 import HeadphonesIcon from "./icons/Headphones";
 import { colors, iconSize, logoSize } from "../theme";
 import Typed from "typed.js";
-import { Page } from "./AppContainer";
-
-const columnWidth = 80;
 
 enum Orientation {
 	Horizontal = "horizontal",
@@ -103,11 +100,7 @@ const Navbar = ({
 				css={getNavbarStyles(orientation)}
 			>
 				<div css={iconContainerStyle}>
-					<span
-						css={logoStyle}
-						onMouseEnter={onButtonHover}
-						onClick={handleLogoClick}
-					>
+					<span css={logoStyle} onMouseEnter={onButtonHover}>
 						<Logo size={logoSize}></Logo>
 					</span>
 				</div>
@@ -158,6 +151,7 @@ const getNavbarStyles = (orientation: Orientation) => {
 		${navbarStyles};
 		border-right: 1px solid rgba(128, 128, 128, 0.1);
 		box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
+		backdrop-filter: blur(4px);
 		img {
 			height: ${logoSize + "px"};
 			width: ${logoSize + "px"};
@@ -250,7 +244,7 @@ const logoStyle = css`
 		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 		fill: #333;
 	}
-	&:hover {
+	/* &:hover {
 		cursor: pointer;
 		svg {
 			fill: ${colors.icon.accent};
@@ -258,7 +252,7 @@ const logoStyle = css`
 		&::after {
 			background-color: ${colors.icon.accent};
 		}
-	}
+	} */
 `;
 
 export default Navbar;
