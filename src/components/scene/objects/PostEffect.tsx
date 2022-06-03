@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import fragmentShader from "../../../assets/glsl/postEffect.frag";
 import vertexShader from "../../../assets/glsl/postEffect.vert";
 
-const PostEffect = () => {
+const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null!);
 
 	const target = new THREE.WebGLRenderTarget(
@@ -23,10 +23,6 @@ const PostEffect = () => {
 			window.innerHeight,
 		);
 	};
-
-	const [camera] = useState(
-		() => new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1),
-	);
 
 	const [scene] = useState(() => new THREE.Scene());
 
@@ -45,7 +41,7 @@ const PostEffect = () => {
 		state.gl.render(state.scene, state.camera);
 		rawShaderMaterialRef.current.visible = true;
 		state.gl.setRenderTarget(null);
-		state.gl.render(scene, camera);
+		state.gl.render(scene, state.camera);
 	});
 
 	const uniforms = {
@@ -64,7 +60,7 @@ const PostEffect = () => {
 	};
 
 	return (
-		<mesh>
+		<mesh {...props}>
 			<planeBufferGeometry args={[2, 2]} />
 			<rawShaderMaterial
 				ref={rawShaderMaterialRef}

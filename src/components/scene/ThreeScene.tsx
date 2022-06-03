@@ -20,7 +20,7 @@ const ThreeScene = () => {
 			),
 	);
 
-	camera.position.set(0, 0, 2048);
+	camera.position.set(0, 0, 1024);
 
 	const handleWindowScroll = () => {
 		camera.position.y = -window.scrollY / 4;
@@ -58,7 +58,7 @@ const ThreeScene = () => {
 				<Box position={[-100, -1200, -300]}></Box>
 				<Box position={[100, -1100, 25]}></Box>
 				<Box position={[150, -1500, -10]}></Box>
-				<PostEffect />
+				<PostEffect position={[0, -200, 0]} />
 			</Canvas>
 		</div>
 	);
