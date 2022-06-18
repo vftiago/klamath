@@ -10,24 +10,20 @@ import RepositorySection from "./RepositorySection";
 import MainSection from "./MainSection";
 import Navbar from "./Navbar";
 import { screenSize } from "../theme";
+import { WEEKDAYS } from "../constants";
+import { pickRandomArrayElement } from "../utils/pickRandomArrayElement";
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
-
-export type Page = {
-	inView: boolean;
-	headers: string[];
-};
 
 export enum Orientation {
 	Horizontal = "horizontal",
 	Vertical = "vertical",
 }
 
-const pages: Page[] = [
-	{ inView: true, headers: ["Hello World"] },
-	{
-		inView: true,
-		headers: ["Stuff I've been working on lately", "What's cooking"],
-	},
+const today = WEEKDAYS[new Date().getDay()];
+
+const headers = [
+	["Hello World", `It is ${today}`, "Welcome back"],
+	["Stuff I've been working on lately", "What's cooking", "Latest projects"],
 ];
 
 function AppContainer() {
@@ -35,29 +31,19 @@ function AppContainer() {
 	const [largeScreen, setLargeScreen] = useState<boolean>(
 		window.innerWidth > screenSize.lg,
 	);
-	const [currentPageHeader, setCurrentPageHeader] = useState<string>(
-		pages[0].headers[0],
+	const [pageVisibilityInfo, setPageVisibilityInfo] = useState<
+		Map<number, boolean>
+	>(
+		new Map([
+			[0, true],
+			[1, false],
+		]),
 	);
-	const pageVisibilityRef = useRef<Partial<Page>[]>([
-		{ inView: true },
-		{ inView: false },
-	]);
+	const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
+	const [header, setHeader] = useState<string>("Hello World");
 
 	const buttonClickAudioElement = useRef(null);
 	const buttonHoverAudioElement = useRef(null);
-
-	// useEffect(() => {
-	// 	const handleVisibilityChange = () => {
-	// 		if (muted) return;
-	// 		document.hidden ? setMuted(true) : setMuted(false);
-	// 	};
-
-	// 	document.addEventListener("visibilitychange", handleVisibilityChange);
-
-	// 	return () => {
-	// 		document.removeEventListener("visibilitychange", handleVisibilityChange);
-	// 	};
-	// }, [muted]);
 
 	const handleResize = () => {
 		if (window.innerWidth > screenSize.lg) {
@@ -81,20 +67,26 @@ function AppContainer() {
 		setMuted(!muted);
 	};
 
-	const handleVisibilityChange = (page: number, inView: boolean) => {
-		pageVisibilityRef.current.splice(page, 1, { inView });
+	const handleVisibilityChange = (pageNumber: number, inView: boolean) => {
+		setPageVisibilityInfo(pageVisibilityInfo.set(pageNumber, inView));
 
-		const firstVisiblePage = pageVisibilityRef.current.findIndex(
-			(page) => page.inView,
+		const firstPageVisibilityInfo = [...pageVisibilityInfo].find(
+			(page) => page[1],
 		);
 
-		if (firstVisiblePage > -1) {
-			setCurrentPageHeader(
-				pages[firstVisiblePage].headers[
-					Math.ceil(Math.random() * pages[firstVisiblePage].headers.length - 1)
-				],
-			);
-		}
+		if (
+			!firstPageVisibilityInfo ||
+			firstPageVisibilityInfo[0] === firstVisiblePage
+		)
+			return;
+
+		setFirstVisiblePage(firstPageVisibilityInfo[0]);
+
+		const header: string = pickRandomArrayElement(
+			headers[firstPageVisibilityInfo[0]],
+		);
+
+		setHeader(header);
 	};
 
 	useEffect(() => {
@@ -102,7 +94,7 @@ function AppContainer() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	const backgroundScene = useMemo(() => <ThreeScene />, []);
+	const Scene = useMemo(() => <ThreeScene />, []);
 
 	return (
 		<div css={appContainerStyles}>
@@ -116,9 +108,9 @@ function AppContainer() {
 				ref={buttonHoverAudioElement}
 				muted={muted}
 			></audio>
-			<Suspense fallback={null}>{largeScreen && backgroundScene}</Suspense>
+			<Suspense fallback={null}>{largeScreen && Scene}</Suspense>
 			<Navbar
-				currentPageHeader={currentPageHeader}
+				currentPageHeader={header}
 				orientation={
 					largeScreen ? Orientation.Vertical : Orientation.Horizontal
 				}

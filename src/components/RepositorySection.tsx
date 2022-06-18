@@ -4,14 +4,13 @@ import { css, jsx } from "@emotion/core";
 import { useInView } from "react-intersection-observer";
 import React, { Suspense, useEffect, useState } from "react";
 import { Element } from "react-scroll";
-import { getRepos, Projects, Repositories } from "../api/octokit-api";
+import { getRepos, Repositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
-import ProjectWall from "./ProjectWall";
 import { Orientation } from "./AppContainer";
 const RepositoryWall = React.lazy(() => import("./RepositoryWall"));
 
 type Props = {
-	onVisibilityChange: (page: number, inView: boolean) => void;
+	onVisibilityChange: (pageNumber: number, inview: boolean) => void;
 	orientation: Orientation;
 };
 

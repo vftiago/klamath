@@ -11,7 +11,7 @@ import { Fragment, useEffect } from "react";
 import { iconSize } from "../theme";
 import { colors } from "../theme";
 import Waterfall from "./Waterfalll";
-import { EMAIL } from "../constants";
+import { EMAIL, WEEKDAYS } from "../constants";
 import { useInView } from "react-intersection-observer";
 
 // #region framer-animations
@@ -70,7 +70,7 @@ type Props = {
 	onButtonClick: () => void;
 	onButtonHover: () => void;
 	onHeadphonesIconClick: () => void;
-	onVisibilityChange: (page: number, inView: boolean) => void;
+	onVisibilityChange: (pageNumber: number, inview: boolean) => void;
 };
 
 function MainSection({
