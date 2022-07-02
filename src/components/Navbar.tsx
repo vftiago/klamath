@@ -100,7 +100,11 @@ const Navbar = ({
 				css={getNavbarStyles(orientation)}
 			>
 				<div css={iconContainerStyle}>
-					<span css={logoStyle} onMouseEnter={onButtonHover}>
+					<span
+						css={logoStyle}
+						onMouseEnter={onButtonHover}
+						onClick={handleLogoClick}
+					>
 						<Logo size={logoSize}></Logo>
 					</span>
 				</div>
@@ -246,7 +250,7 @@ const logoStyle = css`
 		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 		fill: #333;
 	}
-	/* &:hover {
+	&:hover {
 		cursor: pointer;
 		svg {
 			fill: ${colors.icon.accent};
@@ -254,7 +258,7 @@ const logoStyle = css`
 		&::after {
 			background-color: ${colors.icon.accent};
 		}
-	} */
+	}
 `;
 
 export default Navbar;
