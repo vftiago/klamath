@@ -1,12 +1,12 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useInView } from "react-intersection-observer";
 import React, { Suspense, useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
 import { getRepos, Repositories } from "../api/octokit-api";
-import LoadingIcon from "./icons/LoadingIcon";
 import { Orientation } from "./AppContainer";
+import LoadingIcon from "./icons/LoadingIcon";
 const RepositoryWall = React.lazy(() => import("./RepositoryWall"));
 
 type Props = {
@@ -48,7 +48,7 @@ function RepositorySection({ onVisibilityChange, orientation }: Props) {
 	return (
 		<Element css={projectSectionStyle} name="repository-section">
 			<div css={projectSectionTitleStyle} ref={ref}>
-				<h2>Projects</h2>
+				<h2>Repos</h2>
 				{/* <h2>|</h2>
 				<h2>Repos</h2> */}
 			</div>
@@ -73,7 +73,7 @@ const projectSectionTitleStyle = css`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin: 80px 0 120px 0;
+	margin: 80px 0 10px 0;
 	width: 100%;
 	/* h2 {
 		justify-content: center;

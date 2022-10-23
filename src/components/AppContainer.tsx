@@ -4,14 +4,14 @@ import { css, jsx } from "@emotion/core";
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
+import { WEEKDAYS } from "../constants";
+import { screenSize } from "../theme";
+import { pickRandomArrayElement } from "../utils/pickRandomArrayElement";
 import playSound from "../utils/playSound";
 import Footer from "./Footer";
-import RepositorySection from "./RepositorySection";
 import MainSection from "./MainSection";
 import Navbar from "./Navbar";
-import { screenSize } from "../theme";
-import { WEEKDAYS } from "../constants";
-import { pickRandomArrayElement } from "../utils/pickRandomArrayElement";
+import RepositorySection from "./RepositorySection";
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
 
 export enum Orientation {
