@@ -5,6 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import fragmentShader from "../../../assets/glsl/waves.frag";
 import vertexShader from "../../../assets/glsl/waves.vert";
+import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
 
 const PLANE_DIMENSIONS = 1024;
 
@@ -18,7 +19,7 @@ const Plane = () => {
 	}, []);
 
 	useFrame(() => {
-		rawShaderMaterialRef.current.uniforms.time.value += 0.01;
+		rawShaderMaterialRef.current.uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
 	});
 
 	const uniforms = {

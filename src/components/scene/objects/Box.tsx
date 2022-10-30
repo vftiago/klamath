@@ -1,19 +1,20 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import * as THREE from "three";
-import { useRef } from "react";
+import { jsx } from "@emotion/core";
 import { useFrame } from "@react-three/fiber";
+import { useRef } from "react";
+import * as THREE from "three";
 
 import fragmentShader from "../../../assets/glsl/debris.frag";
 import vertexShader from "../../../assets/glsl/debris.vert";
+import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
 
 function Box(props: JSX.IntrinsicElements["mesh"]) {
 	const ref = useRef<THREE.Mesh>(null!);
 	const materialRef = useRef<THREE.RawShaderMaterial>(null!);
 
 	useFrame(() => {
-		materialRef.current.uniforms.time.value += 0.01;
+		materialRef.current.uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
 	});
 
 	const uniforms = {
