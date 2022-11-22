@@ -22,7 +22,13 @@ export enum Orientation {
 const today = WEEKDAYS[new Date().getDay()];
 
 const headers = [
-	["Hello World", `It is ${today}`, "Welcome back"],
+	[
+		"Hello World",
+		`It is ${today}`,
+		"Welcome back",
+		`const pipe =
+	(...fns) => (x) => fns.reduce((v, f) => f(v), x)`,
+	],
 	["Stuff I've been working on lately", "What's cooking", "Latest projects"],
 ];
 
