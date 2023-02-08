@@ -29,7 +29,7 @@ function RepositorySection({ onVisibilityChange, orientation }: Props) {
 				const repos = await getRepos();
 
 				const repositoryData = repos.filter(
-					(repo) => !repo.fork && !repo.archived,
+					(repo) => !repo.fork && !repo.archived && repo.name !== "vftiago",
 				);
 
 				setRepositoryData(repositoryData);
