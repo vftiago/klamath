@@ -1,13 +1,13 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import React, { Suspense, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
+import React, { Suspense, useEffect, useState } from "react";
 import { Element } from "react-scroll";
 import { getRepos, Repositories } from "../api/octokit-api";
-import { Orientation } from "./AppContainer";
 import LoadingIcon from "./icons/LoadingIcon";
-const RepositoryWall = React.lazy(() => import("./RepositoryWall"));
+import { Orientation } from "./AppContainer";
+const RepositoryList = React.lazy(() => import("./RepositoryList"));
 
 type Props = {
 	onVisibilityChange: (pageNumber: number, inview: boolean) => void;
@@ -43,54 +43,35 @@ function RepositorySection({ onVisibilityChange, orientation }: Props) {
 
 	useEffect(() => {
 		onVisibilityChange(1, inView);
-	}, [inView]);
+	}, [inView, onVisibilityChange]);
 
 	return (
-		<Element css={projectSectionStyle} name="repository-section">
-			<div css={projectSectionTitleStyle} ref={ref}>
-				<h2>Repos</h2>
-				{/* <h2>|</h2>
-				<h2>Repos</h2> */}
+		<Element css={repositorySectionContainerStyle} name="repository-section">
+			<div ref={ref} />
+			<h2>Repos</h2>
+			<div css={repositorySectionStyle}>
+				<Suspense fallback={<LoadingIcon />}>
+					{repositoryData && <RepositoryList data={repositoryData} />}
+				</Suspense>
 			</div>
-			<Suspense fallback={<LoadingIcon />}>
-				{repositoryData && (
-					<RepositoryWall data={repositoryData} orientation={orientation} />
-				)}
-			</Suspense>
 		</Element>
 	);
 }
-const projectSectionStyle = css`
-	min-height: 100vh;
-	width: 100%;
+
+const repositorySectionContainerStyle = css`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-items: center;
+	padding: 0 120px;
+	gap: 80px;
 `;
 
-const projectSectionTitleStyle = css`
+const repositorySectionStyle = css`
 	display: flex;
+	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	margin: 80px 0 10px 0;
+	min-height: 100vh;
 	width: 100%;
-	/* h2 {
-		justify-content: center;
-		margin: 0 8px;
-		&:first-of-type {
-			cursor: pointer;
-			flex: 1;
-			display: flex;
-			justify-content: flex-end;
-		}
-		&:last-of-type {
-			cursor: pointer;
-			flex: 1;
-			display: flex;
-			justify-content: flex-start;
-		}
-	} */
 `;
 
 export default RepositorySection;

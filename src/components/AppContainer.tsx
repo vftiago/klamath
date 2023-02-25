@@ -137,7 +137,6 @@ function AppContainer() {
 					largeScreen ? Orientation.Vertical : Orientation.Horizontal
 				}
 			/>
-			{/* <ProjectSection onVisibilityChange={handleVisibilityChange} /> */}
 			<Footer />
 		</div>
 	);
@@ -146,7 +145,7 @@ function AppContainer() {
 const appContainerStyles = css`
 	display: flex;
 	flex-direction: column;
-	gap: 200px;
+	gap: 120px;
 `;
 
 export default AppContainer;
