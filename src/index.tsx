@@ -4,10 +4,9 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import AppContainer from "./components/AppContainer";
 
-const container = document.getElementById("root");
-const root = createRoot(container!);
+const root = document.getElementById("root");
 
-root.render(
+createRoot(root!).render(
 	<React.StrictMode>
 		<AppContainer />
 	</React.StrictMode>,

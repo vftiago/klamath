@@ -31,7 +31,7 @@ const Plane = () => {
 
 	return (
 		<mesh ref={meshRef}>
-			<planeBufferGeometry
+			<planeGeometry
 				args={[
 					PLANE_DIMENSIONS,
 					PLANE_DIMENSIONS,

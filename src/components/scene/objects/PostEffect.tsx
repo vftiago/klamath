@@ -61,7 +61,7 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 
 	return (
 		<mesh {...props}>
-			<planeBufferGeometry args={[2, 2]} />
+			<planeGeometry args={[2, 2]} />
 			<rawShaderMaterial
 				ref={rawShaderMaterialRef}
 				uniforms={uniforms}
