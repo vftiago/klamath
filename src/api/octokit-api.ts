@@ -2,7 +2,7 @@ import { Octokit } from "@octokit/rest";
 import { Endpoints } from "@octokit/types";
 
 const octokit = new Octokit({
-	auth: process.env.REACT_APP_GITHUB_AUTH_TOKEN,
+	auth: import.meta.env.VITE_GITHUB_AUTH_TOKEN,
 	userAgent: "klamath",
 	previews: ["inertia"],
 });
@@ -21,9 +21,7 @@ export const getProjects = async (): Promise<Projects> => {
 	return response.data;
 };
 
-export const getProjectColumns = async (
-	projectId: number,
-): Promise<ProjectColumns> => {
+export const getProjectColumns = async (projectId: number): Promise<ProjectColumns> => {
 	const response = await octokit.rest.projects.listColumns({
 		project_id: projectId,
 	});
@@ -31,9 +29,7 @@ export const getProjectColumns = async (
 	return response.data;
 };
 
-export const getProjectColumnCards = async (
-	columnId: number,
-): Promise<ProjectColumnCards> => {
+export const getProjectColumnCards = async (columnId: number): Promise<ProjectColumnCards> => {
 	const response = await octokit.rest.projects.listCards({
 		column_id: columnId,
 	});
@@ -51,9 +47,7 @@ export const getRepos = async (): Promise<Repositories> => {
 	return response.data;
 };
 
-export const getRepositoryCommits = async (
-	repositoryName: string,
-): Promise<RepositoryCommits> => {
+export const getRepositoryCommits = async (repositoryName: string): Promise<RepositoryCommits> => {
 	const response = await octokit.rest.repos.listCommits({
 		owner: "vftiago",
 		repo: repositoryName,
