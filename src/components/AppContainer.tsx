@@ -4,7 +4,6 @@ import { css, jsx } from "@emotion/core";
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
-import { WEEKDAYS } from "../constants";
 import { screenSize } from "../theme";
 import { pickRandomArrayElement } from "../utils/pickRandomArrayElement";
 import playSound from "../utils/playSound";
@@ -12,25 +11,13 @@ import Footer from "./Footer";
 import MainSection from "./MainSection";
 import Navbar from "./Navbar";
 import RepositorySection from "./RepositorySection";
+import { weightedHeaders } from "./weighted-tables/headers";
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
 
 export enum Orientation {
 	Horizontal = "horizontal",
 	Vertical = "vertical",
 }
-
-const today = WEEKDAYS[new Date().getDay()];
-
-const headers = [
-	[
-		"Hello World",
-		`It is ${today}`,
-		"Welcome back",
-		`const pipe =
-	(...fns) => (x) => fns.reduce((v, f) => f(v), x)`,
-	],
-	["Stuff I've been working on lately", "What's cooking", "Latest projects"],
-];
 
 function AppContainer() {
 	const [muted, setMuted] = useState<boolean>(true);
@@ -88,9 +75,7 @@ function AppContainer() {
 
 		setFirstVisiblePage(firstPageVisibilityInfo[0]);
 
-		const header: string = pickRandomArrayElement(
-			headers[firstPageVisibilityInfo[0]],
-		);
+		const header = weightedHeaders[firstPageVisibilityInfo[0]].pick();
 
 		setHeader(header);
 	};
