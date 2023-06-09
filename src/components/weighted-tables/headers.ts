@@ -1,6 +1,5 @@
-import { createWeightedTable } from "weighted/src/weighted";
+import { weighted, addWeights } from "@lrkit/weighted";
 import { WEEKDAYS } from "../../constants";
-import { addWeights } from "../../utils/addWeights";
 
 const today = WEEKDAYS[new Date().getDay()];
 
@@ -16,6 +15,6 @@ const headers = [
 ];
 
 export const weightedHeaders = [
-	createWeightedTable(addWeights(headers[0])),
-	createWeightedTable(addWeights(headers[1])),
+	weighted(addWeights(headers[0])),
+	weighted(addWeights(headers[1])),
 ];

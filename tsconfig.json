@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"allowSyntheticDefaultImports": true,
 		"target": "esnext",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"strict": true,
@@ -8,7 +9,7 @@
 		"resolveJsonModule": true,
 		"noEmit": true,
 		"jsx": "react",
-		"types": ["vite/client"]
+		"types": ["vite/client", "node"]
 	},
 	"include": ["src"]
 }
