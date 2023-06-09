@@ -1,11 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { css, jsx } from "@emotion/core";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
 import { screenSize } from "../theme";
-import { pickRandomArrayElement } from "../utils/pickRandomArrayElement";
 import playSound from "../utils/playSound";
 import Footer from "./Footer";
 import MainSection from "./MainSection";
