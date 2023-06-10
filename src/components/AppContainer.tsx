@@ -1,7 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
 import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
-import { css, jsx } from "@emotion/core";
+import { css } from "@emotion/css";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
 import { screenSize } from "../theme";
@@ -11,6 +9,7 @@ import MainSection from "./MainSection";
 import Navbar from "./Navbar";
 import RepositorySection from "./RepositorySection";
 import { weightedHeaders } from "./weighted-tables/headers";
+
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
 
 export enum Orientation {
@@ -87,7 +86,7 @@ function AppContainer() {
 	const Scene = useMemo(() => <ThreeScene />, []);
 
 	return (
-		<div css={appContainerStyles}>
+		<div className={appContainerStyles}>
 			<audio
 				src={buttonClick}
 				ref={buttonClickAudioElement}

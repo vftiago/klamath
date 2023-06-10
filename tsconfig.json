@@ -9,7 +9,8 @@
 		"resolveJsonModule": true,
 		"noEmit": true,
 		"jsx": "react",
-		"types": ["vite/client", "node"]
+		"types": ["vite/client", "node"],
+    "skipLibCheck": true
 	},
 	"include": ["src"]
 }

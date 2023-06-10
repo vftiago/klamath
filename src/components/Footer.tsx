@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import Typed from "typed.js";
 import { colors } from "../theme";
 import { useEffect } from "react";
@@ -29,7 +28,7 @@ function Footer() {
 
 	return (
 		<div ref={ref}>
-			<div css={footerStyle}>
+			<div className={footerStyle}>
 				<div>
 					<p id="mission-statement"></p>
 				</div>

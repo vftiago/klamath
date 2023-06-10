@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import { Repositories } from "../api/octokit-api";
 import { motion } from "framer-motion";
 import RepositoryCard from "./common/RepositoryCard";
@@ -38,7 +37,7 @@ const RepositoryList = ({ data }: { data: Repositories }) => {
 			initial="hidden"
 			animate="visible"
 			variants={projectListAnimation}
-			css={repostoryListStyle}
+			className={repostoryListStyle}
 		>
 			{data.map((repo, index) => {
 				return (

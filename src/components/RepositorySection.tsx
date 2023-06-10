@@ -1,8 +1,6 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import { useInView } from "react-intersection-observer";
 import React, { Suspense, useEffect, useState } from "react";
+import { css } from "@emotion/css";
+import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
 import { getRepos, Repositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
@@ -14,7 +12,7 @@ type Props = {
 	orientation: Orientation;
 };
 
-function RepositorySection({ onVisibilityChange, orientation }: Props) {
+function RepositorySection({ onVisibilityChange }: Props) {
 	const [repositoryData, setRepositoryData] = useState<Repositories | null>(
 		null,
 	);
@@ -46,10 +44,10 @@ function RepositorySection({ onVisibilityChange, orientation }: Props) {
 	}, [inView, onVisibilityChange]);
 
 	return (
-		<Element css={repositorySectionContainerStyle} name="repository-section">
+		<Element className={repositorySectionContainerStyle} name="repository-section">
 			<div ref={ref} />
 			<h2>Repos</h2>
-			<div css={repositorySectionStyle}>
+			<div className={repositorySectionStyle}>
 				<Suspense fallback={<LoadingIcon />}>
 					{repositoryData && <RepositoryList data={repositoryData} />}
 				</Suspense>

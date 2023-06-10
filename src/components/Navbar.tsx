@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import { Fragment, useEffect } from "react";
 import { motion } from "framer-motion";
 import Logo from "./icons/Logo";
@@ -97,23 +96,23 @@ const Navbar = ({
 						? topNavbarVariants
 						: leftNavbarVariants
 				}
-				css={getNavbarStyles(orientation)}
+				className={getNavbarStyles(orientation)}
 			>
-				<div css={iconContainerStyle}>
+				<div className={iconContainerStyle}>
 					<span
-						css={logoStyle}
+						className={logoStyle}
 						onMouseEnter={onButtonHover}
 						onClick={handleLogoClick}
 					>
 						<Logo size={logoSize}></Logo>
 					</span>
 				</div>
-				<div css={getCenterPieceStyles(orientation)}>
+				<div className={getCenterPieceStyles(orientation)}>
 					<p id="current-page-header"></p>
 				</div>
-				<div css={iconContainerStyle}>
+				<div className={iconContainerStyle}>
 					<span
-						css={[soundIconStyle, muted && mutedStyle]}
+						className={css([soundIconStyle, muted && mutedStyle])}
 						onMouseEnter={onButtonHover}
 						onClick={onHeadphonesIconClick}
 					>

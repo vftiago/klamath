@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import { colors } from "../theme";
 import { motion } from "framer-motion";
 import { scroller } from "react-scroll";
@@ -14,7 +13,7 @@ const Waterfall = () => {
 
 	return (
 		<motion.div
-			css={waterfallStyle}
+			className={waterfallStyle}
 			variants={item}
 			onClick={handleWaterfallClick}
 		>

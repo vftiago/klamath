@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import { useInView } from "react-intersection-observer";
 import { useEffect, useState } from "react";
 import { Element } from "react-scroll";
@@ -37,7 +36,7 @@ function ProjectSection({ onVisibilityChange }: Props) {
 	}, [inView]);
 
 	return (
-		<Element css={projectSectionStyle} name="projectSection">
+		<Element className={projectSectionStyle} name="projectSection">
 			<h2 ref={ref}>Projects</h2>
 			{projectData && <ProjectWall data={projectData} />}
 		</Element>

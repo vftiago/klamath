@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import GithubIcon from "./icons/GithubIcon";
 import MailIcon from "./icons/MailIcon";
@@ -11,7 +10,7 @@ import { Fragment, useEffect } from "react";
 import { iconSize } from "../theme";
 import { colors } from "../theme";
 import Waterfall from "./Waterfalll";
-import { EMAIL, WEEKDAYS } from "../constants";
+import { EMAIL } from "../constants";
 import { useInView } from "react-intersection-observer";
 
 // #region framer-animations
@@ -54,7 +53,7 @@ const defaultTypedOptions = {
 	cursorChar: "_",
 };
 
-const typedJob = (self: any) => {
+const typedJob = (self: Typed) => {
 	setTimeout(() => {
 		new Typed("#typed-job", {
 			...defaultTypedOptions,
@@ -119,7 +118,7 @@ function MainSection({
 		<Fragment>
 			<div
 				id="external-link"
-				css={css`
+				className={css`
 					height: 80px;
 					display: flex;
 					align-items: center;
@@ -134,9 +133,9 @@ function MainSection({
 					}
 				`}
 			></div>
-			<div css={appContainerStyles}>
-				<main css={mainContentStyle}>
-					<div css={typedTitle}>
+			<div className={appContainerStyles}>
+				<main className={mainContentStyle}>
+					<div className={typedTitle}>
 						<h1 ref={ref}>
 							<span id="typed-name"></span>
 						</h1>
@@ -146,15 +145,15 @@ function MainSection({
 					</div>
 				</main>
 				<motion.div
-					css={callToActionStyle}
+					className={callToActionStyle}
 					initial="hidden"
 					animate="visible"
 					variants={socialIconsVariant}
 				>
-					<div css={toastStyle}>
+					<div className={toastStyle}>
 						<span id="toast"></span>
 					</div>
-					<div css={socialIconsStyle}>
+					<div className={socialIconsStyle}>
 						<motion.a
 							variants={item}
 							href="https://github.com/vftiago"

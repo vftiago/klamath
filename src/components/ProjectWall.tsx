@@ -1,9 +1,7 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import { Projects, Repositories } from "../api/octokit-api";
+import React from "react";
+import { css } from "@emotion/css";
+import { Projects } from "../api/octokit-api";
 import { motion } from "framer-motion";
-import RepositoryCard from "./common/RepositoryCard";
 import ProjectCard from "./common/ProjectCard";
 
 // #region framer-animations
@@ -38,7 +36,7 @@ const ProjectWall = ({ data }: { data: Projects }) => {
 		<motion.ul
 			initial="hidden"
 			animate="visible"
-			css={projectListStyle}
+			className={projectListStyle}
 			variants={projectListAnimation}
 		>
 			{data.map((project, index) => {

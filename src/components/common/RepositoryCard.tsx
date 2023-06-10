@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import { useEffect, useState } from "react";
 import { getRepositoryCommits, RepositoryCommits } from "../../api/octokit-api";
 import GlassPane from "../../glass-ui/GlassPane";
@@ -25,8 +24,12 @@ function RepositoryCard(props: RepositoryCardProps) {
 				const commits = await getRepositoryCommits(name);
 
 				setData(commits);
-			} catch (e: any) {
-				setError(e);
+			} catch (e: unknown) {
+        if (e instanceof Error) {
+          setError(e);
+        }
+        
+        throw new Error(`Unexpected Error: ${e}`);
 			}
 		};
 
@@ -41,7 +44,7 @@ function RepositoryCard(props: RepositoryCardProps) {
 			orientation="horizontal"
 			customCss={repositoryCardStyle}
 		>
-			<div css={repositoryCardTitleStyle}>
+			<div className={repositoryCardTitleStyle}>
 				<h4>{name}</h4>
 
 				{homepage && (
@@ -50,16 +53,16 @@ function RepositoryCard(props: RepositoryCardProps) {
 					</a>
 				)}
 			</div>
-			<div css={repositoryCardBodyStyle}>
+			<div className={repositoryCardBodyStyle}>
 				{data ? (
 					<div>
 						<p>Latest commits:</p>
-						<ul css={commitListStyle}>
+						<ul className={commitListStyle}>
 							{data.map((commit, index) => {
 								return (
 									<li key={index}>
 										<GitCommitIcon />
-										<span css={commitMessageStyle}>
+										<span className={commitMessageStyle}>
 											{commit.commit.message}
 										</span>
 									</li>
@@ -76,7 +79,7 @@ function RepositoryCard(props: RepositoryCardProps) {
 					"Nothing to see here."
 				)}
 			</div>
-			<div css={repositoryCardFooterStyle}>
+			<div className={repositoryCardFooterStyle}>
 				<a target="_blank" rel="noreferrer" href={htmlUrl}>
 					GitHub
 				</a>

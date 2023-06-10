@@ -1,6 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
+import React from "react";
 import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
@@ -10,10 +8,14 @@ import vertexShader from "../../../assets/glsl/debris.vert";
 import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
 
 function Box(props: JSX.IntrinsicElements["mesh"]) {
-	const ref = useRef<THREE.Mesh>(null!);
-	const materialRef = useRef<THREE.RawShaderMaterial>(null!);
+	const ref = useRef<THREE.Mesh>(null);
+	const materialRef = useRef<THREE.RawShaderMaterial>(null);
 
 	useFrame(() => {
+    if (!materialRef.current) {
+      return;
+    }
+    
 		materialRef.current.uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
 	});
 

@@ -1,6 +1,4 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { jsx } from "@emotion/core";
+import React from "react";
 import { useThree } from "@react-three/fiber";
 import { Fragment, useEffect } from "react";
 

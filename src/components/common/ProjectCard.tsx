@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import { Fragment, useEffect, useState } from "react";
 import {
 	getProjectColumnCards,
@@ -46,7 +45,7 @@ function ProjectCard(props: ProjectCardProps) {
 	}, []);
 
 	return (
-		<GlassPane size="m" orientation="horizontal" css={projectCardStyle}>
+		<GlassPane size="m" orientation="horizontal" customCss={projectCardStyle}>
 			<h4>{projectName}</h4>
 			{projectDescription && <span>{projectDescription}</span>}
 			{data ? (
@@ -55,7 +54,7 @@ function ProjectCard(props: ProjectCardProps) {
 					<span>
 						<ul>
 							<li
-								css={cardSpanStyle}
+								className={cardSpanStyle}
 								dangerouslySetInnerHTML={{
 									__html: DOMPurify.sanitize(marked(data)),
 								}}

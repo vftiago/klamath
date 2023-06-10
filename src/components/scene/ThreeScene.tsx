@@ -1,6 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React from "react";
+import { css } from "@emotion/css";
 import * as THREE from "three";
 import { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -42,7 +41,7 @@ const ThreeScene = () => {
 	}, []);
 
 	return (
-		<div css={canvasStyle}>
+		<div className={canvasStyle}>
 			<Canvas
 				camera={camera}
 				gl={{

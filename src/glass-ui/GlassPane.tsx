@@ -1,7 +1,5 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import { css, jsx, SerializedStyles } from "@emotion/core";
-import cx from "@emotion/css";
+import React from "react";
+import { css } from "@emotion/css";
 import { ReactNode } from "react";
 import { GOLDEN_RATIO } from "../constants";
 
@@ -13,7 +11,7 @@ type Props = {
 	orientation?: Orientation;
 	size?: Size;
 	children: ReactNode;
-	customCss?: SerializedStyles;
+	customCss?: string;
 };
 
 const cardSizes = {
@@ -31,7 +29,10 @@ function GlassPane(cardProps: Props) {
 	} = cardProps;
 
 	return (
-		<div css={cx(buildCardStyle(orientation, size), customCss)}>{children}</div>
+		<div className={css([
+      buildCardStyle(orientation, size),
+      customCss
+    ])}>{children}</div>
 	);
 }
 

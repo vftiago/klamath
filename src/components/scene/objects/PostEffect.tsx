@@ -1,15 +1,13 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-import * as THREE from "three";
 
-import { jsx } from "@emotion/core";
+import React from "react";
+import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import fragmentShader from "../../../assets/glsl/postEffect.frag";
 import vertexShader from "../../../assets/glsl/postEffect.vert";
 
 const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
-	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null!);
+	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
 
 	const target = new THREE.WebGLRenderTarget(
 		document.body.clientWidth,
@@ -17,6 +15,10 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 	);
 
 	const handleWindowResize = () => {
+    if (!rawShaderMaterialRef.current) {
+      return;
+    }
+
 		target.setSize(document.body.clientWidth, window.innerHeight);
 		rawShaderMaterialRef.current.uniforms.resolution.value.set(
 			document.body.clientWidth,
@@ -35,6 +37,10 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 	}, []);
 
 	useFrame((state) => {
+    if (!rawShaderMaterialRef.current) {
+      return;
+    }
+
 		rawShaderMaterialRef.current.uniforms.time.value += 1;
 		rawShaderMaterialRef.current.visible = false;
 		state.gl.setRenderTarget(target);
