@@ -18,8 +18,8 @@ const Waterfall = () => {
 			onClick={handleWaterfallClick}
 		>
 			<span></span>
-			<span></span>
-			<span></span>
+      <span></span>
+      <span></span>
 		</motion.div>
 	);
 };
@@ -39,14 +39,14 @@ const item = {
 const waterfallStyle = css`
 	@keyframes waterfall {
 		0% {
-			transform: translateY(-100.5%);
+			transform: translateY(-100%);
 		}
 		100% {
-			transform: translateY(100.5%);
+			transform: translateY(100%);
 		}
 	}
-	width: 15px;
-	height: 80px;
+	width: 17px;
+	height: 60px;
 	overflow: hidden;
 	position: absolute;
 	bottom: 0;
@@ -62,7 +62,7 @@ const waterfallStyle = css`
 		top: 0;
 		background-color: #888;
 		animation-name: waterfall;
-		animation-duration: 1s;
+		animation-duration: 1.5s;
 		animation-iteration-count: infinite;
 		transition: background-color 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 		&:nth-of-type(1) {
