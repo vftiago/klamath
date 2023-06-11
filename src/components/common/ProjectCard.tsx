@@ -5,9 +5,9 @@ import {
 	getProjectColumnCards,
 	getProjectColumns,
 } from "../../api/octokit-api";
-import GlassPane from "../../glass-ui/GlassPane";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
+import Card from "./Card";
 
 type ProjectCardProps = {
 	projectId: number;
@@ -45,7 +45,7 @@ function ProjectCard(props: ProjectCardProps) {
 	}, []);
 
 	return (
-		<GlassPane size="m" orientation="horizontal" customCss={projectCardStyle}>
+		<Card size="m" orientation="horizontal" customStyles={projectCardStyle}>
 			<h4>{projectName}</h4>
 			{projectDescription && <span>{projectDescription}</span>}
 			{data ? (
@@ -63,7 +63,7 @@ function ProjectCard(props: ProjectCardProps) {
 					</span>
 				</Fragment>
 			) : null}
-		</GlassPane>
+		</Card>
 	);
 }
 

@@ -10,6 +10,6 @@ const float radius=512.;
 
 void main(){
   float now=clamp((time-delay)/duration,0.,1.);
-  float opacity=(1.-length(vPosition.xy/vec2(radius)))*.6*now;
+  float opacity=(1.-length(vPosition.xy/vec2(radius)))*0.8*now;
   gl_FragColor=vec4(vec3(.8,.8,.8),opacity);
 }

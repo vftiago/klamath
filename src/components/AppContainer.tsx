@@ -5,12 +5,12 @@ import buttonHover from "../assets/audio/button-hover.mp3";
 import { screenSize } from "../theme";
 import playSound from "../utils/playSound";
 import Footer from "./Footer";
-import MainSection from "./MainSection";
 import Navbar from "./Navbar";
 import RepositorySection from "./RepositorySection";
 import { weightedHeaders } from "./weighted-tables/headers";
 
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
+const MainSection = React.lazy(() => import("./MainSection"));
 
 export enum Orientation {
 	Horizontal = "horizontal",
@@ -83,10 +83,26 @@ function AppContainer() {
 		return () => window.removeEventListener("resize", handleResize);
 	}, []);
 
-	const Scene = useMemo(() => <ThreeScene />, []);
+	const LazyThreeScene = useMemo(() => <ThreeScene />, []);
+
+	const LazyMainSection = useMemo(
+		() => (
+			<MainSection
+				onVisibilityChange={handleVisibilityChange}
+				onHeadphonesIconClick={handleHeadphonesIconClick}
+				onButtonClick={handleButtonClick}
+				onButtonHover={handleButtonHover}
+			/>
+		),
+		[],
+	);
+
+	const orientation = largeScreen
+		? Orientation.Vertical
+		: Orientation.Horizontal;
 
 	return (
-		<div className={appContainerStyles}>
+		<div className={getAppContainerStyles(orientation)}>
 			<audio
 				src={buttonClick}
 				ref={buttonClickAudioElement}
@@ -97,38 +113,34 @@ function AppContainer() {
 				ref={buttonHoverAudioElement}
 				muted={muted}
 			></audio>
-			<Suspense fallback={null}>{largeScreen && Scene}</Suspense>
+			<Suspense fallback={null}>{largeScreen && LazyThreeScene}</Suspense>
 			<Navbar
 				currentPageHeader={header}
-				orientation={
-					largeScreen ? Orientation.Vertical : Orientation.Horizontal
-				}
+				orientation={orientation}
 				muted={muted}
 				onHeadphonesIconClick={handleHeadphonesIconClick}
 				onButtonClick={handleButtonClick}
 				onButtonHover={handleButtonHover}
 			/>
-			<MainSection
-				onVisibilityChange={handleVisibilityChange}
-				onHeadphonesIconClick={handleHeadphonesIconClick}
-				onButtonClick={handleButtonClick}
-				onButtonHover={handleButtonHover}
-			/>
+			<Suspense fallback={null}>{largeScreen && LazyMainSection}</Suspense>
 			<RepositorySection
 				onVisibilityChange={handleVisibilityChange}
-				orientation={
-					largeScreen ? Orientation.Vertical : Orientation.Horizontal
-				}
+				orientation={orientation}
 			/>
 			<Footer />
 		</div>
 	);
 }
 
-const appContainerStyles = css`
-	display: flex;
-	flex-direction: column;
-	gap: 120px;
-`;
+const getAppContainerStyles = (orientation: Orientation) => {
+	const paddingTop = orientation === Orientation.Vertical ? "0px" : "100px";
+
+	return css`
+		display: flex;
+		flex-direction: column;
+		padding-top: ${paddingTop};
+		gap: 120px;
+	`;
+};
 
 export default AppContainer;

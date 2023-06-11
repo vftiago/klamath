@@ -2,9 +2,9 @@ import React from "react";
 import { css } from "@emotion/css";
 import { useEffect, useState } from "react";
 import { getRepositoryCommits, RepositoryCommits } from "../../api/octokit-api";
-import GlassPane from "../../glass-ui/GlassPane";
 import { colors, sizes } from "../../theme";
 import GitCommitIcon from "../icons/GitCommitIcon";
+import Card from "./Card";
 
 type RepositoryCardProps = {
 	name: string;
@@ -25,11 +25,11 @@ function RepositoryCard(props: RepositoryCardProps) {
 
 				setData(commits);
 			} catch (e: unknown) {
-        if (e instanceof Error) {
-          setError(e);
-        }
-        
-        throw new Error(`Unexpected Error: ${e}`);
+				if (e instanceof Error) {
+					setError(e);
+				}
+
+				throw new Error(`Unexpected Error: ${e}`);
 			}
 		};
 
@@ -39,11 +39,7 @@ function RepositoryCard(props: RepositoryCardProps) {
 	}, [data, name]);
 
 	return (
-		<GlassPane
-			size="s"
-			orientation="horizontal"
-			customCss={repositoryCardStyle}
-		>
+		<Card size="s" orientation="horizontal" customStyles={repositoryCardStyle}>
 			<div className={repositoryCardTitleStyle}>
 				<h4>{name}</h4>
 
@@ -81,16 +77,17 @@ function RepositoryCard(props: RepositoryCardProps) {
 			</div>
 			<div className={repositoryCardFooterStyle}>
 				<a target="_blank" rel="noreferrer" href={htmlUrl}>
-					GitHub
+					{htmlUrl}
 				</a>
 			</div>
-		</GlassPane>
+		</Card>
 	);
 }
 
 const repositoryCardStyle = css`
 	display: flex;
 	flex-direction: column;
+	padding: 20px;
 `;
 
 const repositoryCardTitleStyle = css`

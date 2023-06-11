@@ -1,8 +1,9 @@
 export const colors = {
 	text: {
 		accent: "#e6503f",
+		primary: "#333",
 		secondary: "rgba(230, 80, 60, 0.7)",
-		muted: "#aaa",
+		muted: "#888",
 		error: "#d19999",
 	},
 	icon: {

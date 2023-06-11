@@ -44,9 +44,12 @@ function RepositorySection({ onVisibilityChange }: Props) {
 	}, [inView, onVisibilityChange]);
 
 	return (
-		<Element className={repositorySectionContainerStyle} name="repository-section">
+		<Element
+			className={repositorySectionContainerStyle}
+			name="repository-section"
+		>
 			<div ref={ref} />
-			<h2>Repos</h2>
+			<h2>Repositories</h2>
 			<div className={repositorySectionStyle}>
 				<Suspense fallback={<LoadingIcon />}>
 					{repositoryData && <RepositoryList data={repositoryData} />}
@@ -61,7 +64,10 @@ const repositorySectionContainerStyle = css`
 	flex-direction: column;
 	align-items: center;
 	padding: 0 120px;
-	gap: 80px;
+	gap: 30px;
+	h2 {
+		font-size: 32px;
+	}
 `;
 
 const repositorySectionStyle = css`

@@ -6,6 +6,7 @@ import Logo from "./icons/Logo";
 import HeadphonesIcon from "./icons/Headphones";
 import { colors, iconSize, logoSize } from "../theme";
 import Typed from "typed.js";
+import GlassPanel from "../glass-ui/GlassPanel";
 
 enum Orientation {
 	Horizontal = "horizontal",
@@ -14,11 +15,9 @@ enum Orientation {
 
 // #region framer-animations
 const visible = {
-	opacity: 1,
 	x: 0,
 	y: 0,
 	transition: {
-		delay: 0.2,
 		duration: 0.8,
 		when: "beforeChildren",
 		staggerChildren: 0.2,
@@ -28,12 +27,12 @@ const visible = {
 
 const leftNavbarVariants = {
 	visible,
-	hidden: { opacity: 0, x: "-88px" },
+	hidden: { x: "-88px" },
 };
 
 const topNavbarVariants = {
 	visible,
-	hidden: { opacity: 0, y: "-88px" },
+	hidden: { y: "-88px" },
 };
 
 let typedExternalLink: Typed;
@@ -87,16 +86,21 @@ const Navbar = ({
 	}, [currentPageHeader]);
 
 	return (
-		<Fragment>
-			<motion.div
-				initial="hidden"
-				animate="visible"
-				variants={
-					orientation === Orientation.Horizontal
-						? topNavbarVariants
-						: leftNavbarVariants
-				}
-				className={getNavbarStyles(orientation)}
+		<motion.div
+			initial="hidden"
+			animate="visible"
+			variants={
+				orientation === Orientation.Horizontal
+					? topNavbarVariants
+					: leftNavbarVariants
+			}
+			className={navbarContainerStyles}
+		>
+			<GlassPanel
+				customStyles={getNavbarStyles(orientation)}
+				opacity={orientation === "horizontal" ? 1 : undefined}
+				tint={orientation === "horizontal" ? "light" : undefined}
+				stickyPosition={orientation === "horizontal" ? "top" : "left"}
 			>
 				<div className={iconContainerStyle}>
 					<span
@@ -107,8 +111,8 @@ const Navbar = ({
 						<Logo size={logoSize}></Logo>
 					</span>
 				</div>
-				<div className={getCenterPieceStyles(orientation)}>
-					<p id="current-page-header"></p>
+				<div className={getPageHeaderStyles(orientation)}>
+					<header id="current-page-header"></header>
 				</div>
 				<div className={iconContainerStyle}>
 					<span
@@ -119,34 +123,37 @@ const Navbar = ({
 						<HeadphonesIcon size={iconSize}></HeadphonesIcon>
 					</span>
 				</div>
-			</motion.div>
-		</Fragment>
+			</GlassPanel>
+		</motion.div>
 	);
 };
 
-const horizontalBarStyles = css`
-	position: fixed;
-	top: 0;
+const navbarContainerStyles = css`
 	z-index: 1;
-	height: 80px;
+	position: fixed;
+	height: 100%;
+`;
+
+const baseNavbarStyles = css`
+	position: fixed;
 	display: grid;
-	grid-template-columns: 80px auto 80px;
 	align-items: center;
+`;
+
+const horizontalBarStyles = css`
+	${baseNavbarStyles}
+	top: 0;
+	left: -1px;
+	height: 80px;
+	grid-template-columns: 80px auto 80px;
 	width: 100%;
-	background-color: rgba(235, 235, 235, 0.9);
-	box-shadow: 0 3px 3px 0px rgba(88, 88, 88, 0.1);
 `;
 
 const verticalBarStyles = css`
-	position: fixed;
-	z-index: 1;
+	${baseNavbarStyles}
 	width: 80px;
-	display: grid;
 	grid-template-rows: 80px auto 80px;
-	align-items: center;
-	min-height: 100vh;
-	background-color: rgba(88, 88, 88, 0.02);
-	box-shadow: 3px 3px 3px 0px rgba(88, 88, 88, 0.03);
+	height: 100%;
 `;
 
 const getNavbarStyles = (orientation: Orientation) => {
@@ -155,8 +162,6 @@ const getNavbarStyles = (orientation: Orientation) => {
 
 	return css`
 		${navbarStyles};
-		border-right: 1px solid rgba(128, 128, 128, 0.1);
-		backdrop-filter: blur(4px);
 		img {
 			height: ${logoSize + "px"};
 			width: ${logoSize + "px"};
@@ -164,9 +169,9 @@ const getNavbarStyles = (orientation: Orientation) => {
 	`;
 };
 
-const getCenterPieceStyles = (orientation: Orientation) => {
-	const horizontalParagraphStyles = css`
-		p {
+const getPageHeaderStyles = (orientation: Orientation) => {
+	const horizontalHeaderStyles = css`
+		header {
 			position: absolute;
 			display: flex;
 			align-items: center;
@@ -174,8 +179,8 @@ const getCenterPieceStyles = (orientation: Orientation) => {
 		}
 	`;
 
-	const verticalParagraphStyles = css`
-		p {
+	const verticalHeaderStyles = css`
+		header {
 			width: 100vh;
 			position: absolute;
 			display: flex;
@@ -186,16 +191,16 @@ const getCenterPieceStyles = (orientation: Orientation) => {
 		}
 	`;
 
-	const paragraphStyles =
+	const headerStyles =
 		orientation === "horizontal"
-			? horizontalParagraphStyles
-			: verticalParagraphStyles;
+			? horizontalHeaderStyles
+			: verticalHeaderStyles;
 
 	return css`
 		height: 80px;
 		display: flex;
 		align-items: center;
-		${paragraphStyles}
+		${headerStyles}
 	`;
 };
 

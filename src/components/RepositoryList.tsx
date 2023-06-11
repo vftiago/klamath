@@ -60,7 +60,7 @@ const repostoryListStyle = css`
 	width: 100%;
 	max-width: 1600px;
 	grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-	grid-gap: 16px;
+	grid-gap: 24px;
 	list-style: none;
 	padding: 0;
 	margin: 0 auto;
