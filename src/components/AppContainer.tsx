@@ -1,14 +1,14 @@
-import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useMemo, useRef, useState } from "react";
 import { css } from "@emotion/css";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
-import { screenSize } from "../theme";
 import playSound from "../utils/playSound";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import MainSection from "./MainSection";
 import RepositorySection from "./RepositorySection";
 import { weightedHeaders } from "./weighted-tables/headers";
+import { useBreakpoints } from "../useBreakpoints";
 
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
 
@@ -19,9 +19,9 @@ export enum Orientation {
 
 function AppContainer() {
 	const [muted, setMuted] = useState<boolean>(true);
-	const [largeScreen, setLargeScreen] = useState<boolean>(
-		window.innerWidth > screenSize.lg,
-	);
+
+	const { isLgScreen } = useBreakpoints();
+
 	const [pageVisibilityInfo, setPageVisibilityInfo] = useState<
 		Map<number, boolean>
 	>(
@@ -30,19 +30,12 @@ function AppContainer() {
 			[1, false],
 		]),
 	);
+
 	const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
 	const [header, setHeader] = useState<string>("Hello World");
 
 	const buttonClickAudioElement = useRef(null);
 	const buttonHoverAudioElement = useRef(null);
-
-	const handleResize = () => {
-		if (window.innerWidth > screenSize.lg) {
-			setLargeScreen(true);
-		} else {
-			setLargeScreen(false);
-		}
-	};
 
 	const handleButtonClick = () => {
 		if (muted) return;
@@ -78,15 +71,10 @@ function AppContainer() {
 		setHeader(header);
 	};
 
-	useEffect(() => {
-		window.addEventListener("resize", handleResize);
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
-
 	const LazyThreeScene = useMemo(() => <ThreeScene />, []);
 
 	return (
-		<div className={getAppContainerStyles(largeScreen)}>
+		<div className={getAppContainerStyles(isLgScreen)}>
 			<audio
 				src={buttonClick}
 				ref={buttonClickAudioElement}
@@ -97,10 +85,10 @@ function AppContainer() {
 				ref={buttonHoverAudioElement}
 				muted={muted}
 			></audio>
-			<Suspense fallback={null}>{largeScreen && LazyThreeScene}</Suspense>
+			<Suspense fallback={null}>{isLgScreen && LazyThreeScene}</Suspense>
 			<Navbar
 				currentPageHeader={header}
-				largeScreen={largeScreen}
+				largeScreen={isLgScreen}
 				muted={muted}
 				onHeadphonesIconClick={handleHeadphonesIconClick}
 				onButtonClick={handleButtonClick}
@@ -118,8 +106,8 @@ function AppContainer() {
 	);
 }
 
-const getAppContainerStyles = (largeScreen: boolean) => {
-	const paddingTop = largeScreen ? "0px" : "100px";
+const getAppContainerStyles = (isLgScreen: boolean) => {
+	const paddingTop = isLgScreen ? "0px" : "100px";
 
 	return css`
 		display: flex;

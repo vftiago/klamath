@@ -2,7 +2,7 @@ import React from "react";
 import { css } from "@emotion/css";
 import { useEffect, useState } from "react";
 import { getRepositoryCommits, RepositoryCommits } from "../../api/octokit-api";
-import { colors, sizes } from "../../theme";
+import { colors, typography } from "../../theme";
 import GitCommitIcon from "../icons/GitCommitIcon";
 import Card from "./Card";
 
@@ -97,14 +97,14 @@ const repositoryCardTitleStyle = css`
 	border-bottom: 1px solid ${colors.border.muted};
 	a {
 		color: ${colors.text.accent};
-		font-size: ${sizes.text.s};
+		font-size: ${typography.text.s};
 	}
 `;
 
 const repositoryCardBodyStyle = css`
 	flex: 1;
 	p {
-		font-size: ${sizes.text.s};
+		font-size: ${typography.text.s};
 	}
 `;
 
@@ -113,7 +113,7 @@ const repositoryCardFooterStyle = css`
 	/* align-self: flex-end; */
 	a {
 		color: ${colors.text.muted};
-		font-size: ${sizes.text.xs};
+		font-size: ${typography.text.xs};
 	}
 `;
 

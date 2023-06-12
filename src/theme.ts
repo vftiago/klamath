@@ -15,7 +15,7 @@ export const colors = {
 	},
 };
 
-export const sizes = {
+export const typography = {
 	text: {
 		xs: "12px",
 		s: "14px",
@@ -26,15 +26,3 @@ export const sizes = {
 export const logoSize = 36;
 
 export const iconSize = 16;
-
-export const screenSize = {
-	xs: 320,
-	sm: 768,
-	lg: 1024,
-};
-
-export const device = {
-	xs: `(min-width: ${screenSize.xs})`,
-	sm: `(min-width: ${screenSize.sm})`,
-	lg: `(min-width: ${screenSize.lg})`,
-};
