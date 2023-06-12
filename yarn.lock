@@ -567,11 +567,12 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@lrkit/weighted@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@lrkit/weighted/-/weighted-0.0.1.tgz#ec11640ea17d5b0ad97c11b46dc4a06cca05b53f"
-  integrity sha512-nUIX2G/fVVa37lDn7R1HvcTyKfC/N8kQ+hJTG/PSOvAIm9wiB4XnnbF9RUA6Dm5shMBN1nv90+UYH8RJGFyapQ==
+"@lrkit/weighted@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@lrkit/weighted/-/weighted-0.0.2.tgz#747d3888d2698be415b88462407dbd1e04040bf6"
+  integrity sha512-Y14HeuyFQuxbbqkDnJj8iEJ8PM3zeZ+8/1YAiqbQbZSoEAGpsU0JcNXuZNkfe9KY1HtsVb/gNrPVPw1HrZ6MKA==
   dependencies:
+    "@types/seedrandom" "^3.0.5"
     seedrandom "^3.0.5"
 
 "@nodelib/fs.scandir@2.1.5":
