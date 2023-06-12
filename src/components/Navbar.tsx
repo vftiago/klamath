@@ -7,6 +7,7 @@ import HeadphonesIcon from "./icons/Headphones";
 import { colors, iconSize, logoSize } from "../theme";
 import Typed from "typed.js";
 import GlassPanel from "../glass-ui/GlassPanel";
+import { useBreakpoints } from "../useBreakpoints";
 
 // #region framer-animations
 const visible = {
@@ -34,7 +35,6 @@ let typedExternalLink: Typed;
 
 type Props = {
 	muted: boolean;
-	largeScreen: boolean;
 	currentPageHeader: string;
 	onButtonClick: () => void;
 	onButtonHover: () => void;
@@ -43,14 +43,15 @@ type Props = {
 
 const Navbar = ({
 	muted,
-	largeScreen,
 	currentPageHeader,
 	onButtonClick,
 	onButtonHover,
 	onHeadphonesIconClick,
 }: Props) => {
+	const { isMdScreen, isLgScreen } = useBreakpoints();
+
 	const handleLogoClick = () => {
-		if (!largeScreen) return;
+		if (!isMdScreen) return;
 
 		if (typedExternalLink) typedExternalLink.destroy();
 
@@ -84,14 +85,14 @@ const Navbar = ({
 		<motion.div
 			initial="hidden"
 			animate="visible"
-			variants={largeScreen ? leftNavbarVariants : topNavbarVariants}
-			className={navbarContainerStyles}
+			variants={isLgScreen ? leftNavbarVariants : topNavbarVariants}
+			className={getNavbarContainerStyles(isLgScreen)}
 		>
 			<GlassPanel
-				customStyles={getNavbarStyles(largeScreen)}
-				opacity={!largeScreen ? 1 : undefined}
-				tint={!largeScreen ? "light" : undefined}
-				stickyPosition={!largeScreen ? "top" : "left"}
+				customStyles={getNavbarStyles(isLgScreen)}
+				opacity={isLgScreen ? undefined : 1}
+				tint={isLgScreen ? undefined : "light"}
+				stickyPosition={isLgScreen ? "left" : "top"}
 			>
 				<div className={iconContainerStyle}>
 					<span
@@ -102,7 +103,7 @@ const Navbar = ({
 						<Logo size={logoSize}></Logo>
 					</span>
 				</div>
-				<div className={getPageHeaderStyles(largeScreen)}>
+				<div className={getPageHeaderStyles(isLgScreen)}>
 					<header id="current-page-header"></header>
 				</div>
 				<div className={iconContainerStyle}>
@@ -119,10 +120,14 @@ const Navbar = ({
 	);
 };
 
-const navbarContainerStyles = css`
-	z-index: 1;
-	position: fixed;
+const leftNavbarContainerStyles = css`
+	left: 0;
 	height: 100%;
+`;
+
+const topNavbarContainerStyles = css`
+	top: 0;
+	width: 100%;
 `;
 
 const baseNavbarStyles = css`
@@ -133,7 +138,6 @@ const baseNavbarStyles = css`
 
 const horizontalBarStyles = css`
 	${baseNavbarStyles}
-	top: 0;
 	left: -1px;
 	height: 80px;
 	grid-template-columns: 80px auto 80px;
@@ -148,8 +152,20 @@ const verticalBarStyles = css`
 	height: 100%;
 `;
 
-const getNavbarStyles = (largeScreen: boolean) => {
-	const navbarStyles = largeScreen ? verticalBarStyles : horizontalBarStyles;
+const getNavbarContainerStyles = (isLgScreen: boolean) => {
+	const navbarContainerStyles = isLgScreen
+		? leftNavbarContainerStyles
+		: topNavbarContainerStyles;
+
+	return css`
+		z-index: 1;
+		position: fixed;
+		${navbarContainerStyles}
+	`;
+};
+
+const getNavbarStyles = (isLgScreen: boolean) => {
+	const navbarStyles = isLgScreen ? verticalBarStyles : horizontalBarStyles;
 
 	return css`
 		${navbarStyles};
@@ -160,7 +176,7 @@ const getNavbarStyles = (largeScreen: boolean) => {
 	`;
 };
 
-const getPageHeaderStyles = (largeScreen: boolean) => {
+const getPageHeaderStyles = (isLgScreen: boolean) => {
 	const horizontalHeaderStyles = css`
 		header {
 			position: absolute;
@@ -182,7 +198,7 @@ const getPageHeaderStyles = (largeScreen: boolean) => {
 		}
 	`;
 
-	const headerStyles = largeScreen
+	const headerStyles = isLgScreen
 		? verticalHeaderStyles
 		: horizontalHeaderStyles;
 

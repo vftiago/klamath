@@ -20,7 +20,7 @@ export enum Orientation {
 function AppContainer() {
 	const [muted, setMuted] = useState<boolean>(true);
 
-	const { isLgScreen } = useBreakpoints();
+	const { isMdScreen, isLgScreen } = useBreakpoints();
 
 	const [pageVisibilityInfo, setPageVisibilityInfo] = useState<
 		Map<number, boolean>
@@ -73,7 +73,7 @@ function AppContainer() {
 
 	const LazyThreeScene = useMemo(() => <ThreeScene />, []);
 
-	return (
+	return isMdScreen ? (
 		<div className={getAppContainerStyles(isLgScreen)}>
 			<audio
 				src={buttonClick}
@@ -88,7 +88,6 @@ function AppContainer() {
 			<Suspense fallback={null}>{isLgScreen && LazyThreeScene}</Suspense>
 			<Navbar
 				currentPageHeader={header}
-				largeScreen={isLgScreen}
 				muted={muted}
 				onHeadphonesIconClick={handleHeadphonesIconClick}
 				onButtonClick={handleButtonClick}
@@ -103,8 +102,21 @@ function AppContainer() {
 			<RepositorySection onVisibilityChange={handleVisibilityChange} />
 			<Footer />
 		</div>
+	) : (
+		<div className={phoneStytles}>get off your phone</div>
 	);
 }
+
+const phoneStytles = css`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	font-size: 50px;
+	font-weight: 700;
+	color: #fff;
+	background-color: #000;
+`;
 
 const getAppContainerStyles = (isLgScreen: boolean) => {
 	const paddingTop = isLgScreen ? "0px" : "100px";
