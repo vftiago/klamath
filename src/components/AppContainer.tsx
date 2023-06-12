@@ -7,8 +7,13 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import MainSection from "./MainSection";
 import RepositorySection from "./RepositorySection";
-import { weightedHeaders } from "./weighted-tables/headers";
+import {
+	weightedHeaders,
+	weightedPhoneHeaders,
+} from "./weighted-tables/headers";
 import { useBreakpoints } from "../useBreakpoints";
+import GithubIcon from "./icons/GithubIcon";
+import LinkedinIcon from "./icons/LinkedinIcon";
 
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
 
@@ -33,6 +38,7 @@ function AppContainer() {
 
 	const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
 	const [header, setHeader] = useState<string>("Hello World");
+	const phoneTitle = weightedPhoneHeaders.pick();
 
 	const buttonClickAudioElement = useRef(null);
 	const buttonHoverAudioElement = useRef(null);
@@ -73,6 +79,7 @@ function AppContainer() {
 
 	const LazyThreeScene = useMemo(() => <ThreeScene />, []);
 
+	// use Suspense to load the entire application only on md screens and larger
 	return isMdScreen ? (
 		<div className={getAppContainerStyles(isLgScreen)}>
 			<audio
@@ -103,19 +110,44 @@ function AppContainer() {
 			<Footer />
 		</div>
 	) : (
-		<div className={phoneStytles}>get off your phone</div>
+		<div className={phoneStytles}>
+			{phoneTitle}
+			<span>
+				<a href="https://github.com/vftiago" target="_blank" rel="noreferrer">
+					<GithubIcon size={36}></GithubIcon>
+				</a>
+				<a
+					href="https://linkedin.com/in/vftiago"
+					target="_blank"
+					rel="noreferrer"
+				>
+					<LinkedinIcon size={36}></LinkedinIcon>
+				</a>
+			</span>
+		</div>
 	);
 }
 
 const phoneStytles = css`
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
-	font-size: 50px;
+	text-align: center;
+	height: 100%;
+	font-size: 42px;
 	font-weight: 700;
 	color: #fff;
-	background-color: #000;
+	background: radial-gradient(circle at center, #111, #000);
+	padding: 0 20px;
+	span {
+		display: flex;
+		padding: 32px;
+		gap: 36px;
+	}
+	svg {
+		fill: #fff;
+	}
 `;
 
 const getAppContainerStyles = (isLgScreen: boolean) => {

@@ -3,6 +3,16 @@ import { WEEKDAYS } from "../../constants";
 
 const today = WEEKDAYS[new Date().getDay()];
 
+const phoneHeaders = [
+	"get off your phone",
+	"put down your phone",
+	"stop looking at your phone",
+	"stop looking at your phone and look at me",
+	"there's nothing here",
+	"nothing to see here",
+	"nothing to see here, move along",
+];
+
 const headers = [
 	[
 		"Hello World",
@@ -23,6 +33,8 @@ const headers = [
 		"Recent projects",
 	],
 ];
+
+export const weightedPhoneHeaders = weighted(addWeights(phoneHeaders));
 
 export const weightedHeaders = [
 	weighted(addWeights(headers[0])),
