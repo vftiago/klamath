@@ -11,16 +11,16 @@ export const useBreakpoints = () => {
 		isMdScreen: boolean;
 		isLgScreen: boolean;
 	}>({
-		isSmScreen: window.innerWidth < breakpoints.md,
-		isMdScreen: window.innerWidth > breakpoints.md,
-		isLgScreen: window.innerWidth > breakpoints.lg,
+		isSmScreen: window.innerWidth <= breakpoints.md,
+		isMdScreen: window.innerWidth >= breakpoints.md,
+		isLgScreen: window.innerWidth >= breakpoints.lg,
 	});
 
 	const handleResize = () => {
 		const newScreenState = {
-			isSmScreen: window.innerWidth < breakpoints.md,
-			isMdScreen: window.innerWidth > breakpoints.md,
-			isLgScreen: window.innerWidth > breakpoints.lg,
+			isSmScreen: window.innerWidth <= breakpoints.md,
+			isMdScreen: window.innerWidth >= breakpoints.md,
+			isLgScreen: window.innerWidth >= breakpoints.lg,
 		};
 
 		setScreenState(newScreenState);
