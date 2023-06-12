@@ -4,12 +4,10 @@ import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
 import { getRepos, Repositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
-import { Orientation } from "./AppContainer";
 const RepositoryList = React.lazy(() => import("./RepositoryList"));
 
 type Props = {
 	onVisibilityChange: (pageNumber: number, inview: boolean) => void;
-	orientation: Orientation;
 };
 
 function RepositorySection({ onVisibilityChange }: Props) {

@@ -6,11 +6,11 @@ import { screenSize } from "../theme";
 import playSound from "../utils/playSound";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import MainSection from "./MainSection";
 import RepositorySection from "./RepositorySection";
 import { weightedHeaders } from "./weighted-tables/headers";
 
 const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
-const MainSection = React.lazy(() => import("./MainSection"));
 
 export enum Orientation {
 	Horizontal = "horizontal",
@@ -85,24 +85,8 @@ function AppContainer() {
 
 	const LazyThreeScene = useMemo(() => <ThreeScene />, []);
 
-	const LazyMainSection = useMemo(
-		() => (
-			<MainSection
-				onVisibilityChange={handleVisibilityChange}
-				onHeadphonesIconClick={handleHeadphonesIconClick}
-				onButtonClick={handleButtonClick}
-				onButtonHover={handleButtonHover}
-			/>
-		),
-		[],
-	);
-
-	const orientation = largeScreen
-		? Orientation.Vertical
-		: Orientation.Horizontal;
-
 	return (
-		<div className={getAppContainerStyles(orientation)}>
+		<div className={getAppContainerStyles(largeScreen)}>
 			<audio
 				src={buttonClick}
 				ref={buttonClickAudioElement}
@@ -116,24 +100,26 @@ function AppContainer() {
 			<Suspense fallback={null}>{largeScreen && LazyThreeScene}</Suspense>
 			<Navbar
 				currentPageHeader={header}
-				orientation={orientation}
+				largeScreen={largeScreen}
 				muted={muted}
 				onHeadphonesIconClick={handleHeadphonesIconClick}
 				onButtonClick={handleButtonClick}
 				onButtonHover={handleButtonHover}
 			/>
-			<Suspense fallback={null}>{largeScreen && LazyMainSection}</Suspense>
-			<RepositorySection
+			<MainSection
 				onVisibilityChange={handleVisibilityChange}
-				orientation={orientation}
+				onHeadphonesIconClick={handleHeadphonesIconClick}
+				onButtonClick={handleButtonClick}
+				onButtonHover={handleButtonHover}
 			/>
+			<RepositorySection onVisibilityChange={handleVisibilityChange} />
 			<Footer />
 		</div>
 	);
 }
 
-const getAppContainerStyles = (orientation: Orientation) => {
-	const paddingTop = orientation === Orientation.Vertical ? "0px" : "100px";
+const getAppContainerStyles = (largeScreen: boolean) => {
+	const paddingTop = largeScreen ? "0px" : "100px";
 
 	return css`
 		display: flex;

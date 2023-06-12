@@ -1,17 +1,12 @@
 import React from "react";
 import { css } from "@emotion/css";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Logo from "./icons/Logo";
 import HeadphonesIcon from "./icons/Headphones";
 import { colors, iconSize, logoSize } from "../theme";
 import Typed from "typed.js";
 import GlassPanel from "../glass-ui/GlassPanel";
-
-enum Orientation {
-	Horizontal = "horizontal",
-	Vertical = "vertical",
-}
 
 // #region framer-animations
 const visible = {
@@ -39,7 +34,7 @@ let typedExternalLink: Typed;
 
 type Props = {
 	muted: boolean;
-	orientation?: Orientation;
+	largeScreen: boolean;
 	currentPageHeader: string;
 	onButtonClick: () => void;
 	onButtonHover: () => void;
@@ -48,14 +43,14 @@ type Props = {
 
 const Navbar = ({
 	muted,
-	orientation = Orientation.Vertical,
+	largeScreen,
 	currentPageHeader,
 	onButtonClick,
 	onButtonHover,
 	onHeadphonesIconClick,
 }: Props) => {
 	const handleLogoClick = () => {
-		if (orientation === Orientation.Horizontal) return;
+		if (!largeScreen) return;
 
 		if (typedExternalLink) typedExternalLink.destroy();
 
@@ -89,18 +84,14 @@ const Navbar = ({
 		<motion.div
 			initial="hidden"
 			animate="visible"
-			variants={
-				orientation === Orientation.Horizontal
-					? topNavbarVariants
-					: leftNavbarVariants
-			}
+			variants={largeScreen ? leftNavbarVariants : topNavbarVariants}
 			className={navbarContainerStyles}
 		>
 			<GlassPanel
-				customStyles={getNavbarStyles(orientation)}
-				opacity={orientation === "horizontal" ? 1 : undefined}
-				tint={orientation === "horizontal" ? "light" : undefined}
-				stickyPosition={orientation === "horizontal" ? "top" : "left"}
+				customStyles={getNavbarStyles(largeScreen)}
+				opacity={!largeScreen ? 1 : undefined}
+				tint={!largeScreen ? "light" : undefined}
+				stickyPosition={!largeScreen ? "top" : "left"}
 			>
 				<div className={iconContainerStyle}>
 					<span
@@ -111,7 +102,7 @@ const Navbar = ({
 						<Logo size={logoSize}></Logo>
 					</span>
 				</div>
-				<div className={getPageHeaderStyles(orientation)}>
+				<div className={getPageHeaderStyles(largeScreen)}>
 					<header id="current-page-header"></header>
 				</div>
 				<div className={iconContainerStyle}>
@@ -151,14 +142,14 @@ const horizontalBarStyles = css`
 
 const verticalBarStyles = css`
 	${baseNavbarStyles}
+	top: -1px;
 	width: 80px;
 	grid-template-rows: 80px auto 80px;
 	height: 100%;
 `;
 
-const getNavbarStyles = (orientation: Orientation) => {
-	const navbarStyles =
-		orientation === "horizontal" ? horizontalBarStyles : verticalBarStyles;
+const getNavbarStyles = (largeScreen: boolean) => {
+	const navbarStyles = largeScreen ? verticalBarStyles : horizontalBarStyles;
 
 	return css`
 		${navbarStyles};
@@ -169,7 +160,7 @@ const getNavbarStyles = (orientation: Orientation) => {
 	`;
 };
 
-const getPageHeaderStyles = (orientation: Orientation) => {
+const getPageHeaderStyles = (largeScreen: boolean) => {
 	const horizontalHeaderStyles = css`
 		header {
 			position: absolute;
@@ -191,10 +182,9 @@ const getPageHeaderStyles = (orientation: Orientation) => {
 		}
 	`;
 
-	const headerStyles =
-		orientation === "horizontal"
-			? horizontalHeaderStyles
-			: verticalHeaderStyles;
+	const headerStyles = largeScreen
+		? verticalHeaderStyles
+		: horizontalHeaderStyles;
 
 	return css`
 		height: 80px;
