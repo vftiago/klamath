@@ -10,7 +10,7 @@ import RepositorySection from "./RepositorySection";
 import {
 	weightedHeaders,
 	weightedPhoneHeaders,
-} from "./weighted-tables/headers";
+} from "../weighted-tables/headers";
 import { useBreakpoints } from "../useBreakpoints";
 import GithubIcon from "./icons/GithubIcon";
 import LinkedinIcon from "./icons/LinkedinIcon";
