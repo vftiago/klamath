@@ -1,4 +1,4 @@
-import React, { Suspense, useMemo, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { css } from "@emotion/css";
 import buttonClick from "../assets/audio/button-click.mp3";
 import buttonHover from "../assets/audio/button-hover.mp3";
@@ -38,7 +38,7 @@ function AppContainer() {
 
 	const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
 	const [header, setHeader] = useState<string>("Hello World");
-	const phoneTitle = weightedPhoneHeaders.pick();
+	const [phoneHeader, setPhoneHeader] = useState<string>("Hello World");
 
 	const buttonClickAudioElement = useRef(null);
 	const buttonHoverAudioElement = useRef(null);
@@ -77,6 +77,10 @@ function AppContainer() {
 		setHeader(header);
 	};
 
+	useEffect(() => {
+		setPhoneHeader(weightedPhoneHeaders.pick());
+	}, []);
+
 	const LazyThreeScene = useMemo(() => <ThreeScene />, []);
 
 	// use Suspense to load the entire application only on md screens and larger
@@ -111,7 +115,7 @@ function AppContainer() {
 		</div>
 	) : (
 		<div className={phoneStytles}>
-			{phoneTitle}
+			{phoneHeader}
 			<span>
 				<a href="https://github.com/vftiago" target="_blank" rel="noreferrer">
 					<GithubIcon size={36}></GithubIcon>
