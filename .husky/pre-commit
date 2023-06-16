@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+npx tsc -p tsconfig.json
 yarn lint-staged
-npx tsc --noEmit
