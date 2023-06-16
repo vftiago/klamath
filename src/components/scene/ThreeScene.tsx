@@ -66,10 +66,10 @@ const ThreeScene = () => {
 const canvasStyle = css`
 	z-index: -1;
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
 `;
 
-export default ThreeScene;
+export default React.memo(ThreeScene);

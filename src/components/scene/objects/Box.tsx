@@ -3,8 +3,8 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 
-import fragmentShader from "../../../assets/glsl/debris.frag";
-import vertexShader from "../../../assets/glsl/debris.vert";
+import fragmentShader from "../glsl/debris.frag";
+import vertexShader from "../glsl/debris.vert";
 import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
 
 function Box(props: JSX.IntrinsicElements["mesh"]) {
@@ -12,30 +12,26 @@ function Box(props: JSX.IntrinsicElements["mesh"]) {
 	const materialRef = useRef<THREE.RawShaderMaterial>(null);
 
 	useFrame(() => {
-    if (!materialRef.current) {
-      return;
-    }
-    
-		materialRef.current.uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
-	});
+		if (!materialRef.current) {
+			return;
+		}
 
-	const uniforms = {
-		time: {
-			type: "f",
-			value: 0,
-		},
-		rotate: {
-			type: "f",
-			value: Math.random() * 10,
-		},
-	};
+		const uniforms = materialRef.current.uniforms;
+
+		if (!uniforms.rotate) {
+			uniforms.rotate = { value: Math.random() * 10 };
+		}
+
+		uniforms.time = uniforms.time || { value: 0 };
+
+		uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
+	});
 
 	return (
 		<mesh {...props} ref={ref}>
 			<boxGeometry args={[100, 100, 100]} />
 			<rawShaderMaterial
 				ref={materialRef}
-				uniforms={uniforms}
 				vertexShader={vertexShader}
 				fragmentShader={fragmentShader}
 				transparent={true}

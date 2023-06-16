@@ -1,28 +1,17 @@
-import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { css } from "@emotion/css";
-import buttonClick from "../assets/audio/button-click.mp3";
-import buttonHover from "../assets/audio/button-hover.mp3";
-import playSound from "../utils/playSound";
-import Footer from "./Footer";
-import Navbar from "./Navbar";
-import MainSection from "./MainSection";
-import RepositorySection from "./RepositorySection";
-import {
-	weightedHeaders,
-	weightedPhoneHeaders,
-} from "../weighted-tables/headers";
-import { useBreakpoints } from "../useBreakpoints";
-import GithubIcon from "./icons/GithubIcon";
-import LinkedinIcon from "./icons/LinkedinIcon";
+import buttonClick from "./audio/button-click.mp3";
+import buttonHover from "./audio/button-hover.mp3";
+import playSound from "../../utils/playSound";
+import Footer from "../Footer";
+import Navbar from "../Navbar";
+import MainSection from "../MainSection";
+import RepositorySection from "../RepositorySection";
+import { weightedHeaders } from "../../weighted-tables/headers";
+import { useBreakpoints } from "../../useBreakpoints";
+import ThreeScene from "../scene/ThreeScene";
 
-const ThreeScene = React.lazy(() => import("./scene/ThreeScene"));
-
-export enum Orientation {
-	Horizontal = "horizontal",
-	Vertical = "vertical",
-}
-
-function AppContainer() {
+const MainApp = () => {
 	const [muted, setMuted] = useState<boolean>(true);
 
 	const { isMdScreen, isLgScreen } = useBreakpoints();
@@ -38,7 +27,6 @@ function AppContainer() {
 
 	const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
 	const [header, setHeader] = useState<string>("Hello World");
-	const [phoneHeader, setPhoneHeader] = useState<string>("Hello World");
 
 	const buttonClickAudioElement = useRef(null);
 	const buttonHoverAudioElement = useRef(null);
@@ -77,14 +65,7 @@ function AppContainer() {
 		setHeader(header);
 	};
 
-	useEffect(() => {
-		setPhoneHeader(weightedPhoneHeaders.pick());
-	}, []);
-
-	const LazyThreeScene = useMemo(() => <ThreeScene />, []);
-
-	// use Suspense to load the entire application only on md screens and larger
-	return isMdScreen ? (
+	return (
 		<div className={getAppContainerStyles(isLgScreen)}>
 			<audio
 				src={buttonClick}
@@ -96,7 +77,7 @@ function AppContainer() {
 				ref={buttonHoverAudioElement}
 				muted={muted}
 			></audio>
-			<Suspense fallback={null}>{isLgScreen && LazyThreeScene}</Suspense>
+			{isMdScreen && <ThreeScene />}
 			<Navbar
 				currentPageHeader={header}
 				muted={muted}
@@ -113,46 +94,8 @@ function AppContainer() {
 			<RepositorySection onVisibilityChange={handleVisibilityChange} />
 			<Footer />
 		</div>
-	) : (
-		<div className={phoneStytles}>
-			{phoneHeader}
-			<span>
-				<a href="https://github.com/vftiago" target="_blank" rel="noreferrer">
-					<GithubIcon size={36}></GithubIcon>
-				</a>
-				<a
-					href="https://linkedin.com/in/vftiago"
-					target="_blank"
-					rel="noreferrer"
-				>
-					<LinkedinIcon size={36}></LinkedinIcon>
-				</a>
-			</span>
-		</div>
 	);
-}
-
-const phoneStytles = css`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	height: 100%;
-	font-size: 42px;
-	font-weight: 700;
-	color: #fff;
-	background: radial-gradient(circle at center, #111, #000);
-	padding: 0 20px;
-	span {
-		display: flex;
-		padding: 32px;
-		gap: 36px;
-	}
-	svg {
-		fill: #fff;
-	}
-`;
+};
 
 const getAppContainerStyles = (isLgScreen: boolean) => {
 	const paddingTop = isLgScreen ? "0px" : "100px";
@@ -165,4 +108,4 @@ const getAppContainerStyles = (isLgScreen: boolean) => {
 	`;
 };
 
-export default AppContainer;
+export default MainApp;

@@ -1,10 +1,9 @@
-
 import React from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import fragmentShader from "../../../assets/glsl/postEffect.frag";
-import vertexShader from "../../../assets/glsl/postEffect.vert";
+import fragmentShader from "../glsl/postEffect.frag";
+import vertexShader from "../glsl/postEffect.vert";
 
 const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
@@ -15,11 +14,12 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 	);
 
 	const handleWindowResize = () => {
-    if (!rawShaderMaterialRef.current) {
-      return;
-    }
+		if (!rawShaderMaterialRef.current) {
+			return;
+		}
 
 		target.setSize(document.body.clientWidth, window.innerHeight);
+
 		rawShaderMaterialRef.current.uniforms.resolution.value.set(
 			document.body.clientWidth,
 			window.innerHeight,
@@ -37,11 +37,28 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 	}, []);
 
 	useFrame((state) => {
-    if (!rawShaderMaterialRef.current) {
-      return;
-    }
+		if (!rawShaderMaterialRef.current) {
+			return;
+		}
 
-		rawShaderMaterialRef.current.uniforms.time.value += 1;
+		const uniforms = rawShaderMaterialRef.current.uniforms;
+
+		if (!uniforms.resolution) {
+			uniforms.resolution = {
+				value: new THREE.Vector2(document.body.clientWidth, window.innerHeight),
+			};
+		}
+
+		if (!uniforms.texture) {
+			uniforms.texture = {
+				value: target.texture,
+			};
+		}
+
+		uniforms.time = uniforms.time || { value: 0 };
+
+		uniforms.time.value += 1;
+
 		rawShaderMaterialRef.current.visible = false;
 		state.gl.setRenderTarget(target);
 		state.gl.render(state.scene, state.camera);
@@ -50,27 +67,11 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 		state.gl.render(scene, state.camera);
 	});
 
-	const uniforms = {
-		time: {
-			type: "f",
-			value: 0,
-		},
-		resolution: {
-			type: "v2",
-			value: new THREE.Vector2(document.body.clientWidth, window.innerHeight),
-		},
-		texture: {
-			type: "t",
-			value: target.texture,
-		},
-	};
-
 	return (
 		<mesh {...props}>
 			<planeGeometry args={[2, 2]} />
 			<rawShaderMaterial
 				ref={rawShaderMaterialRef}
-				uniforms={uniforms}
 				vertexShader={vertexShader}
 				fragmentShader={fragmentShader}
 			/>

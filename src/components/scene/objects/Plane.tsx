@@ -1,8 +1,8 @@
 import React from "react";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import fragmentShader from "../../../assets/glsl/waves.frag";
-import vertexShader from "../../../assets/glsl/waves.vert";
+import fragmentShader from "../glsl/waves.frag";
+import vertexShader from "../glsl/waves.vert";
 import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
 
 const PLANE_DIMENSIONS = 1024;
@@ -12,28 +12,25 @@ const Plane = () => {
 	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
 
 	useEffect(() => {
-    if (!meshRef.current) {
-      return;
-    }
+		if (!meshRef.current) {
+			return;
+		}
 
 		meshRef.current.position.set(0, -128, 0);
 		meshRef.current.rotation.set((-90 * Math.PI) / 180, 0, 0);
 	}, []);
 
 	useFrame(() => {
-    if (!rawShaderMaterialRef.current) {
-      return;
-    }
+		if (!rawShaderMaterialRef.current) {
+			return;
+		}
 
-		rawShaderMaterialRef.current.uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
+		const uniforms = rawShaderMaterialRef.current.uniforms;
+
+		uniforms.time = uniforms.time || { value: 0 };
+
+		uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
 	});
-
-	const uniforms = {
-		time: {
-			type: "f",
-			value: 0,
-		},
-	};
 
 	return (
 		<mesh ref={meshRef}>
@@ -47,7 +44,6 @@ const Plane = () => {
 			/>
 			<rawShaderMaterial
 				ref={rawShaderMaterialRef}
-				uniforms={uniforms}
 				vertexShader={vertexShader}
 				fragmentShader={fragmentShader}
 				transparent={true}
