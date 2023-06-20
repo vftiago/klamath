@@ -7,9 +7,9 @@ import Footer from "../Footer";
 import Navbar from "../Navbar";
 import MainSection from "../MainSection";
 import RepositorySection from "../RepositorySection";
-import { weightedHeaders } from "../../weighted-tables/headers";
 import { useBreakpoints } from "../../useBreakpoints";
 import ThreeScene from "../scene/ThreeScene";
+import { weightedHeaders } from "./headers";
 
 const MainApp = () => {
 	const [muted, setMuted] = useState<boolean>(true);
