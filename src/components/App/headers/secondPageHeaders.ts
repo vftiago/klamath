@@ -1,4 +1,4 @@
-import { weighted, addWeights } from "@lrkit/weighted";
+import { weighted, addWeight } from "@lrkit/weighted";
 
 const WEIGHTS = {
 	common: 3,
@@ -14,8 +14,6 @@ const commonHeaders = [
 	"Recent projects",
 ];
 
-const weightedCommonHeaders = addWeights(commonHeaders, [
-	...commonHeaders.map(() => WEIGHTS.common),
-]);
+const weightedCommonHeaders = addWeight(commonHeaders, WEIGHTS.common);
 
 export const secondPageHeaders = weighted([...weightedCommonHeaders]);

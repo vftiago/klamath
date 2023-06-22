@@ -567,10 +567,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@lrkit/weighted@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@lrkit/weighted/-/weighted-0.0.2.tgz#747d3888d2698be415b88462407dbd1e04040bf6"
-  integrity sha512-Y14HeuyFQuxbbqkDnJj8iEJ8PM3zeZ+8/1YAiqbQbZSoEAGpsU0JcNXuZNkfe9KY1HtsVb/gNrPVPw1HrZ6MKA==
+"@lrkit/weighted@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@lrkit/weighted/-/weighted-0.1.0.tgz#5d4a2b98b828d6422dcdc3e20ec9a061cb84f5e4"
+  integrity sha512-S/U5AHRJcW/mAXBYBzOTo5uZc26d0bdPFuJFp9WpXEF2ymsl/b7e8AwkGwDg9nD8pcQ5yGjOY+2IcAHaY5S0KQ==
   dependencies:
     "@types/seedrandom" "^3.0.5"
     seedrandom "^3.0.5"

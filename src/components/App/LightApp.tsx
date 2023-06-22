@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import GithubIcon from "../icons/GithubIcon";
 import LinkedinIcon from "../icons/LinkedinIcon";
-import { weightedPhoneHeaders } from "../../weighted-tables/headers";
+import { weightedPhoneHeaders } from "./headers/phoneHeaders";
 
 const LightApp = () => {
 	const [phoneHeader, setPhoneHeader] = useState<string>("Hello World");

@@ -1,4 +1,4 @@
-import { weighted, addWeights } from "@lrkit/weighted";
+import { weighted, addWeight } from "@lrkit/weighted";
 import { WEEKDAYS } from "../../../constants";
 
 const today = WEEKDAYS[new Date().getDay()];
@@ -24,17 +24,11 @@ const uncommonHeaders = [
 
 const rareHeaders = ["Everything I ever said has been satire"];
 
-const weightedCommonHeaders = addWeights(commonHeaders, [
-	...commonHeaders.map(() => WEIGHTS.common),
-]);
+const weightedCommonHeaders = addWeight(commonHeaders, WEIGHTS.common);
 
-const weightedUncommonHeaders = addWeights(uncommonHeaders, [
-	...uncommonHeaders.map(() => WEIGHTS.uncommon),
-]);
+const weightedUncommonHeaders = addWeight(uncommonHeaders, WEIGHTS.uncommon);
 
-const weightedRareHeaders = addWeights(rareHeaders, [
-	...rareHeaders.map(() => WEIGHTS.rare),
-]);
+const weightedRareHeaders = addWeight(rareHeaders, WEIGHTS.rare);
 
 export const firstPageHeaders = weighted([
 	...weightedCommonHeaders,
