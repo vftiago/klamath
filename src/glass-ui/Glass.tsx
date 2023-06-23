@@ -29,7 +29,7 @@ const getGlassStyles = (
 	opacity: number,
 	tint: "light" | "dark",
 ) => {
-	const color = tint === "light" ? 232 : 88;
+	const color = tint === "light" ? 212 : 88;
 
 	const backdropFilter = `blur(${blur}px)`;
 	const backgroundColor = `rgba(${color}, ${color}, ${color}, ${opacity})`;

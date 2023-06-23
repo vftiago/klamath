@@ -14,7 +14,7 @@ import { weightedHeaders } from "./headers";
 const MainApp = () => {
 	const [muted, setMuted] = useState<boolean>(true);
 
-	const { isMdScreen, isLgScreen } = useBreakpoints();
+	const { isMdScreen } = useBreakpoints();
 
 	const [pageVisibilityInfo, setPageVisibilityInfo] = useState<
 		Map<number, boolean>
@@ -66,7 +66,7 @@ const MainApp = () => {
 	};
 
 	return (
-		<div className={getAppContainerStyles(isLgScreen)}>
+		<div className={getAppContainerStyles()}>
 			<audio
 				src={buttonClick}
 				ref={buttonClickAudioElement}
@@ -97,13 +97,10 @@ const MainApp = () => {
 	);
 };
 
-const getAppContainerStyles = (isLgScreen: boolean) => {
-	const paddingTop = isLgScreen ? "0px" : "100px";
-
+const getAppContainerStyles = () => {
 	return css`
 		display: flex;
 		flex-direction: column;
-		padding-top: ${paddingTop};
 		gap: 120px;
 	`;
 };
