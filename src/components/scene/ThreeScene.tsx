@@ -57,7 +57,7 @@ const ThreeScene = () => {
 				<Box position={[-100, -1200, -300]}></Box>
 				<Box position={[100, -1100, 25]}></Box>
 				<Box position={[150, -1500, -10]}></Box>
-				<PostEffect position={[0, -200, 0]} />
+				<PostEffect position={[0, -200, -8000]} />
 			</Canvas>
 		</div>
 	);
