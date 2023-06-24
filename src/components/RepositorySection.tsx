@@ -4,6 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
 import { getRepos, Repositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
+import { useBreakpoints } from "../useBreakpoints";
 const RepositoryList = React.lazy(() => import("./RepositoryList"));
 
 type Props = {
@@ -18,6 +19,8 @@ function RepositorySection({ onVisibilityChange }: Props) {
 	const { ref, inView } = useInView({
 		threshold: 1,
 	});
+
+	const { isLgScreen } = useBreakpoints();
 
 	useEffect(() => {
 		const loadRepositories = async () => {
@@ -43,7 +46,7 @@ function RepositorySection({ onVisibilityChange }: Props) {
 
 	return (
 		<Element
-			className={repositorySectionContainerStyle}
+			className={getRepositorySectionContainerStyle(isLgScreen)}
 			name="repository-section"
 		>
 			<div ref={ref} />
@@ -57,11 +60,11 @@ function RepositorySection({ onVisibilityChange }: Props) {
 	);
 }
 
-const repositorySectionContainerStyle = css`
+const getRepositorySectionContainerStyle = (isLgScreen: boolean) => css`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 0 120px;
+	padding: ${isLgScreen ? 128 : 24}px;
 	gap: 30px;
 	h2 {
 		font-size: 32px;
