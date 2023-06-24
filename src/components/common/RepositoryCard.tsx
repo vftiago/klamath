@@ -87,7 +87,7 @@ function RepositoryCard(props: RepositoryCardProps) {
 const repositoryCardStyle = css`
 	display: flex;
 	flex-direction: column;
-	padding: 20px;
+	padding: 16px 24px;
 `;
 
 const repositoryCardTitleStyle = css`
@@ -127,6 +127,7 @@ const commitListStyle = css`
 		justify-content: flex-start;
 		list-style: none;
 		padding: 0;
+		line-height: 1.3;
 	}
 `;
 
@@ -134,6 +135,7 @@ const commitMessageStyle = css`
 	text-overflow: ellipsis;
 	overflow: hidden;
 	white-space: nowrap;
+	font-size: 14px;
 `;
 
 export default RepositoryCard;

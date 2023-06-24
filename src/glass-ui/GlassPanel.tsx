@@ -42,6 +42,8 @@ const getPanelStyle = (
 	elevation: Elevation,
 	stickyPosition?: StickyPosition,
 ) => {
+	if (!elevation) return null;
+
 	const boxShadow = `${1 + elevation}px`;
 
 	if (!stickyPosition) {

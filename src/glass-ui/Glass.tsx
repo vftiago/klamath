@@ -37,7 +37,7 @@ const getGlassStyles = (
 	return css`
 		backdrop-filter: ${backdropFilter};
 		background-color: ${backgroundColor};
-		border: 1px solid rgba(128, 128, 128, 0.3);
+		border: 1px solid rgba(128, 128, 128, 0.5);
 	`;
 };
 
