@@ -57,7 +57,7 @@ const typedJob = (self: Typed) => {
 	setTimeout(() => {
 		new Typed("#typed-job", {
 			...defaultTypedOptions,
-			strings: [`Frontend web developer^16000?`],
+			strings: [`Frontend web developer`],
 			startDelay: 1200,
 		});
 
