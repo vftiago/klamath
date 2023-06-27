@@ -1,4 +1,14 @@
-import { firstPageHeaders } from "./firstPageHeaders";
+import { getFirstPageHeaders } from "./firstPageHeaders";
 import { secondPageHeaders } from "./secondPageHeaders";
 
-export const weightedHeaders = [firstPageHeaders, secondPageHeaders];
+export const getWeightedHeaders = ({
+	isRecurringVisitor,
+}: {
+	isRecurringVisitor: boolean;
+}) => {
+	const firstPageHeaders = getFirstPageHeaders({
+		isRecurringVisitor,
+	});
+
+	return [firstPageHeaders, secondPageHeaders];
+};

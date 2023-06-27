@@ -9,9 +9,13 @@ import MainSection from "../MainSection";
 import RepositorySection from "../RepositorySection";
 import { useBreakpoints } from "../../useBreakpoints";
 import ThreeScene from "../scene/ThreeScene";
-import { weightedHeaders } from "./headers";
+import { WeightedTable } from "@lrkit/weighted/src/types";
 
-const MainApp = () => {
+const MainApp = ({
+	weightedHeaders,
+}: {
+	weightedHeaders: WeightedTable<string>[];
+}) => {
 	const [muted, setMuted] = useState<boolean>(true);
 
 	const { isMdScreen } = useBreakpoints();
