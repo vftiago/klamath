@@ -10,8 +10,7 @@ const projectListAnimation = {
 	visible: {
 		opacity: 1,
 		transition: {
-			delay: 0.2,
-			duration: 0.8,
+			duration: 0.2,
 			when: "beforeChildren",
 			staggerChildren: 0.1,
 			ease: "backInOut",
@@ -58,7 +57,7 @@ const repostoryListStyle = css`
 	display: grid;
 	justify-content: center;
 	width: 100%;
-	max-width: 1600px;
+	max-width: 1500px;
 	grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
 	grid-gap: 24px;
 	list-style: none;

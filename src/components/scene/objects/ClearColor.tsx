@@ -11,7 +11,7 @@ const ClearColor = () => {
 	};
 
 	useEffect(() => {
-		state.gl.setClearColor(0xeeeeee, 1.03);
+		state.gl.setClearColor(0xeeeeee, 1.1);
 
 		window.addEventListener("resize", handleWindowResize);
 

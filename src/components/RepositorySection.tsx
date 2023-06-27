@@ -66,9 +66,6 @@ const getRepositorySectionContainerStyle = (isLgScreen: boolean) => css`
 	align-items: center;
 	padding: ${isLgScreen ? 128 : 24}px;
 	gap: 30px;
-	h2 {
-		font-size: 32px;
-	}
 `;
 
 const repositorySectionStyle = css`
