@@ -13,7 +13,3 @@
 .env.test.local
 .env.production.local
 .vscode
-
-#yarn
-yarn-debug.log*
-yarn-error.log*
