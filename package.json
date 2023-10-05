@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "license": "MPL-2.0",
   "engines": {
-    "node": "20"
+    "node": "18",
+    "pnpm": "8.8.0"
   },
   "dependencies": {
     "@emotion/css": "^11.11.0",
