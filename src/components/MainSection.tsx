@@ -7,9 +7,7 @@ import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { Fragment, useEffect } from "react";
-import { iconSize } from "../theme";
-import { colors } from "../theme";
-import Waterfall from "./Waterfalll";
+import { DEFAULT_ICON_SIZE, colors } from "../theme";
 import { EMAIL } from "../constants";
 import { useInView } from "react-intersection-observer";
 
@@ -162,7 +160,7 @@ function MainSection({
 							onMouseEnter={onButtonHover}
 							onClick={onButtonClick}
 						>
-							<GithubIcon size={iconSize}></GithubIcon>
+							<GithubIcon />
 						</motion.a>
 						<motion.a
 							variants={item}
@@ -171,7 +169,7 @@ function MainSection({
 							rel="noreferrer"
 							onMouseEnter={onButtonHover}
 						>
-							<MailIcon size={iconSize}></MailIcon>
+							<MailIcon />
 						</motion.a>
 						<motion.a
 							variants={item}
@@ -181,10 +179,10 @@ function MainSection({
 							onMouseEnter={onButtonHover}
 							onClick={onButtonClick}
 						>
-							<LinkedinIcon size={iconSize}></LinkedinIcon>
+							<LinkedinIcon />
 						</motion.a>
 					</div>
-					<Waterfall />
+					{/* <Waterfall /> */}
 				</motion.div>
 			</div>
 		</Fragment>
@@ -194,7 +192,6 @@ function MainSection({
 const appContainerStyles = css`
 	display: flex;
 	align-items: center;
-	/* justify-content: center; */
 	height: 100vh;
 	width: 100%;
 	overflow-x: hidden;
@@ -226,12 +223,11 @@ const socialIconsStyle = css`
 	width: 200px;
 	margin: 32px;
 	a {
-		height: ${iconSize + "px"};
-		width: ${iconSize + "px"};
+		height: ${DEFAULT_ICON_SIZE + "px"};
+		width: ${DEFAULT_ICON_SIZE + "px"};
 	}
 	svg {
 		transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-		/* margin: ${"0 " + iconSize + "px"}; */
 		fill: #333;
 		&:hover {
 			cursor: pointer;

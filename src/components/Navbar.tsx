@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Logo from "./icons/Logo";
 import HeadphonesIcon from "./icons/Headphones";
-import { colors, iconSize, logoSize } from "../theme";
+import { DEFAULT_ICON_SIZE, colors, logoSize } from "../theme";
 import Typed from "typed.js";
 import GlassPanel from "../glass-ui/GlassPanel";
 import { useBreakpoints } from "../useBreakpoints";
@@ -112,7 +112,7 @@ const Navbar = ({
 						onMouseEnter={onButtonHover}
 						onClick={onHeadphonesIconClick}
 					>
-						<HeadphonesIcon size={iconSize}></HeadphonesIcon>
+						<HeadphonesIcon />
 					</span>
 				</div>
 			</GlassPanel>
@@ -240,10 +240,13 @@ const soundIconStyle = css`
 		position: absolute;
 		top: 50%;
 		left: 50%;
-		width: ${Math.sqrt(iconSize * iconSize + iconSize * iconSize) + "px"};
+		width: ${Math.sqrt(
+			DEFAULT_ICON_SIZE * DEFAULT_ICON_SIZE +
+				DEFAULT_ICON_SIZE * DEFAULT_ICON_SIZE,
+		) + "px"};
 		height: 2px;
 		margin-top: -1px;
-		margin-left: ${-1 * iconSize * 0.75 + "px"};
+		margin-left: ${-1 * DEFAULT_ICON_SIZE * 0.75 + "px"};
 		transform: rotate(-45deg) scaleX(0);
 	}
 `;

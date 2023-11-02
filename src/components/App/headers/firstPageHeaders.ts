@@ -17,16 +17,18 @@ export const getFirstPageHeaders = ({
 	const commonHeaders = [
 		"Hello World",
 		`It is ${today}`,
-		"Welcome to my website",
-		"Welcome to my blog",
+		"Welcome",
+		"Hello",
+		"Hi",
 	];
 
 	const uncommonHeaders = [
+		"Not a blog",
 		`const pipe =
   (...fns) => (x) => fns.reduce((v, f) => f(v), x)`,
-	].concat(isRecurringVisitor ? ["Do you like it here?"] : []);
+	].concat(isRecurringVisitor ? ["Do you like it here?", "Welcome back"] : []);
 
-	const rareHeaders = ["Everything I ever said has been satire"];
+	const rareHeaders = ["Everything I ever said has been satire", "Windows 96"];
 
 	const weightedCommonHeaders = addWeight(commonHeaders, WEIGHTS.common);
 

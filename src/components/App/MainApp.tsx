@@ -8,7 +8,7 @@ import Navbar from "../Navbar";
 import MainSection from "../MainSection";
 import RepositorySection from "../RepositorySection";
 import { useBreakpoints } from "../../useBreakpoints";
-import ThreeScene from "../scene/ThreeScene";
+import ThreeScene from "../3d/ThreeScene";
 import { WeightedTable } from "@lrkit/weighted/src/types";
 
 const MainApp = ({

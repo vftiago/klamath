@@ -1,8 +1,8 @@
 import React from "react";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import fragmentShader from "../glsl/waves.frag";
-import vertexShader from "../glsl/waves.vert";
+import fragmentShader from "./plane.frag";
+import vertexShader from "./plane.vert";
 import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
 
 const PLANE_DIMENSIONS = 1024;

@@ -2,8 +2,8 @@ import React from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import fragmentShader from "../glsl/postEffect.frag";
-import vertexShader from "../glsl/postEffect.vert";
+import fragmentShader from "./postEffect.frag";
+import vertexShader from "./postEffect.vert";
 
 const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
@@ -29,7 +29,25 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 	const [scene] = useState(() => new THREE.Scene());
 
 	useEffect(() => {
+		if (!rawShaderMaterialRef.current) {
+			return;
+		}
+
 		window.addEventListener("resize", handleWindowResize);
+
+		const uniforms = rawShaderMaterialRef.current.uniforms;
+
+		uniforms.resolution = {
+			value: new THREE.Vector2(document.body.clientWidth, window.innerHeight),
+		};
+
+		uniforms.texture = {
+			value: target.texture,
+		};
+
+		uniforms.time = {
+			value: 0,
+		};
 
 		return () => {
 			window.removeEventListener("resize", handleWindowResize);
@@ -42,20 +60,6 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 		}
 
 		const uniforms = rawShaderMaterialRef.current.uniforms;
-
-		if (!uniforms.resolution) {
-			uniforms.resolution = {
-				value: new THREE.Vector2(document.body.clientWidth, window.innerHeight),
-			};
-		}
-
-		if (!uniforms.texture) {
-			uniforms.texture = {
-				value: target.texture,
-			};
-		}
-
-		uniforms.time = uniforms.time || { value: 0 };
 
 		uniforms.time.value += 1;
 

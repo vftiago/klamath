@@ -3,10 +3,10 @@ import { css } from "@emotion/css";
 import * as THREE from "three";
 import { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import Box from "./objects/Box";
-import Plane from "./objects/Plane";
-import PostEffect from "./objects/PostEffect";
-import ClearColor from "./objects/ClearColor";
+import Box from "./Box/Box";
+import Plane from "./Plane/Plane";
+import PostEffect from "./PostEffect/PostEffect";
+import ClearColor from "./ClearColor/ClearColor";
 
 const ThreeScene = () => {
 	const [camera] = useState(

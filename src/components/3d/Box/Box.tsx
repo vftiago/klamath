@@ -3,8 +3,8 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 
-import fragmentShader from "../glsl/debris.frag";
-import vertexShader from "../glsl/debris.vert";
+import fragmentShader from "./box.frag";
+import vertexShader from "./box.vert";
 import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
 
 function Box(props: JSX.IntrinsicElements["mesh"]) {
