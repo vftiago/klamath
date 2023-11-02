@@ -13,29 +13,23 @@ const nowString = now.toISOString();
 const nowTime = now.getTime();
 
 const App = () => {
-	const { isMdScreen } = useBreakpoints();
+  const { isMdScreen } = useBreakpoints();
 
-	const [weightedHeaders, setWeightedHeaders] = useState<
-		WeightedTable<string>[]
-	>([]);
+  const [weightedHeaders, setWeightedHeaders] = useState<WeightedTable<string>[]>([]);
 
-	useEffect(() => {
-		const firstVisitString = localStorage.getItem("firstVisit") ?? nowString;
+  useEffect(() => {
+    const firstVisitString = localStorage.getItem("firstVisit") ?? nowString;
 
-		const firstVisitTime = new Date(firstVisitString).getTime();
+    const firstVisitTime = new Date(firstVisitString).getTime();
 
-		const weightedHeaders = getWeightedHeaders({
-			isRecurringVisitor: nowTime - firstVisitTime > DAY,
-		});
+    const weightedHeaders = getWeightedHeaders({
+      isRecurringVisitor: nowTime - firstVisitTime > DAY,
+    });
 
-		setWeightedHeaders(weightedHeaders);
-	}, []);
+    setWeightedHeaders(weightedHeaders);
+  }, []);
 
-	return isMdScreen ? (
-		<MainApp weightedHeaders={weightedHeaders} />
-	) : (
-		<LightApp />
-	);
+  return isMdScreen ? <MainApp weightedHeaders={weightedHeaders} /> : <LightApp />;
 };
 
 export default App;

@@ -8,50 +8,43 @@ import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
 const PLANE_DIMENSIONS = 1024;
 
 const Plane = () => {
-	const meshRef = useRef<THREE.Mesh>(null);
-	const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
+  const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
 
-	useEffect(() => {
-		if (!meshRef.current) {
-			return;
-		}
+  useEffect(() => {
+    if (!meshRef.current) {
+      return;
+    }
 
-		meshRef.current.position.set(0, -128, 0);
-		meshRef.current.rotation.set((-90 * Math.PI) / 180, 0, 0);
-	}, []);
+    meshRef.current.position.set(0, -128, 0);
+    meshRef.current.rotation.set((-90 * Math.PI) / 180, 0, 0);
+  }, []);
 
-	useFrame(() => {
-		if (!rawShaderMaterialRef.current) {
-			return;
-		}
+  useFrame(() => {
+    if (!rawShaderMaterialRef.current) {
+      return;
+    }
 
-		const uniforms = rawShaderMaterialRef.current.uniforms;
+    const uniforms = rawShaderMaterialRef.current.uniforms;
 
-		uniforms.time = uniforms.time || { value: 0 };
+    uniforms.time = uniforms.time || { value: 0 };
 
-		uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
-	});
+    uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
+  });
 
-	return (
-		<mesh ref={meshRef}>
-			<planeGeometry
-				args={[
-					PLANE_DIMENSIONS,
-					PLANE_DIMENSIONS,
-					PLANE_DIMENSIONS / 32,
-					PLANE_DIMENSIONS / 32,
-				]}
-			/>
-			<rawShaderMaterial
-				ref={rawShaderMaterialRef}
-				vertexShader={vertexShader}
-				fragmentShader={fragmentShader}
-				transparent={true}
-				wireframe={true}
-				lights={false}
-			/>
-		</mesh>
-	);
+  return (
+    <mesh ref={meshRef}>
+      <planeGeometry args={[PLANE_DIMENSIONS, PLANE_DIMENSIONS, PLANE_DIMENSIONS / 32, PLANE_DIMENSIONS / 32]} />
+      <rawShaderMaterial
+        ref={rawShaderMaterialRef}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+        transparent={true}
+        wireframe={true}
+        lights={false}
+      />
+    </mesh>
+  );
 };
 
 export default Plane;

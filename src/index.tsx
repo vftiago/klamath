@@ -7,7 +7,7 @@ const root = document.getElementById("root");
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 createRoot(root!).render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
 );

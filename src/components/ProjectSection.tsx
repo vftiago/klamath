@@ -1,54 +1,69 @@
-import React from "react";
-import { css } from "@emotion/css";
-import { useInView } from "react-intersection-observer";
-import { useEffect, useState } from "react";
-import { Element } from "react-scroll";
-import { getProjects, Projects } from "../api/octokit-api";
-import ProjectWall from "./ProjectWall";
+// import React, { Suspense } from "react";
+// import { css } from "@emotion/css";
+// import { useInView } from "react-intersection-observer";
+// import { useEffect, useState } from "react";
+// import { Element } from "react-scroll";
+// import { getProjectData } from "../api/octokit-api";
+// import ProjectList from "./ProjectList";
+// import { useBreakpoints } from "../useBreakpoints";
+// import LoadingIcon from "./icons/LoadingIcon";
 
-type Props = {
-	onVisibilityChange: (page: number, inView: boolean) => void;
-};
+// type Props = {
+// 	onVisibilityChange: (page: number, inView: boolean) => void;
+// };
 
-function ProjectSection({ onVisibilityChange }: Props) {
-	const [projectData, setProjectData] = useState<Projects | null>(null);
+// function ProjectSection({ onVisibilityChange }: Props) {
+// 	const [projectData, setProjectData] = useState<null>(null);
 
-	const { ref, inView } = useInView({
-		threshold: 1,
-	});
+// 	const { ref, inView } = useInView({
+// 		threshold: 1,
+// 	});
 
-	useEffect(() => {
-		const loadRepositories = async () => {
-			if (!projectData) {
-				const projects = await getProjects();
+// 	const { isLgScreen } = useBreakpoints();
 
-				setProjectData(projects);
-			}
-		};
+// 	useEffect(() => {
+// 		const loadRepositories = async () => {
+// 			if (!projectData) {
+// 				const projectData = await getProjectData();
 
-		if (inView && !projectData) {
-			loadRepositories();
-		}
-	}, [inView, projectData]);
+// 				console.log(projectData);
 
-	useEffect(() => {
-		onVisibilityChange(1, inView);
-	}, [inView]);
+// 				// setProjectData(projectData);
+// 			}
+// 		};
 
-	return (
-		<Element className={projectSectionStyle} name="projectSection">
-			<h2 ref={ref}>Projects</h2>
-			{projectData && <ProjectWall data={projectData} />}
-		</Element>
-	);
-}
+// 		if (inView && !projectData) {
+// 			loadRepositories();
+// 		}
+// 	}, [inView, projectData]);
 
-const projectSectionStyle = css`
-	min-height: 100vh;
-	width: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
+// 	useEffect(() => {
+// 		onVisibilityChange(1, inView);
+// 	}, [inView]);
 
-export default ProjectSection;
+// 	return (
+// 		<Element className={getProjectSectionContainerStyle(isLgScreen)} name="projectSection">
+// 			<h2 ref={ref}>Projects</h2>
+// 			<div className={projectSectionStyle}>
+// 				<Suspense fallback={<LoadingIcon />}>{projectData && <ProjectList data={projectData} />}</Suspense>
+// 			</div>
+// 		</Element>
+// 	);
+// }
+
+// const getProjectSectionContainerStyle = (isLgScreen: boolean) => css`
+// 	display: flex;
+// 	flex-direction: column;
+// 	align-items: center;
+// 	padding: ${isLgScreen ? 128 : 24}px;
+// 	gap: 30px;
+// `;
+
+// const projectSectionStyle = css`
+// 	display: flex;
+// 	flex-direction: column;
+// 	align-items: center;
+// 	width: 100%;
+// `;
+
+// export default ProjectSection;

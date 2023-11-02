@@ -3,24 +3,24 @@ import { useThree } from "@react-three/fiber";
 import { Fragment, useEffect } from "react";
 
 const ClearColor = () => {
-	const state = useThree();
+  const state = useThree();
 
-	const handleWindowResize = () => {
-		state.gl.setPixelRatio(window.devicePixelRatio);
-		state.gl.setSize(document.body.clientWidth, window.innerHeight);
-	};
+  const handleWindowResize = () => {
+    state.gl.setPixelRatio(window.devicePixelRatio);
+    state.gl.setSize(document.body.clientWidth, window.innerHeight);
+  };
 
-	useEffect(() => {
-		state.gl.setClearColor(0xeeeeee, 1.1);
+  useEffect(() => {
+    state.gl.setClearColor(0xeeeeee, 1.1);
 
-		window.addEventListener("resize", handleWindowResize);
+    window.addEventListener("resize", handleWindowResize);
 
-		return () => {
-			window.removeEventListener("resize", handleWindowResize);
-		};
-	}, []);
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
 
-	return <Fragment></Fragment>;
+  return <Fragment></Fragment>;
 };
 
 export default ClearColor;

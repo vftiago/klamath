@@ -1,17 +1,17 @@
 {
-	"include": ["**/*.ts", "**/*.tsx"],
-	"compilerOptions": {
-		"diagnostics": true,
-		"noEmit": true,
-		"allowSyntheticDefaultImports": true,
-		"target": "esnext",
-		"lib": ["dom", "dom.iterable", "esnext"],
-		"strict": true,
-		"module": "esnext",
-		"moduleResolution": "node",
-		"resolveJsonModule": true,
-		"jsx": "react",
-		"types": ["vite/client", "node"],
-		"skipLibCheck": true
-	}
+  "include": ["**/*.ts", "**/*.tsx"],
+  "compilerOptions": {
+    "diagnostics": true,
+    "noEmit": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "strict": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "types": ["vite/client", "node"],
+    "skipLibCheck": true
+  }
 }

@@ -1,7 +1,5 @@
 {
-	"trailingComma": "all",
-	"quoteProps": "consistent",
-	"arrowParens": "always",
-	"singleQuote": false,
-	"useTabs": true
+  "printWidth": 120,
+  "quoteProps": "consistent",
+  "trailingComma": "all"
 }

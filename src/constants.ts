@@ -4,12 +4,4 @@ export const EMAIL = "tiago@infodump.xyz";
 
 export const DAY = 1000 * 60 * 60 * 24;
 
-export const WEEKDAYS = [
-	"Sunday",
-	"Monday",
-	"Tuesday",
-	"Wednesday",
-	"Thursday",
-	"Friday",
-	"Saturday",
-];
+export const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
