@@ -31,8 +31,8 @@ const projectListItemAnimation = {
 // #endregion framer-animations
 
 const RepositoryList = ({ repositoryData }: { repositoryData: UserRepositories }) => {
-  const filteredRepositoryList = repositoryData.user.repositories.nodes.filter(({ owner }) => {
-    return owner.login === DEFAULT_OWNER;
+  const filteredRepositoryList = repositoryData.user.repositories.nodes.filter(({ owner, name }) => {
+    return (owner.login === DEFAULT_OWNER && name !== DEFAULT_OWNER);
   });
 
   return (
