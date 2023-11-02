@@ -1,6 +1,6 @@
 import React from "react";
 import { css } from "@emotion/css";
-import { Repositories } from "../api/octokit-api";
+import { DEFAULT_OWNER, UserRepositories } from "../api/octokit-api";
 import { motion } from "framer-motion";
 import RepositoryCard from "./common/RepositoryCard";
 
@@ -30,22 +30,17 @@ const projectListItemAnimation = {
 };
 // #endregion framer-animations
 
-const RepositoryList = ({ data }: { data: Repositories }) => {
+const RepositoryList = ({ repositoryData }: { repositoryData: UserRepositories }) => {
+	const filteredRepositoryList = repositoryData.user.repositories.nodes.filter(({ owner }) => {
+		return owner.login === DEFAULT_OWNER;
+	});
+
 	return (
-		<motion.ul
-			initial="hidden"
-			animate="visible"
-			variants={projectListAnimation}
-			className={repostoryListStyle}
-		>
-			{data.map((repo, index) => {
+		<motion.ul initial="hidden" animate="visible" variants={projectListAnimation} className={repostoryListStyle}>
+			{filteredRepositoryList.map((repositoryNode, index) => {
 				return (
 					<motion.li key={index} variants={projectListItemAnimation}>
-						<RepositoryCard
-							htmlUrl={repo.html_url}
-							name={repo.name}
-							homepage={repo.homepage}
-						></RepositoryCard>
+						<RepositoryCard repositoryNode={repositoryNode}></RepositoryCard>
 					</motion.li>
 				);
 			})}

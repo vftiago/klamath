@@ -1,83 +1,52 @@
 import React from "react";
 import { css } from "@emotion/css";
-import { useEffect, useState } from "react";
-import { getRepositoryCommits, RepositoryCommits } from "../../api/octokit-api";
 import { colors, typography } from "../../theme";
 import GitCommitIcon from "../icons/GitCommitIcon";
 import Card from "./Card";
+import { RepositoryNode } from "../../api/octokit-api";
 
 type RepositoryCardProps = {
-	name: string;
-	htmlUrl: string;
-	homepage?: string | null;
+	repositoryNode: RepositoryNode;
 };
 
-function RepositoryCard(props: RepositoryCardProps) {
-	const { name, htmlUrl, homepage } = props;
+function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
+	const { name, homepageUrl, url, defaultBranchRef } = repositoryNode;
 
-	const [data, setData] = useState<RepositoryCommits | null>(null);
-	const [error, setError] = useState<Error | null>(null);
-
-	useEffect(() => {
-		const fetchRepositoryCommits = async () => {
-			try {
-				const commits = await getRepositoryCommits(name);
-
-				setData(commits);
-			} catch (e: unknown) {
-				if (e instanceof Error) {
-					setError(e);
-				}
-
-				throw new Error(`Unexpected Error: ${e}`);
-			}
-		};
-
-		if (!data) {
-			fetchRepositoryCommits();
-		}
-	}, [data, name]);
+	const commitHistory = defaultBranchRef ? defaultBranchRef.target.history.edges : [];
 
 	return (
 		<Card size="s" orientation="horizontal" customStyles={repositoryCardStyle}>
 			<div className={repositoryCardTitleStyle}>
 				<h4>{name}</h4>
 
-				{homepage && (
-					<a target="_blank" rel="noreferrer" href={homepage}>
-						{homepage}
+				{homepageUrl && (
+					<a target="_blank" rel="noreferrer" href={homepageUrl}>
+						{homepageUrl}
 					</a>
 				)}
 			</div>
 			<div className={repositoryCardBodyStyle}>
-				{data ? (
+				{commitHistory.length ? (
 					<div>
 						<p>Latest commits:</p>
 						<ul className={commitListStyle}>
-							{data.map((commit, index) => {
+							{commitHistory.map((commit, index) => {
 								return (
 									<li key={index}>
 										<GitCommitIcon />
-										<span className={commitMessageStyle}>
-											{commit.commit.message}
-										</span>
+										<span className={commitMessageStyle}>{commit.node.message}</span>
 									</li>
 								);
 							})}
 						</ul>
-					</div>
-				) : error ? (
-					<div>
-						<p>Oops!</p>
-						<span>{error.message}</span>
 					</div>
 				) : (
 					"Nothing to see here."
 				)}
 			</div>
 			<div className={repositoryCardFooterStyle}>
-				<a target="_blank" rel="noreferrer" href={htmlUrl}>
-					{htmlUrl}
+				<a target="_blank" rel="noreferrer" href={url}>
+					{url}
 				</a>
 			</div>
 		</Card>

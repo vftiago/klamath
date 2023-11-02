@@ -9,7 +9,7 @@
   "dependencies": {
     "@emotion/css": "^11.11.2",
     "@lrkit/weighted": "^0.2.1",
-    "@octokit/rest": "^20.0.2",
+    "@octokit/graphql": "^7.0.2",
     "@react-three/drei": "^9.88.10",
     "@react-three/fiber": "^8.15.9",
     "@react-three/postprocessing": "^2.15.8",

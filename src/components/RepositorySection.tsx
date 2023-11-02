@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
-import { getRepos, Repositories } from "../api/octokit-api";
+import { getRepositoryData, UserRepositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
 import { useBreakpoints } from "../useBreakpoints";
 const RepositoryList = React.lazy(() => import("./RepositoryList"));
@@ -12,9 +12,7 @@ type Props = {
 };
 
 function RepositorySection({ onVisibilityChange }: Props) {
-	const [repositoryData, setRepositoryData] = useState<Repositories | null>(
-		null,
-	);
+	const [repositoryData, setRepositoryData] = useState<UserRepositories | null>(null);
 
 	const { ref, inView } = useInView({
 		threshold: 1,
@@ -25,11 +23,9 @@ function RepositorySection({ onVisibilityChange }: Props) {
 	useEffect(() => {
 		const loadRepositories = async () => {
 			if (!repositoryData) {
-				const repos = await getRepos();
+				const repositoryData = await getRepositoryData();
 
-				const repositoryData = repos.filter(
-					(repo) => !repo.fork && !repo.archived && repo.name !== "vftiago",
-				);
+				console.log(repositoryData);
 
 				setRepositoryData(repositoryData);
 			}
@@ -45,15 +41,12 @@ function RepositorySection({ onVisibilityChange }: Props) {
 	}, [inView, onVisibilityChange]);
 
 	return (
-		<Element
-			className={getRepositorySectionContainerStyle(isLgScreen)}
-			name="repository-section"
-		>
+		<Element className={getRepositorySectionContainerStyle(isLgScreen)} name="repository-section">
 			<div ref={ref} />
 			<h2>Repositories</h2>
 			<div className={repositorySectionStyle}>
 				<Suspense fallback={<LoadingIcon />}>
-					{repositoryData && <RepositoryList data={repositoryData} />}
+					{repositoryData && <RepositoryList repositoryData={repositoryData} />}
 				</Suspense>
 			</div>
 		</Element>
@@ -71,9 +64,6 @@ const getRepositorySectionContainerStyle = (isLgScreen: boolean) => css`
 const repositorySectionStyle = css`
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	min-height: 100vh;
-	width: 100%;
 `;
 
 export default RepositorySection;
