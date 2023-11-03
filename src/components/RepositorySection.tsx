@@ -64,6 +64,7 @@ const getRepositorySectionContainerStyle = (isLgScreen: boolean) => css`
 const repositorySectionStyle = css`
   display: flex;
   flex-direction: column;
+  max-width: 100%;
 `;
 
 export default RepositorySection;
