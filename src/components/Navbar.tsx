@@ -69,8 +69,6 @@ const visible = {
   y: 0,
   transition: {
     duration: 0.8,
-    when: "beforeChildren",
-    staggerChildren: 0.2,
     ease: "backInOut",
   },
 };
