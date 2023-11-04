@@ -53,14 +53,12 @@ const getRepositorySectionContainerStyle = () => css`
   align-items: center;
   padding: 80px 24px;
   gap: 48px;
-  height: 100%;
 `;
 
 const repositorySectionStyle = css`
   display: flex;
   flex-direction: column;
   max-width: 100%;
-  min-height: 1200px;
 `;
 
 export default RepositorySection;

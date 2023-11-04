@@ -10,7 +10,6 @@ const projectListAnimation = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.1,
       when: "beforeChildren",
       staggerChildren: 0.1,
       ease: "backInOut",
@@ -19,6 +18,7 @@ const projectListAnimation = {
 };
 
 const projectListItemAnimation = {
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
     transition: {
@@ -26,7 +26,6 @@ const projectListItemAnimation = {
       ease: "backInOut",
     },
   },
-  hidden: { opacity: 0 },
 };
 // #endregion framer-animations
 

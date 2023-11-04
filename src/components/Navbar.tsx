@@ -125,6 +125,7 @@ const getNavbarContainerStyles = (position: NavbarPosition) => {
 };
 
 const verticalBarStyles = css`
+  top: -1px;
   position: fixed;
   display: grid;
   align-items: center;

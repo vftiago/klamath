@@ -1,9 +1,9 @@
 import React from "react";
 import { css } from "@emotion/css";
 import { colors, typography } from "../theme";
-import GitCommitIcon from "./icons/GitCommitIcon";
 import Card from "./Card";
 import { RepositoryNode } from "../api/octokit-api";
+import { VscGitCommit } from "react-icons/vsc";
 
 type RepositoryCardProps = {
   repositoryNode: RepositoryNode;
@@ -33,7 +33,7 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
               {commitHistory.map((commit, index) => {
                 return (
                   <li key={index}>
-                    <GitCommitIcon />
+                    <VscGitCommit />
                     <span className={commitMessageStyle}>{commit.node.message}</span>
                   </li>
                 );

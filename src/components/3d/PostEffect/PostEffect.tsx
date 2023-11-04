@@ -56,7 +56,7 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 
     const uniforms = rawShaderMaterialRef.current.uniforms;
 
-    uniforms.time.value += delta * TIME_SPEED * TIME_SPEED;
+    uniforms.time.value += delta * TIME_SPEED;
 
     rawShaderMaterialRef.current.visible = false;
     state.gl.setRenderTarget(target);
