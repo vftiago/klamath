@@ -3,7 +3,7 @@ import { css } from "@emotion/css";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Logo from "./icons/Logo";
-import { logoSize } from "../theme";
+import { DEFAULT_LOGO_SIZE } from "../theme";
 import Typed from "typed.js";
 import GlassPanel, { FixedPosition } from "../glass-ui/GlassPanel";
 
@@ -46,10 +46,10 @@ const LeftNavbar = ({ header, fixedPosition = FixedPosition.Left }: Props) => {
 
   return (
     <motion.div initial="hidden" animate="visible" variants={leftNavbarVariants} className={leftNavbarContainerStyles}>
-      <GlassPanel customStyles={getNavbarStyles(fixedPosition)} fixedPosition={fixedPosition}>
+      <GlassPanel customStyles={verticalBarStyles} fixedPosition={fixedPosition}>
         <div className={iconContainerStyle}>
           <span className={logoStyle}>
-            <Logo size={logoSize}></Logo>
+            <Logo size={DEFAULT_LOGO_SIZE}></Logo>
           </span>
         </div>
         <div className={getPageHeaderStyles(fixedPosition)}>
@@ -79,31 +79,12 @@ const baseNavbarStyles = css`
   align-items: center;
 `;
 
-const horizontalBarStyles = css`
-  ${baseNavbarStyles}
-  height: 80px;
-  grid-template-columns: 80px auto 80px;
-  width: 100%;
-`;
-
 const verticalBarStyles = css`
   ${baseNavbarStyles}
   width: 80px;
   grid-template-rows: 80px auto 80px;
   height: 100%;
 `;
-
-const getNavbarStyles = (fixedPosition: FixedPosition) => {
-  const navbarStyles = fixedPosition === FixedPosition.Top ? horizontalBarStyles : verticalBarStyles;
-
-  return css`
-    ${navbarStyles};
-    img {
-      height: ${logoSize + "px"};
-      width: ${logoSize + "px"};
-    }
-  `;
-};
 
 const getPageHeaderStyles = (fixedPosition: FixedPosition) => {
   const horizontalHeaderStyles = css`

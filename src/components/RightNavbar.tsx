@@ -3,7 +3,7 @@ import { css } from "@emotion/css";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import HeadphonesIcon from "./icons/Headphones";
-import { DEFAULT_ICON_SIZE, colors, logoSize } from "../theme";
+import { DEFAULT_ICON_SIZE, colors } from "../theme";
 import Typed from "typed.js";
 import GlassPanel, { FixedPosition } from "../glass-ui/GlassPanel";
 
@@ -19,7 +19,7 @@ const visible = {
 };
 
 const rightNavbarVariants = {
-  hidden: { x: "88px" },
+  hidden: { x: "80px" },
   visible,
 };
 
@@ -51,11 +51,7 @@ const RightNavbar = ({ muted, header, onButtonHover, onHeadphonesIconClick }: Pr
       className={rightNavbarContainerStyles}
     >
       <GlassPanel customStyles={verticalBarStyles} fixedPosition={FixedPosition.Right}>
-        <div className={iconContainerStyle}>
-          {/* <span className={logoStyle}>
-            <LoadingIcon size={DEFAULT_ICON_SIZE}></LoadingIcon>
-          </span> */}
-        </div>
+        <div className={iconContainerStyle}></div>
         <div className={pageHeaderStyles}>
           <header id="right-navbar-header">{header}</header>
         </div>
@@ -81,21 +77,13 @@ const rightNavbarContainerStyles = css`
   right: 0;
 `;
 
-const baseNavbarStyles = css`
+const verticalBarStyles = css`
   position: fixed;
   display: grid;
   align-items: center;
-`;
-
-const verticalBarStyles = css`
-  ${baseNavbarStyles}
   width: 80px;
   grid-template-rows: 80px auto 80px;
   height: 100%;
-  img {
-    height: ${logoSize + "px"};
-    width: ${logoSize + "px"};
-  }
 `;
 
 const pageHeaderStyles = css`
@@ -120,13 +108,6 @@ const iconContainerStyle = css`
   align-items: center;
   justify-content: center;
 `;
-
-// const logoStyle = css`
-//   height: 36px;
-//   svg {
-//     fill: #333;
-//   }
-// `;
 
 const soundIconStyle = css`
   height: 16px;

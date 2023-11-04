@@ -23,6 +23,6 @@ export const typography = {
   },
 };
 
-export const logoSize = 36;
+export const DEFAULT_LOGO_SIZE = 36;
 
 export const DEFAULT_ICON_SIZE = 18;
