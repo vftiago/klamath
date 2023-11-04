@@ -6,7 +6,6 @@ import HeadphonesIcon from "./icons/Headphones";
 import { DEFAULT_ICON_SIZE, colors, logoSize } from "../theme";
 import Typed from "typed.js";
 import GlassPanel, { FixedPosition } from "../glass-ui/GlassPanel";
-import { generateUUID } from "three/src/math/MathUtils";
 
 // #region framer-animations
 const visible = {
@@ -26,15 +25,15 @@ const rightNavbarVariants = {
 
 type Props = {
   muted: boolean;
-  currentPageHeader: string;
+  header: string;
   onButtonHover: () => void;
   onHeadphonesIconClick: () => void;
 };
 
-const RightNavbar = ({ muted, currentPageHeader, onButtonHover, onHeadphonesIconClick }: Props) => {
+const RightNavbar = ({ muted, header, onButtonHover, onHeadphonesIconClick }: Props) => {
   useEffect(() => {
-    const typedCurrentPageHeader = new Typed("#current-page-header", {
-      strings: [currentPageHeader],
+    const typedCurrentPageHeader = new Typed("#right-navbar-header", {
+      strings: [header],
       typeSpeed: 20,
       showCursor: false,
     });
@@ -42,7 +41,7 @@ const RightNavbar = ({ muted, currentPageHeader, onButtonHover, onHeadphonesIcon
     return () => {
       typedCurrentPageHeader.destroy();
     };
-  }, [currentPageHeader]);
+  }, [header]);
 
   return (
     <motion.div
@@ -58,7 +57,7 @@ const RightNavbar = ({ muted, currentPageHeader, onButtonHover, onHeadphonesIcon
           </span> */}
         </div>
         <div className={pageHeaderStyles}>
-          <header id="current-page-header">{generateUUID()}</header>
+          <header id="right-navbar-header">{header}</header>
         </div>
         <div className={iconContainerStyle}>
           <span

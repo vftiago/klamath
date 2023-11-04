@@ -27,7 +27,8 @@
     "remove": "^0.1.5",
     "three": "^0.158.0",
     "typed.js": "^2.0.16",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "uuid": "^9.0.1"
   },
   "scripts": {
     "prepare": "husky install",

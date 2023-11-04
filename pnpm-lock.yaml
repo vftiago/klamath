@@ -68,6 +68,9 @@ dependencies:
   typescript:
     specifier: ^5.2.2
     version: 5.2.2
+  uuid:
+    specifier: ^9.0.1
+    version: 9.0.1
 
 devDependencies:
   '@octokit/types':

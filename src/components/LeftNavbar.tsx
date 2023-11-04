@@ -25,17 +25,16 @@ const leftNavbarVariants = {
 };
 
 type Props = {
-  muted: boolean;
-  currentPageHeader: string;
+  header: string;
   onButtonHover: () => void;
   onHeadphonesIconClick: () => void;
   fixedPosition?: FixedPosition;
 };
 
-const LeftNavbar = ({ currentPageHeader, fixedPosition = FixedPosition.Left }: Props) => {
+const LeftNavbar = ({ header, fixedPosition = FixedPosition.Left }: Props) => {
   useEffect(() => {
-    const typedCurrentPageHeader = new Typed("#current-page-header", {
-      strings: [currentPageHeader],
+    const typedCurrentPageHeader = new Typed("#left-navbar-header", {
+      strings: [header],
       typeSpeed: 20,
       showCursor: false,
     });
@@ -43,7 +42,7 @@ const LeftNavbar = ({ currentPageHeader, fixedPosition = FixedPosition.Left }: P
     return () => {
       typedCurrentPageHeader.destroy();
     };
-  }, [currentPageHeader]);
+  }, [header]);
 
   return (
     <motion.div initial="hidden" animate="visible" variants={leftNavbarVariants} className={leftNavbarContainerStyles}>
@@ -54,7 +53,7 @@ const LeftNavbar = ({ currentPageHeader, fixedPosition = FixedPosition.Left }: P
           </span>
         </div>
         <div className={getPageHeaderStyles(fixedPosition)}>
-          <header id="current-page-header"></header>
+          <header id="left-navbar-header"></header>
         </div>
         <div className={iconContainerStyle}></div>
       </GlassPanel>

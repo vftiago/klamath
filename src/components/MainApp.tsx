@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { css } from "@emotion/css";
 import buttonClick from "./audio/button-click.mp3";
 import buttonHover from "./audio/button-hover.mp3";
@@ -10,9 +10,12 @@ import RepositorySection from "./RepositorySection";
 import ThreeScene from "./3d/ThreeScene";
 import { WeightedTable } from "@lrkit/weighted/src/types";
 import RightNavbar from "./RightNavbar";
+import { v4 } from "uuid";
 
 const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[] }) => {
   const [muted, setMuted] = useState<boolean>(true);
+
+  const uuid = useMemo(() => v4(), []);
 
   const [pageVisibilityInfo, setPageVisibilityInfo] = useState<Map<number, boolean>>(
     new Map([
@@ -32,14 +35,14 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
     playSound(buttonClickAudioElement);
   };
 
-  const handleButtonHover = () => {
+  const handleButtonHover = useCallback(() => {
     if (muted) return;
     playSound(buttonHoverAudioElement);
-  };
+  }, [muted]);
 
-  const handleHeadphonesIconClick = () => {
+  const handleHeadphonesIconClick = useCallback(() => {
     setMuted(!muted);
-  };
+  }, [muted]);
 
   const handleVisibilityChange = (pageNumber: number, inView: boolean) => {
     setPageVisibilityInfo(pageVisibilityInfo.set(pageNumber, inView));
@@ -60,19 +63,13 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
       <audio src={buttonClick} ref={buttonClickAudioElement} muted={muted}></audio>
       <audio src={buttonHover} ref={buttonHoverAudioElement} muted={muted}></audio>
       <ThreeScene />
-      <LeftNavbar
-        currentPageHeader={header}
-        muted={muted}
-        onHeadphonesIconClick={handleHeadphonesIconClick}
-        onButtonHover={handleButtonHover}
-      />
+      <LeftNavbar header={header} onHeadphonesIconClick={handleHeadphonesIconClick} onButtonHover={handleButtonHover} />
       <RightNavbar
-        currentPageHeader={header}
+        header={uuid}
         muted={muted}
         onHeadphonesIconClick={handleHeadphonesIconClick}
         onButtonHover={handleButtonHover}
       />
-
       <MainSection
         onVisibilityChange={handleVisibilityChange}
         onHeadphonesIconClick={handleHeadphonesIconClick}
