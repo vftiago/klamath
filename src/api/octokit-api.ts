@@ -12,7 +12,7 @@ const graphqlWithAuth = graphql.defaults({
   },
 });
 
-type ProjectItem = {
+export type ProjectItem = {
   content: {
     title: string;
     body: string;
@@ -108,7 +108,13 @@ export type UserRepositories = {
 export const getRepositoryData = async (): Promise<UserRepositories> => {
   const repositoryData = await graphqlWithAuth<UserRepositories>({
     query: /* GraphQL */ `
-      query repositoryData($owner: String!, $repoCount: Int = 20, $commitCount: Int = 5) {
+      query repositoryData(
+        $owner: String!
+        $repoCount: Int = 20
+        $commitCount: Int = 5
+        $projectCount: Int = 20
+        $itemCount: Int = 5
+      ) {
         user(login: $owner) {
           repositories(
             first: $repoCount
@@ -125,6 +131,35 @@ export const getRepositoryData = async (): Promise<UserRepositories> => {
               homepageUrl
               url
               ... on Repository {
+                issues(first: $projectCount) {
+                  nodes {
+                    title
+                    titleHTML
+                    body
+                    bodyHTML
+                    state
+                    projectItems(first: $itemCount) {
+                      nodes {
+                        content {
+                          ... on DraftIssue {
+                            title
+                            body
+                          }
+                          ... on Issue {
+                            title
+                            body
+                            state
+                          }
+                          ... on PullRequest {
+                            title
+                            body
+                            state
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
                 defaultBranchRef {
                   target {
                     ... on Commit {
