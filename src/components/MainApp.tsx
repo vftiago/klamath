@@ -4,13 +4,16 @@ import buttonClick from "./audio/button-click.mp3";
 import buttonHover from "./audio/button-hover.mp3";
 import playSound from "../utils/playSound";
 import Footer from "./Footer";
-import LeftNavbar from "./LeftNavbar";
+import { NavbarPosition } from "./Navbar";
 import MainSection from "./MainSection";
 import RepositorySection from "./RepositorySection";
 import ThreeScene from "./3d/ThreeScene";
 import { WeightedTable } from "@lrkit/weighted/src/types";
-import RightNavbar from "./RightNavbar";
 import { v4 } from "uuid";
+import Navbar from "./Navbar";
+import Logo from "./icons/Logo";
+import HeadphonesIcon from "./icons/Headphones";
+import { DEFAULT_ICON_SIZE, colors } from "../theme";
 
 const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[] }) => {
   const [muted, setMuted] = useState<boolean>(true);
@@ -63,13 +66,21 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
       <audio src={buttonClick} ref={buttonClickAudioElement} muted={muted}></audio>
       <audio src={buttonHover} ref={buttonHoverAudioElement} muted={muted}></audio>
       <ThreeScene />
-      <LeftNavbar header={header} onHeadphonesIconClick={handleHeadphonesIconClick} onButtonHover={handleButtonHover} />
-      <RightNavbar
-        header={uuid}
-        muted={muted}
-        onHeadphonesIconClick={handleHeadphonesIconClick}
-        onButtonHover={handleButtonHover}
+      <Navbar
+        leftIcon={<Logo />}
+        position={NavbarPosition.Left}
+        header={header}
+        rightIcon={
+          <div
+            className={css([soundIconStyle, muted && mutedStyle])}
+            onMouseEnter={handleButtonHover}
+            onClick={handleHeadphonesIconClick}
+          >
+            <HeadphonesIcon />
+          </div>
+        }
       />
+      <Navbar position={NavbarPosition.Right} header={uuid} />
       <MainSection
         onVisibilityChange={handleVisibilityChange}
         onHeadphonesIconClick={handleHeadphonesIconClick}
@@ -88,6 +99,44 @@ const appContainerStyles = css`
   height: 100%;
   gap: 120px;
   padding: 0 80px;
+`;
+
+const soundIconStyle = css`
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    fill: #333;
+  }
+  &:hover {
+    cursor: pointer;
+    svg {
+      fill: ${colors.icon.accent};
+    }
+    &::after {
+      background-color: ${colors.icon.accent};
+    }
+  }
+  &:after {
+    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+    background-color: #666;
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: ${Math.sqrt(DEFAULT_ICON_SIZE * DEFAULT_ICON_SIZE + DEFAULT_ICON_SIZE * DEFAULT_ICON_SIZE) + "px"};
+    height: 2px;
+    margin-top: -1px;
+    margin-left: ${-1 * DEFAULT_ICON_SIZE * 0.75 + "px"};
+    transform: rotate(-45deg) scaleX(0);
+  }
+`;
+
+const mutedStyle = css`
+  &:after {
+    transform: rotate(-45deg) scaleX(1);
+  }
 `;
 
 export default MainApp;

@@ -10,8 +10,11 @@ const commonHeaders = [
   "Stuff I've been working on lately",
   "What's cooking",
   "Latest projects",
-  "Recent work",
   "Recent projects",
+  "Latest work",
+  "Recent work",
+  "Latest stuff",
+  "Recent stuff",
 ];
 
 const weightedCommonHeaders = addWeight(commonHeaders, WEIGHTS.common);
