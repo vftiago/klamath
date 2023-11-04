@@ -42,7 +42,7 @@ const waterfallStyle = css`
     }
   }
   width: 17px;
-  height: 60px;
+  height: 80px;
   overflow: hidden;
   position: absolute;
   bottom: 0;

@@ -2,9 +2,14 @@ import React from "react";
 import { css } from "@emotion/css";
 import { ReactNode } from "react";
 
+export enum Opacity {
+  Low = 0.03,
+  High = 1,
+}
+
 export type GlassProps = {
   blur?: 1 | 2 | 4;
-  opacity?: 0.03 | 1;
+  opacity?: Opacity;
   tint?: "light" | "dark";
   children: ReactNode;
   customStyles?: string;

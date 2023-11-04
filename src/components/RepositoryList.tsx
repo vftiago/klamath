@@ -2,7 +2,7 @@ import React from "react";
 import { css } from "@emotion/css";
 import { DEFAULT_OWNER, UserRepositories } from "../api/octokit-api";
 import { motion } from "framer-motion";
-import RepositoryCard from "./common/RepositoryCard";
+import RepositoryCard from "./RepositoryCard";
 
 // #region framer-animations
 const projectListAnimation = {
@@ -10,7 +10,7 @@ const projectListAnimation = {
   visible: {
     opacity: 1,
     transition: {
-      duration: 0.2,
+      duration: 0.1,
       when: "beforeChildren",
       staggerChildren: 0.1,
       ease: "backInOut",
@@ -32,7 +32,7 @@ const projectListItemAnimation = {
 
 const RepositoryList = ({ repositoryData }: { repositoryData: UserRepositories }) => {
   const filteredRepositoryList = repositoryData.user.repositories.nodes.filter(({ owner, name }) => {
-    return (owner.login === DEFAULT_OWNER && name !== DEFAULT_OWNER);
+    return owner.login === DEFAULT_OWNER && name !== DEFAULT_OWNER;
   });
 
   return (
@@ -52,8 +52,8 @@ const repostoryListStyle = css`
   display: grid;
   justify-content: center;
   width: 100%;
-  max-width: 1500px;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  max-width: 1600px;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 24px;
   list-style: none;
   padding: 0;

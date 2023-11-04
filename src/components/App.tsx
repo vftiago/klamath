@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useBreakpoints } from "../../useBreakpoints";
-import LightApp from "./LightApp";
 import MainApp from "./MainApp";
-import { DAY } from "../../constants";
 import { getWeightedHeaders } from "./headers";
 import { WeightedTable } from "@lrkit/weighted/src/types";
+import { DAY } from "../constants";
+import { useBreakpoints } from "../useBreakpoints";
+import LightApp from "./LightApp";
 
 const now = new Date();
 
@@ -13,9 +13,9 @@ const nowString = now.toISOString();
 const nowTime = now.getTime();
 
 const App = () => {
-  const { isMdScreen } = useBreakpoints();
-
   const [weightedHeaders, setWeightedHeaders] = useState<WeightedTable<string>[]>([]);
+
+  const { isMdScreen } = useBreakpoints();
 
   useEffect(() => {
     const firstVisitString = localStorage.getItem("firstVisit") ?? nowString;

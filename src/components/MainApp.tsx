@@ -2,20 +2,17 @@ import React, { useRef, useState } from "react";
 import { css } from "@emotion/css";
 import buttonClick from "./audio/button-click.mp3";
 import buttonHover from "./audio/button-hover.mp3";
-import playSound from "../../utils/playSound";
-import Footer from "../Footer";
-import Navbar from "../Navbar";
-import MainSection from "../MainSection";
-import RepositorySection from "../RepositorySection";
-import { useBreakpoints } from "../../useBreakpoints";
-import ThreeScene from "../3d/ThreeScene";
+import playSound from "../utils/playSound";
+import Footer from "./Footer";
+import LeftNavbar from "./LeftNavbar";
+import MainSection from "./MainSection";
+import RepositorySection from "./RepositorySection";
+import ThreeScene from "./3d/ThreeScene";
 import { WeightedTable } from "@lrkit/weighted/src/types";
-// import ProjectSection from "../ProjectSection";
+import RightNavbar from "./RightNavbar";
 
 const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[] }) => {
   const [muted, setMuted] = useState<boolean>(true);
-
-  const { isMdScreen } = useBreakpoints();
 
   const [pageVisibilityInfo, setPageVisibilityInfo] = useState<Map<number, boolean>>(
     new Map([
@@ -59,36 +56,41 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
   };
 
   return (
-    <div className={getAppContainerStyles()}>
+    <div className={appContainerStyles}>
       <audio src={buttonClick} ref={buttonClickAudioElement} muted={muted}></audio>
       <audio src={buttonHover} ref={buttonHoverAudioElement} muted={muted}></audio>
-      {isMdScreen && <ThreeScene />}
-      <Navbar
+      <ThreeScene />
+      <LeftNavbar
         currentPageHeader={header}
         muted={muted}
         onHeadphonesIconClick={handleHeadphonesIconClick}
-        onButtonClick={handleButtonClick}
         onButtonHover={handleButtonHover}
       />
+      <RightNavbar
+        currentPageHeader={header}
+        muted={muted}
+        onHeadphonesIconClick={handleHeadphonesIconClick}
+        onButtonHover={handleButtonHover}
+      />
+
       <MainSection
         onVisibilityChange={handleVisibilityChange}
         onHeadphonesIconClick={handleHeadphonesIconClick}
         onButtonClick={handleButtonClick}
         onButtonHover={handleButtonHover}
       />
-      {/* <ProjectSection onVisibilityChange={handleVisibilityChange} /> */}
       <RepositorySection onVisibilityChange={handleVisibilityChange} />
       <Footer />
     </div>
   );
 };
 
-const getAppContainerStyles = () => {
-  return css`
-    display: flex;
-    flex-direction: column;
-    gap: 120px;
-  `;
-};
+const appContainerStyles = css`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 120px;
+  padding: 0 80px;
+`;
 
 export default MainApp;

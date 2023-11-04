@@ -1,9 +1,9 @@
 import React from "react";
 import { css } from "@emotion/css";
-import { colors, typography } from "../../theme";
-import GitCommitIcon from "../icons/GitCommitIcon";
+import { colors, typography } from "../theme";
+import GitCommitIcon from "./icons/GitCommitIcon";
 import Card from "./Card";
-import { RepositoryNode } from "../../api/octokit-api";
+import { RepositoryNode } from "../api/octokit-api";
 
 type RepositoryCardProps = {
   repositoryNode: RepositoryNode;
@@ -16,7 +16,7 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
 
   return (
     <Card size="s" orientation="horizontal" customStyles={repositoryCardStyle}>
-      <div className={repositoryCardTitleStyle}>
+      <div className={repositoryCardTitleContainerStyle}>
         <h4>{name}</h4>
 
         {homepageUrl && (
@@ -59,10 +59,11 @@ const repositoryCardStyle = css`
   padding: 16px 24px;
 `;
 
-const repositoryCardTitleStyle = css`
+const repositoryCardTitleContainerStyle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-bottom: 8px;
   border-bottom: 1px solid ${colors.border.muted};
   a {
     color: ${colors.text.accent};

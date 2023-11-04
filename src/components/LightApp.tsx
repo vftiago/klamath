@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { css } from "@emotion/css";
-import GithubIcon from "../icons/GithubIcon";
-import LinkedinIcon from "../icons/LinkedinIcon";
+import GithubIcon from "./icons/GithubIcon";
+import LinkedinIcon from "./icons/LinkedinIcon";
 import { weightedPhoneHeaders } from "./headers/phoneHeaders";
 import Typed from "typed.js";
 
@@ -67,7 +67,7 @@ const phoneStytles = css`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background: radial-gradient(circle at center, #222, #000);
+  background: radial-gradient(ellipse at top, #080808, #000);
   padding: 0 20px;
   svg {
     fill: #fff;

@@ -6,10 +6,11 @@ import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { DEFAULT_ICON_SIZE, colors } from "../theme";
 import { EMAIL } from "../constants";
 import { useInView } from "react-intersection-observer";
+import Waterfall from "./Waterfalll";
 
 // #region framer-animations
 const visible = {
@@ -44,6 +45,10 @@ const item = {
 
 let typedMail: Typed;
 let typedName: Typed;
+let typedJob: Typed;
+
+const HEADING_1_START_DELAY = 1800;
+const HEADING_2_START_DELAY = 0;
 
 const defaultTypedOptions = {
   typeSpeed: 20,
@@ -51,16 +56,14 @@ const defaultTypedOptions = {
   cursorChar: "_",
 };
 
-const typedJob = (self: Typed) => {
-  setTimeout(() => {
-    new Typed("#typed-job", {
-      ...defaultTypedOptions,
-      strings: [`Frontend web developer`],
-      startDelay: 1200,
-    });
+const typedJobCallback = (self: Typed) => {
+  typedJob = new Typed("#typed-job", {
+    ...defaultTypedOptions,
+    strings: [`Software developer`],
+    startDelay: HEADING_2_START_DELAY,
+  });
 
-    self.cursor.remove();
-  }, 2900);
+  self.cursor.remove();
 };
 
 type Props = {
@@ -79,12 +82,14 @@ function MainSection({ onButtonClick, onButtonHover, onVisibilityChange }: Props
     typedName = new Typed("#typed-name", {
       ...defaultTypedOptions,
       strings: [`Tiago Fernandes`],
-      startDelay: 2900,
-      onComplete: typedJob,
+      startDelay: HEADING_1_START_DELAY,
+      onComplete: typedJobCallback,
     });
 
     return () => {
-      typedName.destroy();
+      typedName?.destroy();
+      typedJob?.destroy();
+      typedMail?.destroy();
     };
   }, []);
 
@@ -100,119 +105,88 @@ function MainSection({ onButtonClick, onButtonHover, onVisibilityChange }: Props
     onButtonClick();
 
     typedMail = new Typed("#toast", {
-      strings: [`<u>${EMAIL}</u> copied to clipboard.`, ""],
+      strings: [`<u>${EMAIL}</u> copied to clipboard.`],
       typeSpeed: 1,
-      backDelay: 3000,
       showCursor: false,
       fadeOut: true,
+      onComplete: () => {
+        setTimeout(() => {
+          typedMail.destroy();
+        }, 3000);
+      },
     });
   };
 
   return (
-    <Fragment>
-      <div
-        id="external-link"
-        className={css`
-          height: 80px;
-          display: flex;
-          align-items: center;
-          position: fixed;
-          left: 90px;
-          p {
-            font-size: 14px;
-            margin: 0 8px;
-          }
-          a {
-            color: ${colors.text.accent};
-          }
-        `}
-      ></div>
-      <div className={appContainerStyles}>
-        <main className={mainContentStyle}>
-          <div className={typedTitle}>
-            <h1 ref={ref}>
-              <span id="typed-name"></span>
-            </h1>
-            <h3>
-              <span id="typed-job"></span>
-            </h3>
-          </div>
-        </main>
-        <motion.div className={callToActionStyle} initial="hidden" animate="visible" variants={socialIconsVariant}>
-          <div className={toastStyle}>
-            <span id="toast"></span>
-          </div>
-          <div className={socialIconsStyle}>
-            <motion.a
-              variants={item}
-              href="https://github.com/vftiago"
-              target="_blank"
-              rel="noreferrer"
-              onMouseEnter={onButtonHover}
-              onClick={onButtonClick}
-            >
-              <GithubIcon />
-            </motion.a>
-            <motion.a
-              variants={item}
-              onClick={handleMailIconClick}
-              target="_blank"
-              rel="noreferrer"
-              onMouseEnter={onButtonHover}
-            >
-              <MailIcon />
-            </motion.a>
-            <motion.a
-              variants={item}
-              href="https://linkedin.com/in/vftiago"
-              target="_blank"
-              rel="noreferrer"
-              onMouseEnter={onButtonHover}
-              onClick={onButtonClick}
-            >
-              <LinkedinIcon />
-            </motion.a>
-          </div>
-          {/* <Waterfall /> */}
-        </motion.div>
+    <main className={mainContentStyle}>
+      <div className={typedTitle}>
+        <h1 ref={ref}>
+          <span id="typed-name"></span>
+        </h1>
+        <h2>
+          <span id="typed-job"></span>
+        </h2>
       </div>
-    </Fragment>
+      <motion.div className={callToActionStyle} initial="hidden" animate="visible" variants={socialIconsVariant}>
+        <div className={toastStyles}>
+          <span id="toast"></span>
+        </div>
+        <div className={socialIconsStyle}>
+          <motion.a
+            variants={item}
+            href="https://github.com/vftiago"
+            target="_blank"
+            rel="noreferrer"
+            onMouseEnter={onButtonHover}
+            onClick={onButtonClick}
+          >
+            <GithubIcon size={DEFAULT_ICON_SIZE} />
+          </motion.a>
+          <motion.a
+            variants={item}
+            onClick={handleMailIconClick}
+            target="_blank"
+            rel="noreferrer"
+            onMouseEnter={onButtonHover}
+          >
+            <MailIcon size={DEFAULT_ICON_SIZE} />
+          </motion.a>
+          <motion.a
+            variants={item}
+            href="https://linkedin.com/in/vftiago"
+            target="_blank"
+            rel="noreferrer"
+            onMouseEnter={onButtonHover}
+            onClick={onButtonClick}
+          >
+            <LinkedinIcon size={DEFAULT_ICON_SIZE} />
+          </motion.a>
+        </div>
+        <Waterfall />
+      </motion.div>
+    </main>
   );
 }
 
-const appContainerStyles = css`
-  display: flex;
-  align-items: center;
-  height: 100vh;
-  width: 100%;
-  overflow-x: hidden;
-`;
-
 const mainContentStyle = css`
-  top: 0;
-  left: 0;
   display: flex;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  p {
-    margin: 0;
-  }
 `;
 
-const toastStyle = css`
-  width: 253px;
-  height: 16px;
+const toastStyles = css`
+  width: 254px;
+  padding-bottom: 24px;
 `;
 
 const socialIconsStyle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 200px;
-  margin: 32px;
+  gap: 88px;
   a {
     height: ${DEFAULT_ICON_SIZE + "px"};
     width: ${DEFAULT_ICON_SIZE + "px"};
@@ -228,20 +202,18 @@ const socialIconsStyle = css`
 `;
 
 const callToActionStyle = css`
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 300px;
-  width: 100%;
-  position: absolute;
+  padding-bottom: 128px;
   bottom: 0;
 `;
 
 const typedTitle = css`
-  width: 330px;
-  height: 88px;
-
+  height: 70px;
+  width: 349px;
   .typed-cursor {
     animation-delay: 0s;
     animation-direction: normal;

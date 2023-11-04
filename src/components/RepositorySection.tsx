@@ -4,7 +4,6 @@ import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
 import { getRepositoryData, UserRepositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
-import { useBreakpoints } from "../useBreakpoints";
 const RepositoryList = React.lazy(() => import("./RepositoryList"));
 
 type Props = {
@@ -18,14 +17,10 @@ function RepositorySection({ onVisibilityChange }: Props) {
     threshold: 1,
   });
 
-  const { isLgScreen } = useBreakpoints();
-
   useEffect(() => {
     const loadRepositories = async () => {
       if (!repositoryData) {
         const repositoryData = await getRepositoryData();
-
-        console.log(repositoryData);
 
         setRepositoryData(repositoryData);
       }
@@ -41,9 +36,8 @@ function RepositorySection({ onVisibilityChange }: Props) {
   }, [inView, onVisibilityChange]);
 
   return (
-    <Element className={getRepositorySectionContainerStyle(isLgScreen)} name="repository-section">
-      <div ref={ref} />
-      <h2>Repositories</h2>
+    <Element className={getRepositorySectionContainerStyle()} name="repository-section">
+      <h2 ref={ref}>Dashboard</h2>
       <div className={repositorySectionStyle}>
         <Suspense fallback={<LoadingIcon />}>
           {repositoryData && <RepositoryList repositoryData={repositoryData} />}
@@ -53,18 +47,20 @@ function RepositorySection({ onVisibilityChange }: Props) {
   );
 }
 
-const getRepositorySectionContainerStyle = (isLgScreen: boolean) => css`
+const getRepositorySectionContainerStyle = () => css`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: ${isLgScreen ? 128 : 24}px;
-  gap: 30px;
+  padding: 80px 24px;
+  gap: 48px;
+  height: 100%;
 `;
 
 const repositorySectionStyle = css`
   display: flex;
   flex-direction: column;
   max-width: 100%;
+  min-height: 1200px;
 `;
 
 export default RepositorySection;

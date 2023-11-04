@@ -1,5 +1,5 @@
 import { weighted, addWeight } from "@lrkit/weighted";
-import { WEEKDAYS } from "../../../constants";
+import { WEEKDAYS } from "../../constants";
 
 const today = WEEKDAYS[new Date().getDay()];
 

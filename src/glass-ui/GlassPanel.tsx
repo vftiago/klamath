@@ -3,51 +3,59 @@ import { css } from "@emotion/css";
 import { ReactNode } from "react";
 import Glass, { GlassProps } from "./Glass";
 
-type Elevation = 0 | 1 | 2 | 3;
+export enum Elevation {
+  None = 0,
+  Low = 1,
+  Medium = 2,
+  High = 3,
+}
 
-type StickyPosition = "top" | "left" | "right" | "bottom";
+export enum FixedPosition {
+  Top = "top",
+  Left = "left",
+  Bottom = "bottom",
+  Right = "right",
+}
 
 export type GlassPanelProps = GlassProps & {
   children: ReactNode;
   customStyles?: string;
   elevation?: Elevation;
-  stickyPosition?: StickyPosition;
+  fixedPosition?: FixedPosition;
 };
 
 const GlassPanel = ({
   blur,
-  elevation = 3,
+  elevation = Elevation.High,
   opacity,
   tint,
   customStyles,
   children,
-  stickyPosition,
+  fixedPosition,
 }: GlassPanelProps) => {
   return (
     <Glass
       blur={blur}
       opacity={opacity}
       tint={tint}
-      customStyles={css([getPanelStyle(elevation, stickyPosition), customStyles])}
+      customStyles={css([getPanelStyle(elevation, fixedPosition), customStyles])}
     >
       {children}
     </Glass>
   );
 };
 
-const getPanelStyle = (elevation: Elevation, stickyPosition?: StickyPosition) => {
-  if (!elevation) return null;
-
+const getPanelStyle = (elevation: Elevation, fixedPosition?: FixedPosition) => {
   const boxShadow = `${1 + elevation}px`;
 
-  if (!stickyPosition) {
+  if (!fixedPosition) {
     return css`
       box-shadow: ${boxShadow} ${boxShadow} ${boxShadow} 0px rgba(88, 88, 88, 0.1);
     `;
   }
 
-  const offsetX = stickyPosition === "top" ? 0 : `${1 + elevation}px`;
-  const offsetY = stickyPosition === "left" ? 0 : `${1 + elevation}px`;
+  const offsetX = fixedPosition === "top" ? 0 : fixedPosition === "left" ? `${1 + elevation}px` : `-${1 + elevation}px`;
+  const offsetY = fixedPosition === "top" ? `${1 + elevation}px` : 0;
 
   return css`
     box-shadow: ${offsetX} ${offsetY} ${boxShadow} 0px rgba(88, 88, 88, 0.1);

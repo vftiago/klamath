@@ -1,8 +1,7 @@
 import React from "react";
 import { css } from "@emotion/css";
-import { ReactNode } from "react";
-import { GOLDEN_RATIO } from "../../constants";
-import GlassPanel, { GlassPanelProps } from "../../glass-ui/GlassPanel";
+import { GOLDEN_RATIO } from "../constants";
+import GlassPanel, { GlassPanelProps } from "../glass-ui/GlassPanel";
 
 type Size = "s" | "m" | "l";
 type Orientation = "horizontal" | "vertical";
@@ -14,7 +13,6 @@ const cardSizes = {
 };
 
 type CardProps = GlassPanelProps & {
-  children: ReactNode;
   orientation: Orientation;
   customStyles?: string;
   size?: Size;
