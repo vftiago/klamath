@@ -1,1 +1,1 @@
-export const DEFAULT_TIME_VALUE_UPDATE = 0.03;
+export const TIME_SPEED = 3;

@@ -5,13 +5,13 @@ import * as THREE from "three";
 
 import fragmentShader from "./box.frag";
 import vertexShader from "./box.vert";
-import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
+import { TIME_SPEED } from "../scene-defaults";
 
 function Box(props: JSX.IntrinsicElements["mesh"]) {
   const ref = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.RawShaderMaterial>(null);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!materialRef.current) {
       return;
     }
@@ -24,7 +24,7 @@ function Box(props: JSX.IntrinsicElements["mesh"]) {
 
     uniforms.time = uniforms.time || { value: 0 };
 
-    uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
+    uniforms.time.value += delta * TIME_SPEED;
   });
 
   return (

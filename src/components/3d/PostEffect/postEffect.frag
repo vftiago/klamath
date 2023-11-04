@@ -20,8 +20,8 @@ void main() {
 
   float whiteNoise = random(vUv.xy * time) * 0.01 - 0.1;
 
-  float monitor1 = abs(sin(vUv.y * resolution.y * 2.0 + time * 6.0)) * 0.04;
-  float monitor2 = abs(sin(vUv.y * resolution.y * 1.0 + time * 3.0)) * 0.04;
+  float monitor1 = abs(sin(vUv.y * resolution.y * 4.0 + time * 1.0)) * 0.08;
+  float monitor2 = abs(sin(vUv.y * resolution.y * 2.0 + time * 2.0)) * 0.08;
   
   float monitor = monitor1 - monitor2;
 

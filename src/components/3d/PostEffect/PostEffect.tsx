@@ -4,6 +4,7 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
 import fragmentShader from "./postEffect.frag";
 import vertexShader from "./postEffect.vert";
+import { TIME_SPEED } from "../scene-defaults";
 
 const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
   const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
@@ -48,14 +49,14 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
     };
   }, []);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (!rawShaderMaterialRef.current) {
       return;
     }
 
     const uniforms = rawShaderMaterialRef.current.uniforms;
 
-    uniforms.time.value += 1;
+    uniforms.time.value += delta * TIME_SPEED * TIME_SPEED;
 
     rawShaderMaterialRef.current.visible = false;
     state.gl.setRenderTarget(target);

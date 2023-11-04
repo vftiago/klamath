@@ -3,7 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import fragmentShader from "./plane.frag";
 import vertexShader from "./plane.vert";
-import { DEFAULT_TIME_VALUE_UPDATE } from "../scene-defaults";
+import { TIME_SPEED } from "../scene-defaults";
 
 const PLANE_DIMENSIONS = 1024;
 
@@ -20,7 +20,7 @@ const Plane = () => {
     meshRef.current.rotation.set((-90 * Math.PI) / 180, 0, 0);
   }, []);
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!rawShaderMaterialRef.current) {
       return;
     }
@@ -29,7 +29,7 @@ const Plane = () => {
 
     uniforms.time = uniforms.time || { value: 0 };
 
-    uniforms.time.value += DEFAULT_TIME_VALUE_UPDATE;
+    uniforms.time.value += delta * TIME_SPEED;
   });
 
   return (
