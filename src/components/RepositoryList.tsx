@@ -38,7 +38,13 @@ const RepositoryList = ({ repositoryData }: { repositoryData: UserRepositories }
     <motion.ul initial="hidden" animate="visible" variants={projectListAnimation} className={repostoryListStyle}>
       {filteredRepositoryList.map((repositoryNode, index) => {
         return (
-          <motion.li key={index} variants={projectListItemAnimation}>
+          <motion.li
+            key={index}
+            className={css`
+              display: flex;
+            `}
+            variants={projectListItemAnimation}
+          >
             <RepositoryCard repositoryNode={repositoryNode}></RepositoryCard>
           </motion.li>
         );
@@ -51,7 +57,6 @@ const repostoryListStyle = css`
   display: grid;
   justify-content: center;
   width: 100%;
-  max-width: 1600px;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-gap: 24px;
   list-style: none;

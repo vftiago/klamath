@@ -1,7 +1,7 @@
 import React from "react";
 import { css } from "@emotion/css";
-import Card from "./Card";
 import { ProjectItemNode } from "../api/octokit-api";
+import GlassPanel from "../glass-ui/GlassPanel";
 
 type ProjectCardProps = {
   projectTitle: string;
@@ -10,7 +10,7 @@ type ProjectCardProps = {
 
 function ProjectCard({ projectTitle, projectItems }: ProjectCardProps) {
   return (
-    <Card size="m" orientation="horizontal" customStyles={projectCardStyle}>
+    <GlassPanel customStyles={projectCardStyle}>
       <h4>{projectTitle}</h4>
       {projectItems && (
         <span className={cardSpanStyle}>
@@ -24,7 +24,7 @@ function ProjectCard({ projectTitle, projectItems }: ProjectCardProps) {
           })}
         </span>
       )}
-    </Card>
+    </GlassPanel>
   );
 }
 

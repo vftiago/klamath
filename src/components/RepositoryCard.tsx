@@ -1,9 +1,9 @@
 import React from "react";
 import { css } from "@emotion/css";
 import { colors, typography } from "../theme";
-import Card from "./Card";
 import { RepositoryNode } from "../api/octokit-api";
 import { VscGitCommit } from "react-icons/vsc";
+import GlassPanel from "../glass-ui/GlassPanel";
 
 type RepositoryCardProps = {
   repositoryNode: RepositoryNode;
@@ -14,8 +14,10 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
 
   const commitHistory = defaultBranchRef ? defaultBranchRef.target.history.edges : [];
 
+  // const issueItems = issues.nodes;
+
   return (
-    <Card size="s" orientation="horizontal" customStyles={repositoryCardStyle}>
+    <GlassPanel customStyles={repositoryCardStyle}>
       <div className={repositoryCardTitleContainerStyle}>
         <h4>{name}</h4>
 
@@ -25,21 +27,44 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
           </a>
         )}
       </div>
-      <div className={repositoryCardBodyStyle}>
-        {commitHistory.length ? (
+      {/* <div className={repositoryCardStyle}>
+        {issueItems.length ? (
           <div>
-            <p>Latest commits:</p>
-            <ul className={commitListStyle}>
-              {commitHistory.map((commit, index) => {
+            <ul className={cardListStyle}>
+              {issueItems.map(({ title, state }, index) => {
                 return (
                   <li key={index}>
-                    <VscGitCommit />
-                    <span className={commitMessageStyle}>{commit.node.message}</span>
+                    <GoIssueOpened size="18px" />
+                    <span className={messageStyle}>{title}</span>
                   </li>
                 );
               })}
             </ul>
           </div>
+        ) : (
+          "No open issues."
+        )}
+      </div> */}
+      <div
+        className={css`
+          display: flex;
+          gap: 8px;
+          flex: 1;
+          flex-direction: column;
+        `}
+      >
+        <p>Latest commits:</p>
+        {commitHistory.length ? (
+          <ul className={cardListStyle}>
+            {commitHistory.map((commit, index) => {
+              return (
+                <li key={index}>
+                  <VscGitCommit size="18px" />
+                  <span className={messageStyle}>{commit.node.message}</span>
+                </li>
+              );
+            })}
+          </ul>
         ) : (
           "Nothing to see here."
         )}
@@ -49,14 +74,17 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
           {url}
         </a>
       </div>
-    </Card>
+    </GlassPanel>
   );
 }
 
 const repositoryCardStyle = css`
   display: flex;
   flex-direction: column;
-  padding: 16px 24px;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  flex: 1;
 `;
 
 const repositoryCardTitleContainerStyle = css`
@@ -71,25 +99,21 @@ const repositoryCardTitleContainerStyle = css`
   }
 `;
 
-const repositoryCardBodyStyle = css`
-  flex: 1;
-  p {
-    font-size: ${typography.text.s};
-  }
-`;
-
 const repositoryCardFooterStyle = css`
   display: flex;
-  /* align-self: flex-end; */
   a {
     color: ${colors.text.muted};
     font-size: ${typography.text.xs};
   }
 `;
 
-const commitListStyle = css`
+const cardListStyle = css`
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   li {
+    height: 18px;
     display: grid;
     grid-gap: 8px;
     grid-template-columns: auto auto;
@@ -97,11 +121,10 @@ const commitListStyle = css`
     justify-content: flex-start;
     list-style: none;
     padding: 0;
-    line-height: 1.3;
   }
 `;
 
-const commitMessageStyle = css`
+const messageStyle = css`
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

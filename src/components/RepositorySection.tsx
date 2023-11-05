@@ -4,7 +4,7 @@ import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
 import { UserRepositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
-const RepositoryList = React.lazy(() => import("./RepositoryList"));
+import RepositoryList from "./RepositoryList";
 
 type RepositorySectionProps = {
   onVisibilityChange: (pageNumber: number, inview: boolean) => void;
@@ -21,23 +21,33 @@ function RepositorySection({ onVisibilityChange, repositoryData }: RepositorySec
   }, [inView, onVisibilityChange]);
 
   return (
-    <Element className={getRepositorySectionContainerStyle()} name="repository-section">
-      <h2 ref={ref}>Dashboard</h2>
-      <div className={repositorySectionStyle}>
-        <Suspense fallback={<LoadingIcon />}>
-          <RepositoryList repositoryData={repositoryData} />
-        </Suspense>
+    <Element className={repositorySectionContainerStyles} name="repository-section">
+      <div
+        className={css`
+          max-width: 1600px;
+          padding: 24px;
+          display: grid;
+          gap: 24px;
+        `}
+      >
+        <h2 ref={ref}>Dashboard</h2>
+        <div className={repositorySectionStyle}>
+          <Suspense fallback={<LoadingIcon />}>
+            <RepositoryList repositoryData={repositoryData} />
+          </Suspense>
+        </div>
       </div>
     </Element>
   );
 }
 
-const getRepositorySectionContainerStyle = () => css`
+const repositorySectionContainerStyles = css`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 80px 24px;
   gap: 48px;
+  max-width: 100%;
 `;
 
 const repositorySectionStyle = css`
