@@ -1,11 +1,11 @@
 import React from "react";
 import { css } from "@emotion/css";
 import Card from "./Card";
-import { ProjectItem } from "../api/octokit-api";
+import { ProjectItemNode } from "../api/octokit-api";
 
 type ProjectCardProps = {
   projectTitle: string;
-  projectItems: ProjectItem[];
+  projectItems: ProjectItemNode[];
 };
 
 function ProjectCard({ projectTitle, projectItems }: ProjectCardProps) {

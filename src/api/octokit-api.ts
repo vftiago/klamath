@@ -12,7 +12,7 @@ const graphqlWithAuth = graphql.defaults({
   },
 });
 
-export type ProjectItem = {
+export type ProjectItemNode = {
   content: {
     title: string;
     body: string;
@@ -20,10 +20,10 @@ export type ProjectItem = {
   };
 };
 
-type ProjectNode = {
+export type ProjectNode = {
   title: string;
   items: {
-    nodes: ProjectItem[];
+    nodes: ProjectItemNode[];
   };
 };
 
@@ -76,6 +76,17 @@ export const getProjectData = async (): Promise<UserProjectsV2> => {
   return projectData;
 };
 
+export type IssueNode = {
+  title: string;
+  titleHTML: string;
+  body: string;
+  bodyHTML: string;
+  state: "OPEN" | "CLOSED";
+  projectItems: {
+    nodes: ProjectItemNode[];
+  };
+};
+
 export type RepositoryNode = {
   name: string;
   description: string | null;
@@ -94,6 +105,9 @@ export type RepositoryNode = {
         }[];
       };
     };
+  };
+  issues: {
+    nodes: IssueNode[];
   };
 };
 
@@ -131,13 +145,14 @@ export const getRepositoryData = async (): Promise<UserRepositories> => {
               homepageUrl
               url
               ... on Repository {
-                issues(first: $projectCount) {
+                issues(first: $projectCount, states: OPEN) {
                   nodes {
                     title
                     titleHTML
                     body
                     bodyHTML
                     state
+                    stateReason
                     projectItems(first: $itemCount) {
                       nodes {
                         content {
@@ -149,6 +164,7 @@ export const getRepositoryData = async (): Promise<UserRepositories> => {
                             title
                             body
                             state
+                            stateReason
                           }
                           ... on PullRequest {
                             title
