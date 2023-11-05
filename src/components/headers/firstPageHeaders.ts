@@ -18,7 +18,7 @@ export const getFirstPageHeaders = ({ isRecurringVisitor }: { isRecurringVisitor
     "Online",
   ].concat(isRecurringVisitor ? ["Do you like it here?", "Welcome back"] : []);
 
-  const rareHeaders = ["Everything I ever said has been satire", "Windows 96"];
+  const rareHeaders = ["Everything I ever said has been satire", "Windows 96", "Hypnotic isn't it?"];
 
   const weightedCommonHeaders = addWeight(commonHeaders, WEIGHTS.common);
 

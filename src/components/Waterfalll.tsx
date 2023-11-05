@@ -3,6 +3,7 @@ import { css } from "@emotion/css";
 import { colors } from "../theme";
 import { motion } from "framer-motion";
 import { scroller } from "react-scroll";
+import Clicky from "./Clicky";
 
 const Waterfall = () => {
   const handleWaterfallClick = () => {
@@ -12,11 +13,13 @@ const Waterfall = () => {
   };
 
   return (
-    <motion.div className={waterfallStyle} variants={item} onClick={handleWaterfallClick}>
-      <span></span>
-      <span></span>
-      <span></span>
-    </motion.div>
+    <Clicky>
+      <motion.div className={waterfallStyle} variants={item} onClick={handleWaterfallClick}>
+        <span></span>
+        <span></span>
+        <span></span>
+      </motion.div>
+    </Clicky>
   );
 };
 
