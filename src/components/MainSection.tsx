@@ -1,16 +1,11 @@
 import React from "react";
 import { css } from "@emotion/css";
-import LinkedinIcon from "./icons/LinkedinIcon";
-import GithubIcon from "./icons/GithubIcon";
-import MailIcon from "./icons/MailIcon";
 import Typed from "typed.js";
-import { copyToClipboard } from "../utils/copyToClipboard";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
-import { DEFAULT_ICON_SIZE, colors } from "../theme";
-import { EMAIL } from "../constants";
 import { useInView } from "react-intersection-observer";
 import Waterfall from "./Waterfalll";
+import Socials from "./Socials";
 
 // #region framer-animations
 const visible = {
@@ -30,20 +25,8 @@ const socialIconsVariant = {
   hidden: { opacity: 0 },
 };
 
-const item = {
-  visible: {
-    opacity: 1,
-    cursor: "pointer",
-    transition: {
-      duration: 0.8,
-      ease: "backInOut",
-    },
-  },
-  hidden: { opacity: 0 },
-};
 // #endregion framer-animations
 
-let typedMail: Typed;
 let typedName: Typed;
 let typedJob: Typed;
 
@@ -66,14 +49,11 @@ const typedJobCallback = (self: Typed) => {
   self.cursor.remove();
 };
 
-type Props = {
-  onButtonClick: () => void;
-  onButtonHover: () => void;
-  onHeadphonesIconClick: () => void;
+type MainSectionProps = {
   onVisibilityChange: (pageNumber: number, inview: boolean) => void;
 };
 
-function MainSection({ onButtonClick, onButtonHover, onVisibilityChange }: Props) {
+const MainSection = ({ onVisibilityChange }: MainSectionProps) => {
   const { ref, inView } = useInView({
     threshold: 1,
   });
@@ -89,33 +69,12 @@ function MainSection({ onButtonClick, onButtonHover, onVisibilityChange }: Props
     return () => {
       typedName?.destroy();
       typedJob?.destroy();
-      typedMail?.destroy();
     };
   }, []);
 
   useEffect(() => {
     onVisibilityChange(0, inView);
   }, [inView]);
-
-  const handleMailIconClick = () => {
-    if (typedMail) typedMail.destroy();
-
-    copyToClipboard(EMAIL);
-
-    onButtonClick();
-
-    typedMail = new Typed("#toast", {
-      strings: [`<u>${EMAIL}</u> copied to clipboard.`],
-      typeSpeed: 1,
-      showCursor: false,
-      fadeOut: true,
-      onComplete: () => {
-        setTimeout(() => {
-          typedMail.destroy();
-        }, 3000);
-      },
-    });
-  };
 
   return (
     <main className={mainContentStyle}>
@@ -131,42 +90,12 @@ function MainSection({ onButtonClick, onButtonHover, onVisibilityChange }: Props
         <div className={toastStyles}>
           <span id="toast"></span>
         </div>
-        <div className={socialIconsStyle}>
-          <motion.a
-            variants={item}
-            href="https://github.com/vftiago"
-            target="_blank"
-            rel="noreferrer"
-            onMouseEnter={onButtonHover}
-            onClick={onButtonClick}
-          >
-            <GithubIcon size={DEFAULT_ICON_SIZE} />
-          </motion.a>
-          <motion.a
-            variants={item}
-            onClick={handleMailIconClick}
-            target="_blank"
-            rel="noreferrer"
-            onMouseEnter={onButtonHover}
-          >
-            <MailIcon size={DEFAULT_ICON_SIZE} />
-          </motion.a>
-          <motion.a
-            variants={item}
-            href="https://linkedin.com/in/vftiago"
-            target="_blank"
-            rel="noreferrer"
-            onMouseEnter={onButtonHover}
-            onClick={onButtonClick}
-          >
-            <LinkedinIcon size={DEFAULT_ICON_SIZE} />
-          </motion.a>
-        </div>
+        <Socials />
         <Waterfall />
       </motion.div>
     </main>
   );
-}
+};
 
 const mainContentStyle = css`
   display: flex;
@@ -178,27 +107,9 @@ const mainContentStyle = css`
 `;
 
 const toastStyles = css`
+  height: 20px;
   width: 254px;
-  padding-bottom: 24px;
-`;
-
-const socialIconsStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 88px;
-  a {
-    height: ${DEFAULT_ICON_SIZE + "px"};
-    width: ${DEFAULT_ICON_SIZE + "px"};
-  }
-  svg {
-    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-    fill: #333;
-    &:hover {
-      cursor: pointer;
-      fill: ${colors.icon.accent};
-    }
-  }
+  padding-bottom: 48px;
 `;
 
 const callToActionStyle = css`
