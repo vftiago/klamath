@@ -12,9 +12,11 @@ const WEIGHTS = {
 export const getFirstPageHeaders = ({ isRecurringVisitor }: { isRecurringVisitor: boolean }) => {
   const commonHeaders = ["Hello World", `It is ${today}`, "Welcome", "Hello", "Hi"];
 
-  const uncommonHeaders = ["Not a blog", `const pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x)`].concat(
-    isRecurringVisitor ? ["Do you like it here?", "Welcome back"] : [],
-  );
+  const uncommonHeaders = [
+    "Not a blog",
+    `const pipe = (...fns) => (x) => fns.reduce((v, f) => f(v), x)`,
+    "Online",
+  ].concat(isRecurringVisitor ? ["Do you like it here?", "Welcome back"] : []);
 
   const rareHeaders = ["Everything I ever said has been satire", "Windows 96"];
 

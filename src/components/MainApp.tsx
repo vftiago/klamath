@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { css } from "@emotion/css";
 import buttonClick from "./audio/button-click.mp3";
 import buttonHover from "./audio/button-hover.mp3";
@@ -14,12 +14,15 @@ import Logo from "./icons/Logo";
 import { useAudio } from "../useAudio";
 import { AudioContext } from "./AudioContext";
 import AudioToggle from "./AudioToggle";
+import { UserRepositories, getRepositoryData } from "../api/octokit-api";
+import LoadingIcon from "./icons/LoadingIcon";
 
 const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[] }) => {
   const { isMuted, toggleMuted, buttonClickAudioElementRef, buttonHoverAudioElementRef } = useAudio();
-
-  const uuid = useMemo(() => v4(), []);
-
+  const [repositoryData, setRepositoryData] = useState<UserRepositories | null>(null);
+  const [isLoading, setIsloading] = useState<boolean>(true);
+  const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
+  const [header, setHeader] = useState<string>("Hello World");
   const [pageVisibilityInfo, setPageVisibilityInfo] = useState<Map<number, boolean>>(
     new Map([
       [0, true],
@@ -27,8 +30,7 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
     ]),
   );
 
-  const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
-  const [header, setHeader] = useState<string>("Hello World");
+  const uuid = useMemo(() => v4(), []);
 
   const handleVisibilityChange = (pageNumber: number, inView: boolean) => {
     setPageVisibilityInfo(pageVisibilityInfo.set(pageNumber, inView));
@@ -44,6 +46,19 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
     setHeader(header);
   };
 
+  useEffect(() => {
+    const loadRepositories = async () => {
+      const repositoryData = await getRepositoryData();
+
+      setRepositoryData(repositoryData);
+      setIsloading(false);
+    };
+
+    if (!repositoryData) {
+      loadRepositories();
+    }
+  }, [repositoryData]);
+
   return (
     <div className={appContainerStyles}>
       <audio src={buttonClick} ref={buttonClickAudioElementRef} muted={isMuted}></audio>
@@ -56,9 +71,11 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
           header={header}
           rightIcon={<AudioToggle isMuted={isMuted} toggleMuted={toggleMuted} />}
         />
-        <Navbar position={NavbarPosition.Right} header={uuid} />
-        <MainSection onVisibilityChange={handleVisibilityChange} />
-        <RepositorySection onVisibilityChange={handleVisibilityChange} />
+        <Navbar position={NavbarPosition.Right} leftIcon={isLoading && <LoadingIcon />} header={uuid} />
+        <MainSection isLoading={isLoading} onVisibilityChange={handleVisibilityChange} />
+        {repositoryData && (
+          <RepositorySection repositoryData={repositoryData} onVisibilityChange={handleVisibilityChange} />
+        )}
         <Footer />
       </AudioContext.Provider>
     </div>

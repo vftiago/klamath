@@ -50,10 +50,11 @@ const typedJobCallback = (self: Typed) => {
 };
 
 type MainSectionProps = {
+  isLoading: boolean;
   onVisibilityChange: (pageNumber: number, inview: boolean) => void;
 };
 
-const MainSection = ({ onVisibilityChange }: MainSectionProps) => {
+const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
   const { ref, inView } = useInView({
     threshold: 1,
   });
@@ -91,7 +92,7 @@ const MainSection = ({ onVisibilityChange }: MainSectionProps) => {
           <span id="toast"></span>
         </div>
         <Socials />
-        <Waterfall />
+        {!isLoading && <Waterfall />}
       </motion.div>
     </main>
   );

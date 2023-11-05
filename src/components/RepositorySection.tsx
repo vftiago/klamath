@@ -1,35 +1,20 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect } from "react";
 import { css } from "@emotion/css";
 import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
-import { getRepositoryData, UserRepositories } from "../api/octokit-api";
+import { UserRepositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
 const RepositoryList = React.lazy(() => import("./RepositoryList"));
 
-type Props = {
+type RepositorySectionProps = {
   onVisibilityChange: (pageNumber: number, inview: boolean) => void;
+  repositoryData: UserRepositories;
 };
 
-function RepositorySection({ onVisibilityChange }: Props) {
-  const [repositoryData, setRepositoryData] = useState<UserRepositories | null>(null);
-
+function RepositorySection({ onVisibilityChange, repositoryData }: RepositorySectionProps) {
   const { ref, inView } = useInView({
     threshold: 1,
   });
-
-  useEffect(() => {
-    const loadRepositories = async () => {
-      if (!repositoryData) {
-        const repositoryData = await getRepositoryData();
-
-        setRepositoryData(repositoryData);
-      }
-    };
-
-    if (inView && !repositoryData) {
-      loadRepositories();
-    }
-  }, [inView, repositoryData]);
 
   useEffect(() => {
     onVisibilityChange(1, inView);
@@ -40,7 +25,7 @@ function RepositorySection({ onVisibilityChange }: Props) {
       <h2 ref={ref}>Dashboard</h2>
       <div className={repositorySectionStyle}>
         <Suspense fallback={<LoadingIcon />}>
-          {repositoryData && <RepositoryList repositoryData={repositoryData} />}
+          <RepositoryList repositoryData={repositoryData} />
         </Suspense>
       </div>
     </Element>
