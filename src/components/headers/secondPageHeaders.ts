@@ -8,15 +8,16 @@ const WEIGHTS = {
 
 const commonHeaders = [
   "Stuff I've been working on lately",
-  "What's cooking",
   "Latest projects",
   "Recent projects",
   "Latest work",
   "Recent work",
-  "Latest stuff",
-  "Recent stuff",
 ];
+
+const uncommonHeaders = ["Dashboard", "What's cooking", "Latest stuff", "Recent stuff"];
 
 const weightedCommonHeaders = addWeight(commonHeaders, WEIGHTS.common);
 
-export const secondPageHeaders = weighted([...weightedCommonHeaders]);
+const weightedUncommonHeaders = addWeight(uncommonHeaders, WEIGHTS.uncommon);
+
+export const secondPageHeaders = weighted([...weightedCommonHeaders, ...weightedUncommonHeaders]);
