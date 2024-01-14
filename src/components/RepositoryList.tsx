@@ -1,5 +1,4 @@
 import React from "react";
-import { css } from "@emotion/css";
 import { DEFAULT_OWNER, UserRepositories } from "../api/octokit-api";
 import { motion } from "framer-motion";
 import RepositoryCard from "./RepositoryCard";
@@ -35,16 +34,15 @@ const RepositoryList = ({ repositoryData }: { repositoryData: UserRepositories }
   });
 
   return (
-    <motion.ul initial="hidden" animate="visible" variants={projectListAnimation} className={repostoryListStyle}>
+    <motion.ul
+      initial="hidden"
+      animate="visible"
+      variants={projectListAnimation}
+      className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+    >
       {filteredRepositoryList.map((repositoryNode, index) => {
         return (
-          <motion.li
-            key={index}
-            className={css`
-              display: flex;
-            `}
-            variants={projectListItemAnimation}
-          >
+          <motion.li key={index} className="flex" variants={projectListItemAnimation}>
             <RepositoryCard repositoryNode={repositoryNode}></RepositoryCard>
           </motion.li>
         );
@@ -52,16 +50,5 @@ const RepositoryList = ({ repositoryData }: { repositoryData: UserRepositories }
     </motion.ul>
   );
 };
-
-const repostoryListStyle = css`
-  display: grid;
-  justify-content: center;
-  width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  grid-gap: 24px;
-  list-style: none;
-  padding: 0;
-  margin: 0 auto;
-`;
 
 export default RepositoryList;

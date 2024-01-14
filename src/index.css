@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto+Condensed:wght@300&display=swap");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #root {
@@ -9,10 +13,8 @@ body,
 
 body {
   background-color: #eee;
-  color: #333;
   margin: 0;
-  font-family: "Roboto Condensed", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Roboto Condensed", "Oxygen", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -30,8 +32,7 @@ p {
 }
 
 button {
-  font-family: "Roboto Condensed", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Roboto Condensed", "Oxygen", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 ::selection {

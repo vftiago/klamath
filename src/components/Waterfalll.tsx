@@ -1,9 +1,21 @@
 import React from "react";
-import { css } from "@emotion/css";
-import { colors } from "../theme";
 import { motion } from "framer-motion";
 import { scroller } from "react-scroll";
 import Clicky from "./Clicky";
+
+// #region framer-animations
+const item = {
+  visible: {
+    opacity: 1,
+    cursor: "pointer",
+    transition: {
+      duration: 4,
+      ease: "backInOut",
+    },
+  },
+  hidden: { opacity: 0 },
+};
+// #endregion framer-animations
 
 const Waterfall = () => {
   const handleWaterfallClick = () => {
@@ -14,69 +26,22 @@ const Waterfall = () => {
 
   return (
     <Clicky>
-      <motion.div className={waterfallStyle} variants={item} onClick={handleWaterfallClick}>
-        <span></span>
-        <span></span>
-        <span></span>
+      <motion.div
+        className="absolute bottom-0 h-14 w-[17px] overflow-hidden transition delay-500 ease-out-expo [&>span]:hover:bg-orange-600"
+        variants={item}
+        onClick={handleWaterfallClick}
+      >
+        {["left-0", "left-1/2 ml-[-1px] animation-delay-300", "right-0 animation-delay-150"].map((spanClass, index) => {
+          return (
+            <span
+              className={`${spanClass} absolute top-0 h-full w-[1px] animate-waterfall bg-neutral-500 transition duration-500 ease-out-expo`}
+              key={index}
+            ></span>
+          );
+        })}
       </motion.div>
     </Clicky>
   );
 };
-
-const item = {
-  visible: {
-    opacity: 1,
-    cursor: "pointer",
-    transition: {
-      duration: 8,
-      ease: "backInOut",
-    },
-  },
-  hidden: { opacity: 0 },
-};
-
-const waterfallStyle = css`
-  @keyframes waterfall {
-    0% {
-      transform: translateY(-100%);
-    }
-    100% {
-      transform: translateY(100%);
-    }
-  }
-  width: 17px;
-  height: 80px;
-  overflow: hidden;
-  position: absolute;
-  bottom: 0;
-  &:hover {
-    span {
-      background-color: ${colors.icon.accent};
-    }
-  }
-  span {
-    width: 1px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    background-color: #888;
-    animation-name: waterfall;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    transition: background-color 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-    &:nth-of-type(1) {
-      left: 0;
-    }
-    &:nth-of-type(2) {
-      left: 50%;
-      margin-left: -1px;
-      animation-delay: 0.3s;
-    }
-    &:nth-of-type(3) {
-      right: 0;
-      animation-delay: 0.15s;
-    }
-  }
-`;
 
 export default Waterfall;

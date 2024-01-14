@@ -1,9 +1,9 @@
 import React from "react";
-import { DEFAULT_LOGO_SIZE, DEFAULT_LOGO_FILL } from "../../theme";
+import { DEFAULT_LOGO_SIZE } from "../../theme";
 
-function Logo({ size = DEFAULT_LOGO_SIZE, fill = DEFAULT_LOGO_FILL }) {
+function Logo({ size = DEFAULT_LOGO_SIZE }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 102 144" height={size} width={size} fill={fill}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 102 144" height={size} width={size}>
       <g data-name="Layer 2">
         <g className="cls-1" data-name="Rectangle 2">
           <g data-name="Rectangle 2">

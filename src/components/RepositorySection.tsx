@@ -1,5 +1,4 @@
 import React, { Suspense, useEffect } from "react";
-import { css } from "@emotion/css";
 import { useInView } from "react-intersection-observer";
 import { Element } from "react-scroll";
 import { UserRepositories } from "../api/octokit-api";
@@ -21,17 +20,12 @@ function RepositorySection({ onVisibilityChange, repositoryData }: RepositorySec
   }, [inView, onVisibilityChange]);
 
   return (
-    <Element className={repositorySectionContainerStyles} name="repository-section">
-      <div
-        className={css`
-          max-width: 1600px;
-          padding: 24px;
-          display: grid;
-          gap: 24px;
-        `}
-      >
-        <h2 ref={ref}>Dashboard</h2>
-        <div className={repositorySectionStyle}>
+    <Element className="flex flex-col items-center max-w-full py-6 gap-12" name="repository-section">
+      <div className="max-w-[1600px] p-6 grid gap-6">
+        <h2 className="text-xl font-bold" ref={ref}>
+          Dashboard
+        </h2>
+        <div className="flex flex-col max-w-full">
           <Suspense fallback={<LoadingIcon />}>
             <RepositoryList repositoryData={repositoryData} />
           </Suspense>
@@ -40,20 +34,5 @@ function RepositorySection({ onVisibilityChange, repositoryData }: RepositorySec
     </Element>
   );
 }
-
-const repositorySectionContainerStyles = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 80px 24px;
-  gap: 48px;
-  max-width: 100%;
-`;
-
-const repositorySectionStyle = css`
-  display: flex;
-  flex-direction: column;
-  max-width: 100%;
-`;
 
 export default RepositorySection;

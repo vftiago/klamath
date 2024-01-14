@@ -1,5 +1,4 @@
 import React from "react";
-import { css } from "@emotion/css";
 import * as THREE from "three";
 import { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -33,7 +32,7 @@ const ThreeScene = () => {
   }, []);
 
   return (
-    <div className={canvasStyle}>
+    <div className="-z-10 w-full h-full fixed top-0 left-0">
       <Canvas
         camera={camera}
         gl={{
@@ -54,14 +53,5 @@ const ThreeScene = () => {
     </div>
   );
 };
-
-const canvasStyle = css`
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-`;
 
 export default React.memo(ThreeScene);

@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { css } from "@emotion/css";
 import buttonClick from "./audio/button-click.mp3";
 import buttonHover from "./audio/button-hover.mp3";
 import Footer from "./Footer";
@@ -16,6 +15,8 @@ import { AudioContext } from "./AudioContext";
 import AudioToggle from "./AudioToggle";
 import { UserRepositories, getRepositoryData } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
+// import { CgOptions } from "react-icons/cg";
+import { useBreakpoints } from "../useBreakpoints";
 
 const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[] }) => {
   const { isMuted, toggleMuted, buttonClickAudioElementRef, buttonHoverAudioElementRef } = useAudio();
@@ -23,6 +24,7 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
   const [isLoading, setIsloading] = useState<boolean>(true);
   const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
   const [header, setHeader] = useState<string>("Hello World");
+  const { isLgScreen } = useBreakpoints();
   const [pageVisibilityInfo, setPageVisibilityInfo] = useState<Map<number, boolean>>(
     new Map([
       [0, true],
@@ -60,18 +62,27 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
   }, [repositoryData]);
 
   return (
-    <div className={appContainerStyles}>
+    <div className="flex h-full flex-col gap-32 lg:px-20">
       <audio src={buttonClick} ref={buttonClickAudioElementRef} muted={isMuted}></audio>
       <audio src={buttonHover} ref={buttonHoverAudioElementRef} muted={isMuted}></audio>
       <ThreeScene />
       <AudioContext.Provider value={{ isMuted, buttonClickAudioElementRef, buttonHoverAudioElementRef }}>
-        <Navbar
-          leftIcon={<Logo />}
-          position={NavbarPosition.Left}
-          header={header}
-          rightIcon={<AudioToggle isMuted={isMuted} toggleMuted={toggleMuted} />}
-        />
-        <Navbar position={NavbarPosition.Right} leftIcon={isLoading && <LoadingIcon />} header={uuid} />
+        {isLgScreen && (
+          <>
+            <Navbar
+              leftIcon={<Logo />}
+              position={NavbarPosition.Left}
+              header={header}
+              rightIcon={<AudioToggle isMuted={isMuted} toggleMuted={toggleMuted} />}
+            />
+            <Navbar
+              position={NavbarPosition.Right}
+              // leftIcon={<CgOptions size={26} />}
+              rightIcon={isLoading && <LoadingIcon />}
+              header={uuid}
+            />
+          </>
+        )}
         <MainSection isLoading={isLoading} onVisibilityChange={handleVisibilityChange} />
         {repositoryData && (
           <RepositorySection repositoryData={repositoryData} onVisibilityChange={handleVisibilityChange} />
@@ -81,13 +92,5 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
     </div>
   );
 };
-
-const appContainerStyles = css`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  gap: 120px;
-  padding: 0 80px;
-`;
 
 export default MainApp;

@@ -3,8 +3,6 @@ import MainApp from "./MainApp";
 import { getWeightedHeaders } from "./headers";
 import { WeightedTable } from "@lrkit/weighted/src/types";
 import { DAY } from "../constants";
-import { useBreakpoints } from "../useBreakpoints";
-import LightApp from "./LightApp";
 
 const now = new Date();
 
@@ -14,8 +12,6 @@ const nowTime = now.getTime();
 
 const App = () => {
   const [weightedHeaders, setWeightedHeaders] = useState<WeightedTable<string>[]>([]);
-
-  const { isMdScreen } = useBreakpoints();
 
   useEffect(() => {
     const firstVisitString = localStorage.getItem("firstVisit") ?? nowString;
@@ -29,7 +25,7 @@ const App = () => {
     setWeightedHeaders(weightedHeaders);
   }, []);
 
-  return isMdScreen ? <MainApp weightedHeaders={weightedHeaders} /> : <LightApp />;
+  return <MainApp weightedHeaders={weightedHeaders} />;
 };
 
 export default App;

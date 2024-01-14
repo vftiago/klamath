@@ -1,7 +1,6 @@
-import { ReactNode, useCallback, useContext, useEffect } from "react";
+import { ReactNode, useCallback, useContext } from "react";
 import React from "react";
 import playSound from "../utils/playSound";
-import { css } from "@emotion/css";
 import { AudioContext } from "./AudioContext";
 
 const Clicky = ({
@@ -27,24 +26,16 @@ const Clicky = ({
     playSound(buttonHoverAudioElementRef);
   }, [isMuted]);
 
-  useEffect(() => {
-    console.log("clicky rendered");
-  }, [isMuted]);
-
   return (
-    <div id="test" onClick={onClick} onMouseEnter={onHover} className={clickyContainerStyles}>
+    <div
+      id="test"
+      onClick={onClick}
+      onMouseEnter={onHover}
+      className="z-10 cursor-pointer flex flex-col items-center justify-center"
+    >
       {children}
     </div>
   );
 };
-
-const clickyContainerStyles = css`
-  z-index: 1;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
 
 export default Clicky;

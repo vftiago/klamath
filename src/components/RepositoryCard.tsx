@@ -1,6 +1,4 @@
 import React from "react";
-import { css } from "@emotion/css";
-import { colors, typography } from "../theme";
 import { RepositoryNode } from "../api/octokit-api";
 import { VscGitCommit } from "react-icons/vsc";
 import GlassPanel from "../glass-ui/GlassPanel";
@@ -17,12 +15,12 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
   // const issueItems = issues.nodes;
 
   return (
-    <GlassPanel customStyles={repositoryCardStyle}>
-      <div className={repositoryCardTitleContainerStyle}>
-        <h4>{name}</h4>
+    <GlassPanel customStyles="flex flex-col justify-between gap-4 p-4 flex-1 min-h-64">
+      <div className="flex items-center justify-between pb-2 border-b border-neutral-300">
+        <h4 className="text-base font-bold">{name}</h4>
 
         {homepageUrl && (
-          <a target="_blank" rel="noreferrer" href={homepageUrl}>
+          <a className="text-sm text-orange-600" target="_blank" rel="noreferrer" href={homepageUrl}>
             {homepageUrl}
           </a>
         )}
@@ -45,22 +43,17 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
           "No open issues."
         )}
       </div> */}
-      <div
-        className={css`
-          display: flex;
-          gap: 8px;
-          flex: 1;
-          flex-direction: column;
-        `}
-      >
-        <p>Latest commits:</p>
+      <div className="flex flex-1 gap-2 flex-col">
+        <p className="text-sm">Latest commits:</p>
         {commitHistory.length ? (
-          <ul className={cardListStyle}>
+          <ul className="p-0 flex flex-col gap-1">
             {commitHistory.map((commit, index) => {
               return (
-                <li key={index}>
+                <li className="h-4 grid gap-2 grid-flow-col items-center justify-start list-none p-0" key={index}>
                   <VscGitCommit size="18px" />
-                  <span className={messageStyle}>{commit.node.message}</span>
+                  <span className="whitespace-nowrap overflow-hidden text-ellipsis text-base">
+                    {commit.node.message}
+                  </span>
                 </li>
               );
             })}
@@ -69,66 +62,13 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
           "Nothing to see here."
         )}
       </div>
-      <div className={repositoryCardFooterStyle}>
-        <a target="_blank" rel="noreferrer" href={url}>
+      <div className="flex">
+        <a className="text-sm text-neutral-500" target="_blank" rel="noreferrer" href={url}>
           {url}
         </a>
       </div>
     </GlassPanel>
   );
 }
-
-const repositoryCardStyle = css`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 16px;
-  flex: 1;
-`;
-
-const repositoryCardTitleContainerStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 8px;
-  border-bottom: 1px solid ${colors.border.muted};
-  a {
-    color: ${colors.text.accent};
-    font-size: ${typography.text.s};
-  }
-`;
-
-const repositoryCardFooterStyle = css`
-  display: flex;
-  a {
-    color: ${colors.text.muted};
-    font-size: ${typography.text.xs};
-  }
-`;
-
-const cardListStyle = css`
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  li {
-    height: 18px;
-    display: grid;
-    grid-gap: 8px;
-    grid-template-columns: auto auto;
-    align-items: center;
-    justify-content: flex-start;
-    list-style: none;
-    padding: 0;
-  }
-`;
-
-const messageStyle = css`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  font-size: 14px;
-`;
 
 export default RepositoryCard;

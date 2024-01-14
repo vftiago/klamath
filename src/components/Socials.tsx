@@ -1,5 +1,4 @@
 import React from "react";
-import { css } from "@emotion/css";
 import LinkedinIcon from "./icons/LinkedinIcon";
 import GithubIcon from "./icons/GithubIcon";
 import MailIcon from "./icons/MailIcon";
@@ -8,7 +7,20 @@ import { motion } from "framer-motion";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { EMAIL } from "../constants";
 import Typed from "typed.js";
-import { DEFAULT_ICON_SIZE, colors } from "../theme";
+
+// #region framer-animations
+const item = {
+  visible: {
+    opacity: 1,
+    cursor: "pointer",
+    transition: {
+      duration: 0.8,
+      ease: "backInOut",
+    },
+  },
+  hidden: { opacity: 0 },
+};
+// #endregion framer-animations
 
 let typedMail: Typed;
 
@@ -27,35 +39,35 @@ const Socials = () => {
     });
   };
 
-  const item = {
-    visible: {
-      opacity: 1,
-      cursor: "pointer",
-      transition: {
-        duration: 0.8,
-        ease: "backInOut",
-      },
-    },
-    hidden: { opacity: 0 },
-  };
-
   return (
-    <div className={socialIconsStyle}>
+    <div className={`flex items-center justify-between gap-20`}>
       <Clicky>
-        <motion.a variants={item} href="https://github.com/vftiago" target="_blank" rel="noreferrer">
-          <GithubIcon />
+        <motion.a
+          className="h-9 hover:cursor-pointer"
+          variants={item}
+          href="https://github.com/vftiago"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <GithubIcon customStyles="fill-neutral-800 hover:fill-orange-600 transition duration-500 ease-out-expo" />
         </motion.a>
       </Clicky>
 
       <Clicky onClick={handleMailIconClick}>
-        <motion.a variants={item} target="_blank" rel="noreferrer">
-          <MailIcon />
+        <motion.a className="h-9 hover:cursor-pointer" variants={item} target="_blank" rel="noreferrer">
+          <MailIcon customStyles="fill-neutral-800 hover:fill-orange-600 transition duration-500 ease-out-expo" />
         </motion.a>
       </Clicky>
 
       <Clicky>
-        <motion.a variants={item} href="https://linkedin.com/in/vftiago" target="_blank" rel="noreferrer">
-          <LinkedinIcon />
+        <motion.a
+          className="h-9 hover:cursor-pointer"
+          variants={item}
+          href="https://linkedin.com/in/vftiago"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <LinkedinIcon customStyles="fill-neutral-800 hover:fill-orange-600 transition duration-500 ease-out-expo" />
         </motion.a>
       </Clicky>
     </div>
@@ -63,22 +75,3 @@ const Socials = () => {
 };
 
 export default Socials;
-
-const socialIconsStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 88px;
-  a {
-    height: ${DEFAULT_ICON_SIZE + "px"};
-    width: ${DEFAULT_ICON_SIZE + "px"};
-  }
-  svg {
-    transition: all 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-    fill: #333;
-    &:hover {
-      cursor: pointer;
-      fill: ${colors.icon.accent};
-    }
-  }
-`;

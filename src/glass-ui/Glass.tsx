@@ -1,5 +1,5 @@
 import React from "react";
-import { css } from "@emotion/css";
+import { clsx } from "clsx";
 import { ReactNode } from "react";
 
 export enum Opacity {
@@ -8,28 +8,19 @@ export enum Opacity {
 }
 
 export type GlassProps = {
-  blur?: 1 | 2 | 4;
   opacity?: Opacity;
-  tint?: "light" | "dark";
   children: ReactNode;
   customStyles?: string;
 };
 
-const Glass = ({ blur = 1, opacity = 0.03, tint = "dark", customStyles, children }: GlassProps) => {
-  return <div className={css([getGlassStyles(blur, opacity, tint), customStyles])}>{children}</div>;
-};
-
-const getGlassStyles = (blur: number, opacity: number, tint: "light" | "dark") => {
-  const color = tint === "light" ? 212 : 88;
-
-  const backdropFilter = `blur(${blur}px)`;
-  const backgroundColor = `rgba(${color}, ${color}, ${color}, ${opacity})`;
-
-  return css`
-    backdrop-filter: ${backdropFilter};
-    background-color: ${backgroundColor};
-    border: 1px solid rgba(128, 128, 128, 0.5);
-  `;
+const Glass = ({ opacity = 0.03, customStyles, children }: GlassProps) => {
+  return (
+    <div
+      className={clsx([`backdrop-blur-[2px] bg-neutral-500/[${opacity}] border border-neutral-500/20`, customStyles])}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default Glass;
