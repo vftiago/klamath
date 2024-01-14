@@ -23,7 +23,6 @@ const socialIconsVariant = {
   visible,
   hidden: { opacity: 0 },
 };
-
 // #endregion framer-animations
 
 let typedName: Typed;
@@ -77,7 +76,7 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
   }, [inView]);
 
   return (
-    <main className="flex w-full min-h-full flex-col items-center justify-center">
+    <main className="flex min-h-full w-full flex-col items-center justify-center">
       <div className="h-20 w-[349px]">
         <h1 className="text-3xl font-bold" ref={ref}>
           <span id="typed-name"></span>
@@ -87,12 +86,12 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
         </h2>
       </div>
       <motion.div
-        className="absolute flex justify-center items-center flex-col pb-32 bottom-0"
+        className="absolute bottom-0 flex flex-col items-center justify-center pb-32"
         initial="hidden"
         animate="visible"
         variants={socialIconsVariant}
       >
-        <div className="h-5 pb-48 w-[254px]">
+        <div className="h-5 w-[254px] pb-12">
           <span id="toast"></span>
         </div>
         <Socials />

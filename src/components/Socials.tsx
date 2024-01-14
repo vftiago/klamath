@@ -54,7 +54,7 @@ const Socials = () => {
       </Clicky>
 
       <Clicky onClick={handleMailIconClick}>
-        <motion.a className="h-9 hover:cursor-pointer" variants={item} target="_blank" rel="noreferrer">
+        <motion.a className="h-9 hover:cursor-pointer" variants={item} rel="noreferrer">
           <MailIcon customStyles="fill-neutral-800 hover:fill-orange-600 transition duration-500 ease-out-expo" />
         </motion.a>
       </Clicky>
