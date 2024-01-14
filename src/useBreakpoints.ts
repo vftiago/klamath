@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 
 const breakpoints = {
+  sm: 576,
   md: 768,
   lg: 1024,
 };
 
 export const useBreakpoints = () => {
   const [screenState, setScreenState] = useState<{
+    isXsHeight: boolean;
     isSmScreen: boolean;
     isMdScreen: boolean;
     isLgScreen: boolean;
   }>({
+    isXsHeight: window.innerHeight <= breakpoints.sm,
     isSmScreen: window.innerWidth <= breakpoints.md,
     isMdScreen: window.innerWidth >= breakpoints.md,
     isLgScreen: window.innerWidth >= breakpoints.lg,
@@ -18,6 +21,7 @@ export const useBreakpoints = () => {
 
   const handleResize = () => {
     const newScreenState = {
+      isXsHeight: window.innerHeight <= breakpoints.sm,
       isSmScreen: window.innerWidth <= breakpoints.md,
       isMdScreen: window.innerWidth >= breakpoints.md,
       isLgScreen: window.innerWidth >= breakpoints.lg,

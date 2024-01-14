@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import Waterfall from "./Waterfalll";
 import Socials from "./Socials";
+import { useBreakpoints } from "../useBreakpoints";
 
 // #region framer-animations
 const visible = {
@@ -53,9 +54,9 @@ type MainSectionProps = {
 };
 
 const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
-  const { ref, inView } = useInView({
-    threshold: 1,
-  });
+  const { ref, inView } = useInView({ threshold: 1 });
+
+  const { isXsHeight } = useBreakpoints();
 
   useEffect(() => {
     typedName = new Typed("#typed-name", {
@@ -94,7 +95,7 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
         <div className="h-5 w-[254px] pb-12">
           <span id="toast"></span>
         </div>
-        <Socials />
+        {!isXsHeight && <Socials />}
         {!isLoading && <Waterfall />}
       </motion.div>
     </main>

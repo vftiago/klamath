@@ -28,10 +28,9 @@ const Clicky = ({
 
   return (
     <div
-      id="test"
       onClick={onClick}
       onMouseEnter={onHover}
-      className="z-10 cursor-pointer flex flex-col items-center justify-center"
+      className="z-10 flex cursor-pointer flex-col items-center justify-center"
     >
       {children}
     </div>
