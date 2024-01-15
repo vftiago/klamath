@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import Typed from "typed.js";
-import GlassPanel from "../glass-ui/GlassPanel";
+import GlassPanel from "./GlassPanel";
 
 const DEFAULT_NAVBAR_SIZE = 80;
 

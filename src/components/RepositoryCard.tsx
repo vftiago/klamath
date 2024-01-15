@@ -1,7 +1,7 @@
 import React from "react";
 import { RepositoryNode } from "../api/octokit-api";
 import { VscGitCommit } from "react-icons/vsc";
-import GlassPanel from "../glass-ui/GlassPanel";
+import GlassPanel from "./GlassPanel";
 
 type RepositoryCardProps = {
   repositoryNode: RepositoryNode;
@@ -16,7 +16,7 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
 
   return (
     <GlassPanel customStyles="flex flex-col justify-between gap-4 p-4 flex-1 min-h-64">
-      <div className="flex items-center justify-between pb-2 border-b border-neutral-300">
+      <div className="flex items-center justify-between border-b border-neutral-300 pb-2">
         <h4 className="text-base font-bold">{name}</h4>
 
         {homepageUrl && (
@@ -43,15 +43,15 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
           "No open issues."
         )}
       </div> */}
-      <div className="flex flex-1 gap-2 flex-col">
+      <div className="flex flex-1 flex-col gap-2">
         <p className="text-sm">Latest commits:</p>
         {commitHistory.length ? (
-          <ul className="p-0 flex flex-col gap-1">
+          <ul className="flex flex-col gap-1 p-0">
             {commitHistory.map((commit, index) => {
               return (
-                <li className="h-4 grid gap-2 grid-flow-col items-center justify-start list-none p-0" key={index}>
+                <li className="grid h-4 list-none grid-flow-col items-center justify-start gap-2 p-0" key={index}>
                   <VscGitCommit size="18px" />
-                  <span className="whitespace-nowrap overflow-hidden text-ellipsis text-base">
+                  <span className="overflow-hidden text-ellipsis whitespace-nowrap text-base">
                     {commit.node.message}
                   </span>
                 </li>

@@ -1,18 +1,28 @@
 import React from "react";
 import { clsx } from "clsx";
 import { ReactNode } from "react";
-import Glass, { GlassProps } from "./Glass";
 
-export type GlassPanelProps = GlassProps & {
+export enum Opacity {
+  Low = 0.03,
+  High = 1,
+}
+
+export type GlassPanelProps = {
   children: ReactNode;
   customStyles?: string;
+  opacity?: Opacity;
 };
 
 const GlassPanel = ({ opacity, customStyles, children }: GlassPanelProps) => {
   return (
-    <Glass opacity={opacity} customStyles={clsx(["shadow-lg", customStyles])}>
+    <div
+      className={clsx([
+        `backdrop-blur-sm bg-neutral-500/[${opacity}] border border-neutral-500/20 shadow-lg`,
+        customStyles,
+      ])}
+    >
       {children}
-    </Glass>
+    </div>
   );
 };
 

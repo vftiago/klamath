@@ -20,12 +20,12 @@ function RepositorySection({ onVisibilityChange, repositoryData }: RepositorySec
   }, [inView, onVisibilityChange]);
 
   return (
-    <Element className="flex flex-col items-center max-w-full py-6 gap-12" name="repository-section">
-      <div className="max-w-[1600px] p-6 grid gap-6">
+    <Element className="flex max-w-full flex-col items-center gap-12 py-6" name="repository-section">
+      <div className="grid max-w-[1600px] gap-6 p-6">
         <h2 className="text-xl font-bold" ref={ref}>
-          Dashboard
+          Projects
         </h2>
-        <div className="flex flex-col max-w-full">
+        <div className="flex max-w-full flex-col">
           <Suspense fallback={<LoadingIcon />}>
             <RepositoryList repositoryData={repositoryData} />
           </Suspense>
