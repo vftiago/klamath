@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useRef } from "react";
 import Typed from "typed.js";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
 import Waterfall from "./Waterfalll";
 import Socials from "./Socials";
 import { useBreakpoints } from "../useBreakpoints";
+import { Page } from "./MainApp";
 
 // #region framer-animations
 const visible = {
@@ -50,11 +50,12 @@ const typedJobCallback = (self: Typed) => {
 
 type MainSectionProps = {
   isLoading: boolean;
-  onVisibilityChange: (pageNumber: number, inview: boolean) => void;
+  onVisibilityChange: (page: Page, isInView: boolean) => void;
 };
 
 const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
-  const { ref, inView } = useInView({ threshold: 1 });
+  const ref = useRef(null);
+  const isInView = useInView(ref);
 
   const { isXsHeight } = useBreakpoints();
 
@@ -73,8 +74,8 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
   }, []);
 
   useEffect(() => {
-    onVisibilityChange(0, inView);
-  }, [inView]);
+    onVisibilityChange(Page.Main, isInView);
+  }, [isInView, onVisibilityChange]);
 
   return (
     <main className="flex min-h-full w-full flex-col items-center justify-center">

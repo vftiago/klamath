@@ -17,6 +17,19 @@ import { UserRepositories, getRepositoryData } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
 // import { CgOptions } from "react-icons/cg";
 import { useBreakpoints } from "../useBreakpoints";
+import { About } from "./AboutSection";
+
+export enum Page {
+  Main,
+  Repository,
+  About,
+}
+
+const pageVisibilityInfo = new Map([
+  [Page.Main, true],
+  [Page.Repository, false],
+  [Page.About, false],
+]);
 
 const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[] }) => {
   const { isMuted, toggleMuted, buttonClickAudioElementRef, buttonHoverAudioElementRef } = useAudio();
@@ -25,17 +38,11 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
   const [firstVisiblePage, setFirstVisiblePage] = useState<number>(0);
   const [header, setHeader] = useState<string>("Hello World");
   const { isLgScreen } = useBreakpoints();
-  const [pageVisibilityInfo, setPageVisibilityInfo] = useState<Map<number, boolean>>(
-    new Map([
-      [0, true],
-      [1, false],
-    ]),
-  );
 
   const uuid = useMemo(() => v4(), []);
 
-  const handleVisibilityChange = (pageNumber: number, inView: boolean) => {
-    setPageVisibilityInfo(pageVisibilityInfo.set(pageNumber, inView));
+  const handleVisibilityChange = (page: Page, inView: boolean) => {
+    pageVisibilityInfo.set(page, inView);
 
     const firstPageVisibilityInfo = [...pageVisibilityInfo].find((page) => page[1]);
 
@@ -87,6 +94,7 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
         {repositoryData && (
           <RepositorySection repositoryData={repositoryData} onVisibilityChange={handleVisibilityChange} />
         )}
+        <About onVisibilityChange={handleVisibilityChange} />
         <Footer />
       </AudioContext.Provider>
     </div>

@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 import Typed from "typed.js";
 import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
+import { useInView } from "framer-motion";
 
 let typedMissionStatement: Typed;
 
@@ -16,17 +16,18 @@ function Footer() {
     });
   };
 
-  const { ref, inView } = useInView();
+  const ref = useRef(null);
+  const isInView = useInView(ref);
 
   useEffect(() => {
-    if (inView) {
+    if (isInView) {
       handleMissionStatementVisibilityChange();
     }
-  }, [inView]);
+  }, [isInView]);
 
   return (
     <div ref={ref}>
-      <div className={`h-20 w-full flex items-center justify-center`}>
+      <div className="flex h-20 w-full items-center justify-center">
         <div className="w-[241px]">
           <p className="[&>span]:text-orange-600" id="mission-statement"></p>
         </div>

@@ -1,23 +1,23 @@
-import React, { Suspense, useEffect } from "react";
-import { useInView } from "react-intersection-observer";
+import React, { Suspense, useEffect, useRef } from "react";
 import { Element } from "react-scroll";
 import { UserRepositories } from "../api/octokit-api";
 import LoadingIcon from "./icons/LoadingIcon";
 import RepositoryList from "./RepositoryList";
+import { useInView } from "framer-motion";
+import { Page } from "./MainApp";
 
 type RepositorySectionProps = {
-  onVisibilityChange: (pageNumber: number, inview: boolean) => void;
+  onVisibilityChange: (page: Page, isInView: boolean) => void;
   repositoryData: UserRepositories;
 };
 
 function RepositorySection({ onVisibilityChange, repositoryData }: RepositorySectionProps) {
-  const { ref, inView } = useInView({
-    threshold: 1,
-  });
+  const ref = useRef(null);
+  const isInView = useInView(ref);
 
   useEffect(() => {
-    onVisibilityChange(1, inView);
-  }, [inView, onVisibilityChange]);
+    onVisibilityChange(Page.Repository, isInView);
+  }, [isInView, onVisibilityChange]);
 
   return (
     <Element className="flex max-w-full flex-col items-center gap-12 py-6" name="repository-section">

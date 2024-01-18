@@ -83,7 +83,7 @@ const Navbar = ({ position, header, leftIcon, rightIcon }: Props) => {
             )}
             id={`${position}-header`}
           >
-            {header}
+            <p className="sr-only">{header}</p>
           </div>
         </div>
         <div className="flex items-center justify-center">{rightIcon}</div>
