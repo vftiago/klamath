@@ -34,7 +34,7 @@ const Waterfall = () => {
         {["left-0", "left-1/2 ml-[-1px] animation-delay-300", "right-0 animation-delay-150"].map((spanClass, index) => {
           return (
             <span
-              className={`${spanClass} absolute top-0 h-full w-[1px] animate-waterfall bg-neutral-500 transition duration-500 ease-out-expo`}
+              className={`${spanClass} absolute top-0 h-full w-[1px] animate-waterfall bg-black transition duration-500 ease-out-expo`}
               key={index}
             ></span>
           );

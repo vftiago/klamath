@@ -49,13 +49,13 @@ const Socials = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <GithubIcon customStyles="fill-neutral-800 hover:fill-orange-600 transition duration-500 ease-out-expo" />
+          <GithubIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
         </motion.a>
       </Clicky>
 
       <Clicky onClick={handleMailIconClick}>
         <motion.a className="h-9 hover:cursor-pointer" variants={item} rel="noreferrer">
-          <MailIcon customStyles="fill-neutral-800 hover:fill-orange-600 transition duration-500 ease-out-expo" />
+          <MailIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
         </motion.a>
       </Clicky>
 
@@ -67,7 +67,7 @@ const Socials = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <LinkedinIcon customStyles="fill-neutral-800 hover:fill-orange-600 transition duration-500 ease-out-expo" />
+          <LinkedinIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
         </motion.a>
       </Clicky>
     </div>
