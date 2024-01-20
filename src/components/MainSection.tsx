@@ -78,7 +78,7 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
   }, [isInView, onVisibilityChange]);
 
   return (
-    <main className="flex min-h-full w-full flex-col items-center justify-center">
+    <main className="relative flex min-h-full w-full flex-col items-center justify-center">
       <div className="h-20 w-[306px]">
         <h1 className="text-3xl font-bold" ref={ref}>
           <span id="typed-name"></span>

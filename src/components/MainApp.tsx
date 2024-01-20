@@ -68,7 +68,7 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
   }, [repositoryData]);
 
   return (
-    <div className="flex h-full flex-col gap-32 lg:px-20">
+    <div id="app" className="flex h-full flex-col gap-32 lg:px-20">
       <audio src={buttonClick} ref={buttonClickAudioElementRef} muted={isMuted}></audio>
       <audio src={buttonHover} ref={buttonHoverAudioElementRef} muted={isMuted}></audio>
       <AudioContext.Provider value={{ isMuted, buttonClickAudioElementRef, buttonHoverAudioElementRef }}>
