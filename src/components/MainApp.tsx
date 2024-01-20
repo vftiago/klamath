@@ -5,7 +5,6 @@ import Footer from "./Footer";
 import { NavbarPosition } from "./Navbar";
 import MainSection from "./MainSection";
 import RepositorySection from "./RepositorySection";
-import ThreeScene from "./3d/ThreeScene";
 import { WeightedTable } from "@lrkit/weighted/src/types";
 import { v4 } from "uuid";
 import Navbar from "./Navbar";
@@ -72,7 +71,6 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
     <div className="flex h-full flex-col gap-32 lg:px-20">
       <audio src={buttonClick} ref={buttonClickAudioElementRef} muted={isMuted}></audio>
       <audio src={buttonHover} ref={buttonHoverAudioElementRef} muted={isMuted}></audio>
-      <ThreeScene />
       <AudioContext.Provider value={{ isMuted, buttonClickAudioElementRef, buttonHoverAudioElementRef }}>
         {isLgScreen && (
           <>
