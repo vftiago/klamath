@@ -5,20 +5,23 @@ import { useEffect, useRef, useState } from "react";
 import fragmentShader from "./postEffect.frag";
 import vertexShader from "./postEffect.vert";
 import { TIME_SPEED } from "../scene-defaults";
+import { useInitialWindowSize } from "../useInitialWindowSize";
 
 const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
   const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
 
-  const target = new THREE.WebGLRenderTarget(document.body.clientWidth, window.innerHeight);
+  const target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+
+  const { haveBothDimensionsChanged } = useInitialWindowSize();
 
   const handleWindowResize = () => {
-    if (!rawShaderMaterialRef.current) {
+    if (!rawShaderMaterialRef.current || !haveBothDimensionsChanged()) {
       return;
     }
 
-    target.setSize(document.body.clientWidth, window.innerHeight);
+    target.setSize(window.innerWidth, window.innerHeight);
 
-    rawShaderMaterialRef.current.uniforms.resolution.value.set(document.body.clientWidth, window.innerHeight);
+    rawShaderMaterialRef.current.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
   };
 
   const [scene] = useState(() => new THREE.Scene());
@@ -33,7 +36,7 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
     const uniforms = rawShaderMaterialRef.current.uniforms;
 
     uniforms.resolution = {
-      value: new THREE.Vector2(document.body.clientWidth, window.innerHeight),
+      value: new THREE.Vector2(window.innerWidth, window.innerHeight),
     };
 
     uniforms.texture = {

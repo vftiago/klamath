@@ -6,6 +6,7 @@ import Box from "./Box/Box";
 import Plane from "./Plane/Plane";
 import PostEffect from "./PostEffect/PostEffect";
 import ClearColor from "./ClearColor/ClearColor";
+import { useInitialWindowSize } from "./useInitialWindowSize";
 
 const ThreeScene = () => {
   const [camera] = useState(() => new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000));
@@ -16,8 +17,12 @@ const ThreeScene = () => {
     camera.position.y = -window.scrollY / 4;
   };
 
+  const { haveBothDimensionsChanged } = useInitialWindowSize();
+
   const handleWindowResize = () => {
-    camera.aspect = document.body.clientWidth / window.innerHeight;
+    if (!haveBothDimensionsChanged()) return;
+
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
   };
 

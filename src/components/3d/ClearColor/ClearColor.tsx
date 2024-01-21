@@ -1,13 +1,17 @@
-import React from "react";
 import { useThree } from "@react-three/fiber";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
+import { useInitialWindowSize } from "../useInitialWindowSize";
 
 const ClearColor = () => {
   const state = useThree();
 
+  const { haveBothDimensionsChanged } = useInitialWindowSize();
+
   const handleWindowResize = () => {
+    if (!haveBothDimensionsChanged()) return;
+
     state.gl.setPixelRatio(window.devicePixelRatio);
-    state.gl.setSize(document.body.clientWidth, window.innerHeight);
+    state.gl.setSize(window.innerWidth, window.innerHeight);
   };
 
   useEffect(() => {
@@ -20,7 +24,7 @@ const ClearColor = () => {
     };
   }, []);
 
-  return <Fragment></Fragment>;
+  return null;
 };
 
 export default ClearColor;
