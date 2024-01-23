@@ -1,7 +1,7 @@
 import React from "react";
 import { DEFAULT_LOGO_SIZE } from "../../theme";
 
-function Logo({ size = DEFAULT_LOGO_SIZE }) {
+const Logo = ({ size = DEFAULT_LOGO_SIZE }) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 102 144" height={size} width={size}>
       <g data-name="Layer 2">
@@ -38,6 +38,6 @@ function Logo({ size = DEFAULT_LOGO_SIZE }) {
       </g>
     </svg>
   );
-}
+};
 
 export default Logo;

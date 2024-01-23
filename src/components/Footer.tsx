@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 
 let typedMissionStatement: Typed;
 
-function Footer() {
+const Footer = () => {
   const handleMissionStatementVisibilityChange = () => {
     if (typedMissionStatement) return;
 
@@ -34,6 +34,6 @@ function Footer() {
       </div>
     </div>
   );
-}
+};
 
 export default Footer;

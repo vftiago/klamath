@@ -11,7 +11,7 @@ type RepositorySectionProps = {
   repositoryData: UserRepositories;
 };
 
-function RepositorySection({ onVisibilityChange, repositoryData }: RepositorySectionProps) {
+const RepositorySection = ({ onVisibilityChange, repositoryData }: RepositorySectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref);
 
@@ -33,6 +33,6 @@ function RepositorySection({ onVisibilityChange, repositoryData }: RepositorySec
       </div>
     </Element>
   );
-}
+};
 
 export default RepositorySection;

@@ -7,7 +7,7 @@ import fragmentShader from "./box.frag";
 import vertexShader from "./box.vert";
 import { TIME_SPEED } from "../scene-defaults";
 
-function Box(props: JSX.IntrinsicElements["mesh"]) {
+const Box = (props: JSX.IntrinsicElements["mesh"]) => {
   const ref = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.RawShaderMaterial>(null);
 
@@ -39,6 +39,6 @@ function Box(props: JSX.IntrinsicElements["mesh"]) {
       />
     </mesh>
   );
-}
+};
 
 export default Box;

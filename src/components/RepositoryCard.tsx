@@ -7,7 +7,7 @@ type RepositoryCardProps = {
   repositoryNode: RepositoryNode;
 };
 
-function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
+const RepositoryCard = ({ repositoryNode }: RepositoryCardProps) => {
   const { name, homepageUrl, url, defaultBranchRef } = repositoryNode;
 
   const commitHistory = defaultBranchRef ? defaultBranchRef.target.history.edges : [];
@@ -69,6 +69,6 @@ function RepositoryCard({ repositoryNode }: RepositoryCardProps) {
       </div>
     </GlassPanel>
   );
-}
+};
 
 export default RepositoryCard;

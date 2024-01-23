@@ -4,10 +4,10 @@ const debounce = <Params extends unknown[]>(
 ): ((...args: Params) => void) => {
   let timer: NodeJS.Timeout;
 
-  return function (...args: Params) {
+  return (...args: Params) => {
     clearTimeout(timer);
 
-    timer = setTimeout(function () {
+    timer = setTimeout(() => {
       callback(...args);
     }, duration);
   };
