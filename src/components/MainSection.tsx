@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Typed from "typed.js";
 import { motion, useInView } from "framer-motion";
 import { useEffect } from "react";
@@ -56,8 +56,13 @@ type MainSectionProps = {
 const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref);
+  const [hasUserScrolled, setHasUserScrolled] = useState(false);
 
   const { isXsHeight } = useBreakpoints();
+
+  const handleWindowScroll = () => {
+    setHasUserScrolled(true);
+  };
 
   useEffect(() => {
     typedName = new Typed("#typed-name", {
@@ -67,7 +72,10 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
       onComplete: typedJobCallback,
     });
 
+    window.addEventListener("scroll", handleWindowScroll);
+
     return () => {
+      window.removeEventListener("scroll", handleWindowScroll);
       typedName?.destroy();
       typedJob?.destroy();
     };
@@ -97,7 +105,7 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
           <span id="toast"></span>
         </div>
         {!isXsHeight && <Socials />}
-        {!isLoading && <Waterfall />}
+        {!isLoading && !hasUserScrolled && <Waterfall />}
       </motion.div>
     </main>
   );

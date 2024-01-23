@@ -9,6 +9,7 @@ const item = {
     opacity: 1,
     cursor: "pointer",
     transition: {
+      delay: 4,
       duration: 4,
       ease: "backInOut",
     },
