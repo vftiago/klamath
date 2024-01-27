@@ -1,30 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import Typed from "typed.js";
-import { motion, useInView } from "framer-motion";
+import { useInView } from "framer-motion";
 import { useEffect } from "react";
 import Waterfall from "./Waterfalll";
 import Socials from "./Socials";
-import { useBreakpoints } from "../useBreakpoints";
 import { Page } from "./MainApp";
-
-// #region framer-animations
-const visible = {
-  opacity: 1,
-  x: 0,
-  transition: {
-    delay: 0.2,
-    duration: 0.8,
-    when: "beforeChildren",
-    staggerChildren: 0.2,
-    ease: "backInOut",
-  },
-};
-
-const socialIconsVariant = {
-  visible,
-  hidden: { opacity: 0 },
-};
-// #endregion framer-animations
 
 let typedName: Typed;
 let typedJob: Typed;
@@ -56,13 +36,6 @@ type MainSectionProps = {
 const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
   const ref = useRef(null);
   const isInView = useInView(ref);
-  const [hasUserScrolled, setHasUserScrolled] = useState(false);
-
-  const { isXsHeight } = useBreakpoints();
-
-  const handleWindowScroll = () => {
-    setHasUserScrolled(true);
-  };
 
   useEffect(() => {
     typedName = new Typed("#typed-name", {
@@ -72,10 +45,7 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
       onComplete: typedJobCallback,
     });
 
-    window.addEventListener("scroll", handleWindowScroll);
-
     return () => {
-      window.removeEventListener("scroll", handleWindowScroll);
       typedName?.destroy();
       typedJob?.destroy();
     };
@@ -87,26 +57,18 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
 
   return (
     <main className="flex min-h-full w-full flex-col items-center justify-center">
-      <div className="h-20 w-[306px]">
-        <h1 className="text-3xl font-bold" ref={ref}>
-          <span id="typed-name"></span>
-        </h1>
-        <h2>
-          <span className="text-xl" id="typed-job"></span>
-        </h2>
-      </div>
-      <motion.div
-        className="absolute bottom-0 flex flex-col items-center justify-center pb-32"
-        initial="hidden"
-        animate="visible"
-        variants={socialIconsVariant}
-      >
-        <div className="h-5 w-[254px] pb-12">
-          <span id="toast"></span>
+      <div className="flex h-48 w-[306px] flex-col justify-between">
+        <div>
+          <h1 className="text-3xl font-bold" ref={ref}>
+            <span id="typed-name"></span>
+          </h1>
+          <h2>
+            <span className="text-xl" id="typed-job"></span>
+          </h2>
         </div>
-        {!isXsHeight && <Socials />}
-        {!isLoading && !hasUserScrolled && <Waterfall />}
-      </motion.div>
+        <Socials />
+      </div>
+      <Waterfall isLoading={isLoading} />
     </main>
   );
 };

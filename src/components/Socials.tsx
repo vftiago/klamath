@@ -7,8 +7,26 @@ import { motion } from "framer-motion";
 import { copyToClipboard } from "../utils/copyToClipboard";
 import { EMAIL } from "../constants";
 import Typed from "typed.js";
+import { useBreakpoints } from "../useBreakpoints";
 
 // #region framer-animations
+const visible = {
+  opacity: 1,
+  x: 0,
+  transition: {
+    delay: 2,
+    duration: 0.8,
+    when: "beforeChildren",
+    staggerChildren: 0.2,
+    ease: "backInOut",
+  },
+};
+
+const socialIconsVariant = {
+  visible,
+  hidden: { opacity: 0 },
+};
+
 const item = {
   visible: {
     opacity: 1,
@@ -39,38 +57,47 @@ const Socials = () => {
     });
   };
 
+  const { isXsHeight } = useBreakpoints();
+
+  if (isXsHeight) return null;
+
   return (
-    <div className={`flex items-center justify-between gap-20`}>
-      <Clicky>
-        <motion.a
-          className="h-9 hover:cursor-pointer"
-          variants={item}
-          href="https://github.com/vftiago"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <GithubIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
-        </motion.a>
-      </Clicky>
+    <motion.div className="flex w-full flex-col" initial="hidden" animate="visible" variants={socialIconsVariant}>
+      <div className="flex w-[254px] pb-10">
+        <span id="toast"></span>
+      </div>
+      <div className="flex w-full items-center justify-between">
+        <Clicky>
+          <motion.a
+            className="h-9 hover:cursor-pointer"
+            variants={item}
+            href="https://github.com/vftiago"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <GithubIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
+          </motion.a>
+        </Clicky>
 
-      <Clicky onClick={handleMailIconClick}>
-        <motion.a className="h-9 hover:cursor-pointer" variants={item} rel="noreferrer">
-          <MailIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
-        </motion.a>
-      </Clicky>
+        <Clicky onClick={handleMailIconClick}>
+          <motion.a className="h-9 hover:cursor-pointer" variants={item} rel="noreferrer">
+            <MailIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
+          </motion.a>
+        </Clicky>
 
-      <Clicky>
-        <motion.a
-          className="h-9 hover:cursor-pointer"
-          variants={item}
-          href="https://linkedin.com/in/vftiago"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <LinkedinIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
-        </motion.a>
-      </Clicky>
-    </div>
+        <Clicky>
+          <motion.a
+            className="h-9 hover:cursor-pointer"
+            variants={item}
+            href="https://linkedin.com/in/vftiago"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <LinkedinIcon customStyles="fill-black hover:fill-orange-600 transition duration-500 ease-out-expo" />
+          </motion.a>
+        </Clicky>
+      </div>
+    </motion.div>
   );
 };
 
