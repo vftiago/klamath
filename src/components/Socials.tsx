@@ -62,11 +62,16 @@ const Socials = () => {
   if (isXsHeight) return null;
 
   return (
-    <motion.div className="flex w-full flex-col" initial="hidden" animate="visible" variants={socialIconsVariant}>
-      <div className="flex w-[254px] pb-10">
+    <motion.div
+      className="absolute bottom-40 flex flex-col"
+      initial="hidden"
+      animate="visible"
+      variants={socialIconsVariant}
+    >
+      <div className="flex h-10 w-[254px] pb-12">
         <span id="toast"></span>
       </div>
-      <div className="flex w-full items-center justify-around ">
+      <div className="flex w-full items-center justify-center gap-20">
         <Clicky>
           <motion.a
             className="h-9 hover:cursor-pointer"
