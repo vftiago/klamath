@@ -57,7 +57,7 @@ const MainSection = ({ isLoading, onVisibilityChange }: MainSectionProps) => {
 
   return (
     <main className="flex min-h-full w-full flex-col items-center justify-center">
-      <div className="flex h-48 w-[306px] flex-col justify-between">
+      <div className="flex h-48 w-[306px] flex-col items-start justify-between">
         <div>
           <h1 className="text-3xl font-bold" ref={ref}>
             <span id="typed-name"></span>

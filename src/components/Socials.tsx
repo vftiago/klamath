@@ -66,7 +66,7 @@ const Socials = () => {
       <div className="flex w-[254px] pb-10">
         <span id="toast"></span>
       </div>
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-around ">
         <Clicky>
           <motion.a
             className="h-9 hover:cursor-pointer"
