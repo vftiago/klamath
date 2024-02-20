@@ -15,7 +15,7 @@
   "dependencies": {
     "@lrkit/weighted": "^0.2.1",
     "@octokit/graphql": "^7.0.2",
-    "@react-three/drei": "^9.88.10",
+    "@react-three/drei": "^9.99.0",
     "@react-three/fiber": "^8.15.9",
     "@react-three/postprocessing": "^2.15.8",
     "clsx": "^2.1.0",
