@@ -78,6 +78,7 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
               leftIcon={<Logo />}
               position={NavbarPosition.Left}
               header={header}
+              typedHeader
               rightIcon={<AudioToggle isMuted={isMuted} toggleMuted={toggleMuted} />}
             />
             <Navbar

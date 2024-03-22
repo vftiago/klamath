@@ -45,14 +45,17 @@ export enum NavbarPosition {
 }
 
 type Props = {
+  header: string;
   position: NavbarPosition;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  header: string;
+  typedHeader?: boolean;
 };
 
-const Navbar = ({ position, header, leftIcon, rightIcon }: Props) => {
+const Navbar = ({ header, position, leftIcon, rightIcon, typedHeader }: Props) => {
   useEffect(() => {
+    if (!typedHeader) return;
+
     const typedCurrentPageHeader = new Typed(`#${position}-header`, {
       strings: [header],
       typeSpeed: 20,
@@ -62,7 +65,7 @@ const Navbar = ({ position, header, leftIcon, rightIcon }: Props) => {
     return () => {
       typedCurrentPageHeader.destroy();
     };
-  }, [header]);
+  }, [header, position, typedHeader]);
 
   const isLeftNavbar = position === NavbarPosition.Left;
 
@@ -83,7 +86,7 @@ const Navbar = ({ position, header, leftIcon, rightIcon }: Props) => {
             )}
             id={`${position}-header`}
           >
-            <p className="sr-only">{header}</p>
+            <p className={typedHeader ? "sr-only" : undefined}>{header}</p>
           </div>
         </div>
         <div className="flex items-center justify-center">{rightIcon}</div>
