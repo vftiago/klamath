@@ -3,11 +3,11 @@ import { useFrame } from "@react-three/fiber";
 import { useRef } from "react";
 import * as THREE from "three";
 
-import fragmentShader from "./box.frag";
-import vertexShader from "./box.vert";
+import fragmentShader from "./barbelith.frag";
+import vertexShader from "./barbelith.vert";
 import { TIME_SPEED } from "../scene-defaults";
 
-const Box = (props: JSX.IntrinsicElements["mesh"]) => {
+const Barbelith = (props: JSX.IntrinsicElements["mesh"]) => {
   const meshRef = useRef<THREE.Mesh>(null);
   const materialRef = useRef<THREE.RawShaderMaterial>(null);
 
@@ -20,7 +20,7 @@ const Box = (props: JSX.IntrinsicElements["mesh"]) => {
 
     const uniforms = materialRef.current.uniforms;
 
-    uniforms.rotate = { value: Math.random() * 10 };
+    uniforms.rotate = { value: 4 };
   }, []);
 
   useFrame((_, delta) => {
@@ -37,7 +37,7 @@ const Box = (props: JSX.IntrinsicElements["mesh"]) => {
 
   return (
     <mesh {...props} ref={meshRef}>
-      <boxGeometry args={[100, 100, 100]} />
+      <sphereGeometry args={[92, 24, 24]} />
       <rawShaderMaterial
         ref={materialRef}
         vertexShader={vertexShader}
@@ -49,4 +49,4 @@ const Box = (props: JSX.IntrinsicElements["mesh"]) => {
   );
 };
 
-export default Box;
+export default Barbelith;

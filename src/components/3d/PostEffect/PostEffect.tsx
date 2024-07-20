@@ -5,24 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import fragmentShader from "./postEffect.frag";
 import vertexShader from "./postEffect.vert";
 import { TIME_SPEED } from "../scene-defaults";
-import { useInitialWindowSize } from "../useInitialWindowSize";
 
 const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
   const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
 
   const target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
-
-  const { haveBothDimensionsChanged } = useInitialWindowSize();
-
-  const handleWindowResize = () => {
-    if (!rawShaderMaterialRef.current || !haveBothDimensionsChanged()) {
-      return;
-    }
-
-    target.setSize(window.innerWidth, window.innerHeight);
-
-    rawShaderMaterialRef.current.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
-  };
 
   const [scene] = useState(() => new THREE.Scene());
 
@@ -30,8 +17,6 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
     if (!rawShaderMaterialRef.current) {
       return;
     }
-
-    window.addEventListener("resize", handleWindowResize);
 
     const uniforms = rawShaderMaterialRef.current.uniforms;
 
@@ -45,10 +30,6 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
 
     uniforms.time = {
       value: 0,
-    };
-
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
 
@@ -64,6 +45,7 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
     rawShaderMaterialRef.current.visible = false;
     state.gl.setRenderTarget(target);
     state.gl.render(state.scene, state.camera);
+
     rawShaderMaterialRef.current.visible = true;
     state.gl.setRenderTarget(null);
     state.gl.render(scene, state.camera);

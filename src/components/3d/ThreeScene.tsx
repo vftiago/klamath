@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import * as THREE from "three";
 import { useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
@@ -6,25 +6,22 @@ import Box from "./Box/Box";
 import Plane from "./Plane/Plane";
 import PostEffect from "./PostEffect/PostEffect";
 import ClearColor from "./ClearColor/ClearColor";
-import { useInitialWindowSize } from "./useInitialWindowSize";
+import Barbelith from "./Barbelith/Barbelith";
 
 const ThreeScene = () => {
   const [camera] = useState(() => new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000));
 
   camera.position.set(0, 0, 1024);
 
+  const [counter, setCounter] = useState(0);
+
   const handleWindowScroll = () => {
     camera.position.y = -window.scrollY / 4;
   };
 
-  const { haveBothDimensionsChanged } = useInitialWindowSize();
-
-  const handleWindowResize = () => {
-    if (!haveBothDimensionsChanged()) return;
-
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-  };
+  const handleWindowResize = useCallback(() => {
+    setCounter((prev) => prev + 1);
+  }, [camera, counter]);
 
   useEffect(() => {
     window.addEventListener("resize", handleWindowResize);
@@ -45,6 +42,7 @@ const ThreeScene = () => {
         }}
       >
         <ClearColor />
+        <Barbelith position={[250, 250, -200]} />
         <Plane />
         <Box position={[400, -500, 200]}></Box>
         <Box position={[-350, -600, -5]}></Box>
@@ -53,7 +51,7 @@ const ThreeScene = () => {
         <Box position={[-100, -1200, -300]}></Box>
         <Box position={[100, -1100, 25]}></Box>
         <Box position={[150, -1500, -10]}></Box>
-        <PostEffect position={[0, -200, -8000]} />
+        <PostEffect key={counter} position={[0, -200, 0]} />
       </Canvas>
     </div>
   );

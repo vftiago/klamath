@@ -1,1 +1,1 @@
-export const TIME_SPEED = 3;
+export const TIME_SPEED = 2;
