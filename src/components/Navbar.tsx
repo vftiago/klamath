@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import Typed from "typed.js";
 import GlassPanel from "./GlassPanel";
 
-const DEFAULT_NAVBAR_SIZE = 80;
-
 // #region framer-animations
 const visible = {
   x: 0,
@@ -17,44 +15,97 @@ const visible = {
   },
 };
 
-const leftNavbarVariants = {
-  visible,
-  hidden: { x: `-${DEFAULT_NAVBAR_SIZE}PX` },
-};
-
-const rightNavbarVariants = {
-  visible,
-  hidden: { x: `${DEFAULT_NAVBAR_SIZE}PX` },
-};
+// #endregion framer-animations
 
 const getNavbarVariants = (position: NavbarPosition) => {
   switch (position) {
     case NavbarPosition.Left:
-      return leftNavbarVariants;
+      return {
+        visible,
+        hidden: { x: `-66px` },
+      };
     case NavbarPosition.Right:
-      return rightNavbarVariants;
+      return {
+        visible: {
+          ...visible,
+          x: "-66px",
+        },
+        hidden: { x: 0 },
+      };
+    case NavbarPosition.Top:
+      return {
+        visible,
+        hidden: { y: `-66px` },
+      };
+    case NavbarPosition.Bottom:
+      return {
+        visible: {
+          ...visible,
+          y: "-66px",
+        },
+        hidden: { y: 0 },
+      };
     default:
-      return leftNavbarVariants;
+      return {
+        visible,
+        hidden: { x: `-66px` },
+      };
   }
 };
-// #endregion framer-animations
+
+const getGridTemplates = (position: NavbarPosition) => {
+  switch (position) {
+    case NavbarPosition.Top:
+    case NavbarPosition.Bottom:
+      return `grid-cols-[66px_auto_66px]`;
+    case NavbarPosition.Left:
+    case NavbarPosition.Right:
+      return `grid-rows-[66px_auto_66px]`;
+    default:
+      return `grid-cols-[66px_auto_66px]`;
+  }
+};
+
+const getNavbarDimensions = (position: NavbarPosition) => {
+  switch (position) {
+    case NavbarPosition.Top:
+    case NavbarPosition.Bottom:
+      return `h-[66px]`;
+    case NavbarPosition.Left:
+    case NavbarPosition.Right:
+      return `w-[66px]`;
+    default:
+      return `h-[66px]`;
+  }
+};
 
 export enum NavbarPosition {
   Left = "left",
   Right = "right",
+  Top = "top",
+  Bottom = "bottom",
 }
 
-type Props = {
-  header: string;
-  position: NavbarPosition;
+type NavbarProps = {
+  isAnimated?: boolean;
+  header?: string;
+  position?: NavbarPosition;
+  size?: number;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  typedHeader?: boolean;
+  isTyped?: boolean;
 };
 
-const Navbar = ({ header, position, leftIcon, rightIcon, typedHeader }: Props) => {
+const Navbar = ({
+  isAnimated = true,
+  header,
+  position = NavbarPosition.Left,
+  leftIcon,
+  rightIcon,
+  isTyped,
+}: NavbarProps) => {
   useEffect(() => {
-    if (!typedHeader) return;
+    if (!header || !isTyped) return;
 
     const typedCurrentPageHeader = new Typed(`#${position}-header`, {
       strings: [header],
@@ -65,28 +116,43 @@ const Navbar = ({ header, position, leftIcon, rightIcon, typedHeader }: Props) =
     return () => {
       typedCurrentPageHeader.destroy();
     };
-  }, [header, position, typedHeader]);
-
-  const isLeftNavbar = position === NavbarPosition.Left;
+  }, [header, position, isTyped]);
 
   return (
     <motion.div
-      initial="hidden"
+      initial={isAnimated ? "hidden" : "visible"}
       animate="visible"
       variants={getNavbarVariants(position)}
-      className={clsx("fixed top-0 z-10 h-full w-20", isLeftNavbar ? "left-0" : "right-0")}
+      className={clsx("fixed z-10", {
+        "w-full": position === NavbarPosition.Top || position === NavbarPosition.Bottom,
+        "h-full": position === NavbarPosition.Left || position === NavbarPosition.Right,
+        "left-0": position === NavbarPosition.Left,
+        "right-0": position === NavbarPosition.Right,
+        "top-0": position === NavbarPosition.Top,
+        "bottom-0": position === NavbarPosition.Bottom,
+      })}
     >
-      <GlassPanel customStyles="fixed grid items-center w-20 h-full grid-rows-[80px,auto,80px]">
+      <GlassPanel
+        customStyles={clsx(
+          "fixed grid items-center",
+          {
+            "w-full grid-flow-col": position === NavbarPosition.Top || position === NavbarPosition.Bottom,
+            "h-full grid-flow-row": position === NavbarPosition.Left || position === NavbarPosition.Right,
+          },
+          getGridTemplates(position),
+          getNavbarDimensions(position),
+        )}
+      >
         <div className="flex items-center justify-center">{leftIcon}</div>
-        <div className="flex h-20 items-center justify-center">
+        <div className="flex items-center justify-center">
           <div
-            className={clsx(
-              `absolute flex h-20 w-screen items-center justify-center text-base`,
-              isLeftNavbar ? "-rotate-90" : "rotate-90",
-            )}
+            className={clsx("absolute flex w-screen items-center justify-center text-lg", {
+              "-rotate-90": position === NavbarPosition.Left,
+              "rotate-90": position === NavbarPosition.Right,
+            })}
             id={`${position}-header`}
           >
-            <p className={typedHeader ? "sr-only" : undefined}>{header}</p>
+            <p className={isTyped ? "sr-only" : undefined}>{header}</p>
           </div>
         </div>
         <div className="flex items-center justify-center">{rightIcon}</div>
