@@ -63,7 +63,7 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
   }, [repositoryData]);
 
   return (
-    <div className="flex h-full flex-col gap-32">
+    <div className="flex h-full flex-col gap-32 lg:px-20">
       {isLgScreen && (
         <Navbar
           leftIcon={<Logo />}
@@ -72,18 +72,16 @@ const MainApp = ({ weightedHeaders }: { weightedHeaders: WeightedTable<string>[]
           rightIcon={<AudioToggle isMuted={isMuted} toggleMuted={toggleMuted} />}
         />
       )}
-      <div className="lg:px-20">
-        <audio src={buttonClick} ref={buttonClickAudioElementRef} muted={isMuted}></audio>
-        <audio src={buttonHover} ref={buttonHoverAudioElementRef} muted={isMuted}></audio>
-        <AudioContext.Provider value={{ isMuted, buttonClickAudioElementRef, buttonHoverAudioElementRef }}>
-          <MainSection isLoading={isLoading} onVisibilityChange={handleVisibilityChange} />
-          {repositoryData && (
-            <RepositorySection repositoryData={repositoryData} onVisibilityChange={handleVisibilityChange} />
-          )}
-          <About onVisibilityChange={handleVisibilityChange} />
-          <Footer />
-        </AudioContext.Provider>
-      </div>
+      <audio src={buttonClick} ref={buttonClickAudioElementRef} muted={isMuted}></audio>
+      <audio src={buttonHover} ref={buttonHoverAudioElementRef} muted={isMuted}></audio>
+      <AudioContext.Provider value={{ isMuted, buttonClickAudioElementRef, buttonHoverAudioElementRef }}>
+        <MainSection isLoading={isLoading} onVisibilityChange={handleVisibilityChange} />
+        {repositoryData && (
+          <RepositorySection repositoryData={repositoryData} onVisibilityChange={handleVisibilityChange} />
+        )}
+        <About onVisibilityChange={handleVisibilityChange} />
+        <Footer />
+      </AudioContext.Provider>
     </div>
   );
 };
