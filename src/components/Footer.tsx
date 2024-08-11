@@ -27,7 +27,7 @@ const Footer = () => {
   }, [isInView]);
 
   return (
-    <footer ref={ref} className="flex flex-col items-center gap-6 bg-neutral-100 p-6 text-sm md:text-base">
+    <footer ref={ref} className="flex flex-col items-center gap-6 p-6 text-sm md:text-base">
       <div className="flex w-full max-w-[1600px]">
         <div className="flex w-full flex-1 flex-col justify-between gap-6 md:flex-row">
           <div className="flex w-full justify-between gap-6 md:w-auto md:justify-normal">
