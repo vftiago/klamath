@@ -42,7 +42,7 @@ const ThreeScene = () => {
         }}
       >
         <ClearColor />
-        <Barbelith position={[250, 250, -200]} />
+        <Barbelith position={[150, 350, -200]} />
         <Plane />
         <Box position={[400, -500, 200]}></Box>
         <Box position={[-350, -600, -5]}></Box>
