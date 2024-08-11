@@ -4,7 +4,7 @@ import plugin from "tailwindcss/plugin";
 const customTimingFunction = "cubic-bezier(0.215, 0.61, 0.355, 1)";
 
 export default {
-  content: ["./index.html", "./src/**/*.tsx"],
+  content: ["./src/**/*.tsx"],
   theme: {
     extend: {
       animation: {
