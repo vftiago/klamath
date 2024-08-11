@@ -6,8 +6,9 @@ import fragmentShader from "./postEffect.frag";
 import vertexShader from "./postEffect.vert";
 import { TIME_SPEED } from "../scene-defaults";
 
-const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
+const PostEffect = () => {
   const rawShaderMaterialRef = useRef<THREE.RawShaderMaterial>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
 
   const target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
 
@@ -34,11 +35,13 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
   }, []);
 
   useFrame((state, delta) => {
-    if (!rawShaderMaterialRef.current) {
+    if (!rawShaderMaterialRef.current || !meshRef.current) {
       return;
     }
 
     const uniforms = rawShaderMaterialRef.current.uniforms;
+
+    meshRef.current.position.set(0, state.camera.position.y, 0);
 
     uniforms.time.value += delta * TIME_SPEED;
 
@@ -52,7 +55,7 @@ const PostEffect = (props: JSX.IntrinsicElements["mesh"]) => {
   });
 
   return (
-    <mesh {...props}>
+    <mesh ref={meshRef}>
       <planeGeometry args={[2, 2]} />
       <rawShaderMaterial ref={rawShaderMaterialRef} vertexShader={vertexShader} fragmentShader={fragmentShader} />
     </mesh>
