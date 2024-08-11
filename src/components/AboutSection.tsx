@@ -21,26 +21,22 @@ export const About = ({ onVisibilityChange }: AboutSectionProps) => {
         <h2 className="text-xl font-bold" ref={ref}>
           About
         </h2>
-        <div className="flex flex-col gap-3 text-lg">
+        <div className="flex flex-col gap-6 text-lg">
           <p>
-            I'm a <b>software developer</b>. The web is my domain, frontend is my speciality although I feel comfortable
-            on both ends, and TypeScript is my main tool.
+            I'm a <b>software engineer</b> by trade. The web is my domain, frontend is my speciality (although I don't
+            shy away from the backend), React and TypeScript are my main tools.
           </p>
           <p>
-            I did not follow the beaten path. I bring a unique blend of business and technical expertise to the table. I
-            found my passion for programming as soon as I got my first programmable calculator, and I've been
-            continuously refining my technical skills ever since. After a brief career in international management I
-            decided to pivot to software development by creating my own brand, taking on client projects as a
-            freelancer, and crafting a robust personal portfolio.
-          </p>
-          <p>
-            During my years in management I have honed my ability to communicate effectively within{" "}
-            <b>global business structures</b>, and internationally connected organizations.
+            For better or worse, I did not follow the beaten path. After a brief career in international management I
+            decided to pivot to software development by creating my own brand, taking on projects as a freelancer, and
+            crafting a robust personal portfolio. I bring a unique blend of business and technical expertise to the
+            table. During my years in management I have honed my ability to communicate effectively within global
+            business structures, and internationally connected organizations.
           </p>
           <p>
             I'm a quick learner and very adaptable; new skills, languages and environments are never an issue. I'm also
-            an experienced expat, having studied, worked and lived in China, The Netherlands, Mexico, Poland and{" "}
-            <b>Portugal</b>, where I currently reside.
+            an experienced expat, having studied, worked and lived in China, The Netherlands, Mexico, Poland and
+            Portugal, where I currently reside.
           </p>
         </div>
       </div>

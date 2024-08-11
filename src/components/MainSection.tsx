@@ -21,7 +21,7 @@ const defaultTypedOptions = {
 const typedJobCallback = (self: Typed) => {
   typedJob = new Typed("#typed-job", {
     ...defaultTypedOptions,
-    strings: [`Software developer`],
+    strings: [`Software Engineer`],
     startDelay: HEADING_2_START_DELAY,
   });
 
