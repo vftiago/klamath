@@ -14,10 +14,22 @@ const PostEffect = () => {
 
   const [scene] = useState(() => new THREE.Scene());
 
+  const handleWindowResize = () => {
+    if (!rawShaderMaterialRef.current) {
+      return;
+    }
+
+    target.setSize(window.innerWidth, window.innerHeight);
+
+    rawShaderMaterialRef.current.uniforms.resolution.value.set(window.innerWidth, window.innerHeight);
+  };
+
   useEffect(() => {
     if (!rawShaderMaterialRef.current) {
       return;
     }
+
+    window.addEventListener("resize", handleWindowResize);
 
     const uniforms = rawShaderMaterialRef.current.uniforms;
 
@@ -31,6 +43,10 @@ const PostEffect = () => {
 
     uniforms.time = {
       value: 0,
+    };
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
 

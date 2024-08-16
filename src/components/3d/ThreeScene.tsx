@@ -13,22 +13,14 @@ const ThreeScene = () => {
 
   camera.position.set(0, 0, 1024);
 
-  const [counter, setCounter] = useState(0);
-
-  const handleWindowScroll = () => {
+  const handleWindowScroll = useCallback(() => {
     camera.position.y = -window.scrollY / 4;
-  };
-
-  const handleWindowResize = useCallback(() => {
-    setCounter((prev) => prev + 1);
-  }, [camera, counter]);
+  }, [camera]);
 
   useEffect(() => {
-    window.addEventListener("resize", handleWindowResize);
     window.addEventListener("scroll", handleWindowScroll);
 
     return () => {
-      window.removeEventListener("resize", handleWindowResize);
       window.removeEventListener("scroll", handleWindowScroll);
     };
   }, []);
@@ -51,7 +43,7 @@ const ThreeScene = () => {
         <Box position={[-100, -1200, -300]}></Box>
         <Box position={[100, -1100, 25]}></Box>
         <Box position={[150, -1500, -10]}></Box>
-        <PostEffect key={counter} />
+        <PostEffect />
       </Canvas>
     </div>
   );
